@@ -5,39 +5,114 @@ using App;
 List<User> users = new List<User>();
 User activeUser = null;
 
+
 bool Running = true;
 
 while (Running)
 {
-    if (activeUser == null)
+    if (activeUser == null)  // ------------------------LOGIN MENU----------------------
     {
         Console.WriteLine("-=Welcome to the Healcare system=-");
         Console.WriteLine("1. Login");
         Console.WriteLine("2. Create account");
         Console.WriteLine("3. Exit system");
-        string input = Console.ReadLine();
-        switch (input)
+        string Login_input = Console.ReadLine();
+        switch (Login_input)
         {
-            case "1":
+            case "1":               //------------------------LOGIN----------------------
                 Console.Write("Enter username: ");
                 string L_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string L_password = Console.ReadLine();
+                foreach (User user in users)
+                {
+
+                    if (user.TryLogin(L_username, L_password))
+                    {
+                        activeUser = user;
+                        activeUser.IsLoggedIn = true;
+                        Console.WriteLine("Login Succesfull!");
+                        Console.ReadLine();
+                        break;
+                    }
+                }
                 break;
 
-            case "2":
+            case "2":               //---------------------CREATE ACCOUNT------------------
                 Console.Write("Enter username: ");
                 string C_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
+                bool isloggedin = false;
+
+                User newUser = new User(C_username, C_password, isloggedin);
+                users.Add(newUser);
+                Console.WriteLine($"Account: {C_username} has been created.");
                 break;
 
-            case "3":
+            case "3":               //------------------------EXIT-----------------------
                 Console.WriteLine("Exiting System!");
                 Running = false;
                 break;
         }
 
     }
+    //-------------------------------------LOGGED IN MENU----------------------------------------
+    {
+
+
+        Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        string input = Console.ReadLine();
+        switch (input)
+        {
+
+
+
+
+
+        }
+
+
+
+
+
+
+    }
+
+
 
 }
+
+/*
+
+TODO:
+
+1. Patient
+
+Ska kunna registrera sig och logga in. !!
+Ska kunna se sin egen journal.
+Ska kunna begära en tid (bokning).
+Ska kunna se sitt schema (bokade tider).
+
+2. Personal (vårdpersonal)
+
+Ska kunna se patientjournaler.
+Ska kunna markera journaler med olika läsbehörigheter.
+Ska kunna registrera och ändra tider.
+Ska kunna godkänna eller avslå tidsförfrågningar.
+Ska kunna se schema för en plats (t.ex. vårdcentral).
+
+3. Administratör (admin)
+
+Ska kunna hantera rättigheter för andra användare.
+Ska kunna tilldela roller (t.ex. personal, lokal admin).
+Ska kunna skapa konton för personal.
+Ska kunna lägga till platser (sjukhus, vårdcentraler).
+Ska kunna godkänna eller avslå patientregistreringar.
+Ska kunna se vem som har vilka behörigheter.
+Systemet ska vara uppbyggt så att varje användare bara har tillgång till det som deras roll behöver.
+*/
