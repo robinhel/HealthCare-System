@@ -32,7 +32,6 @@ while (Running)
                         activeUser = user;
                         activeUser.IsLoggedIn = true;
                         Console.WriteLine("Login Succesfull!");
-                        Console.ReadLine();
                         break;
                     }
                 }
@@ -58,6 +57,7 @@ while (Running)
 
     }
     //-------------------------------------LOGGED IN MENU----------------------------------------
+    else
     {
 
 
