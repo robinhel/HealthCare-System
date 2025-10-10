@@ -25,5 +25,3 @@ public class Admin : IUser
         }
     }
 }
-
-//temporär klass, ska bli fler som ex admin, läkare, pasient

@@ -25,5 +25,3 @@ public class Patient : IUser
         }
     }
 }
-
-//temporär klass, ska bli fler som ex admin, läkare, pasient
