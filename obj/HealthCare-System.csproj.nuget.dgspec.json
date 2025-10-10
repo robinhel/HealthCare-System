@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hellg\\repos\\HealthCare-System\\HealthCare-System.csproj": {}
+    "/Users/callepalsson/repos/HealthCare-System/HealthCare-System.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hellg\\repos\\HealthCare-System\\HealthCare-System.csproj": {
+    "/Users/callepalsson/repos/HealthCare-System/HealthCare-System.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hellg\\repos\\HealthCare-System\\HealthCare-System.csproj",
+        "projectUniqueName": "/Users/callepalsson/repos/HealthCare-System/HealthCare-System.csproj",
         "projectName": "HealthCare-System",
-        "projectPath": "C:\\Users\\hellg\\repos\\HealthCare-System\\HealthCare-System.csproj",
-        "packagesPath": "C:\\Users\\hellg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hellg\\repos\\HealthCare-System\\obj\\",
+        "projectPath": "/Users/callepalsson/repos/HealthCare-System/HealthCare-System.csproj",
+        "packagesPath": "/Users/callepalsson/.nuget/packages/",
+        "outputPath": "/Users/callepalsson/repos/HealthCare-System/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\hellg\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/callepalsson/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.413/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
