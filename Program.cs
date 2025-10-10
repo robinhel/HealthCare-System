@@ -2,8 +2,8 @@
 using App;
 
 
-List<User> users = new List<User>();
-User activeUser = null;
+List<IUser> users = new List<IUser>();
+IUser activeUser = null;
 
 
 bool Running = true;
