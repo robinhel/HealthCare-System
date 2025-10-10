@@ -1,12 +1,12 @@
 namespace App;
 
-public class User : IUser
+public class Doctor : IUser
 {
     public string Username;
     public string Password;
     public bool IsLoggedIn;
 
-    public User(string username, string password, bool isloggedin)
+    public Doctor(string username, string password, bool isloggedin)
     {
         Username = username;
         Password = password;
@@ -26,4 +26,3 @@ public class User : IUser
     }
 }
 
-//temporär klass, ska bli fler som ex admin, läkare, pasient

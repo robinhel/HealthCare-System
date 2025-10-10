@@ -2,8 +2,8 @@
 using App;
 
 
-List<User> users = new List<User>();
-User activeUser = null;
+List<IUser> users = new List<IUser>();
+IUser activeUser = null;
 
 
 bool Running = true;
@@ -24,13 +24,12 @@ while (Running)
                 string L_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string L_password = Console.ReadLine();
-                foreach (User user in users)
+                foreach (IUser user in users)
                 {
 
                     if (user.TryLogin(L_username, L_password))
                     {
                         activeUser = user;
-                        activeUser.IsLoggedIn = true;
                         Console.WriteLine("Login Succesfull!");
                         break;
                     }
@@ -44,7 +43,7 @@ while (Running)
                 string C_password = Console.ReadLine();
                 bool isloggedin = false;
 
-                User newUser = new User(C_username, C_password, isloggedin);
+                IUser newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
                 break;
@@ -60,8 +59,13 @@ while (Running)
     else
     {
 
+        if (activeUser is Patient p)
+        {
+            Console.WriteLine(p.Username);
+        }
 
-        Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
+
+        Console.WriteLine($"Welcome {activeUser} to a terminal based HealthCare.");
         Console.WriteLine("");
         Console.WriteLine("");
         Console.WriteLine("");
