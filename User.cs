@@ -38,6 +38,6 @@ public class User
     }
     public string SaveUserCsv(User activeuser)
     {
-        return $"{activeuser.Username},{activeuser.Password},{activeuser.Id},{activeuser.Role}";
+        return $"{activeuser.Username},{activeuser.Password},{activeuser.Id},{activeuser.Role},{activeuser.IsLoggedIn}";
     }
 }
