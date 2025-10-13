@@ -71,10 +71,11 @@ while (Running)
         {
             Console.WriteLine($"Welcome {a.Username}");
         }
-        
-         if (activeUser is Doctor d)
+
+        if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
+<<<<<<< HEAD
             Console.WriteLine($"[1] Write journal for patient");
 
 
@@ -98,6 +99,9 @@ while (Running)
                     break;
             }
             
+=======
+
+>>>>>>> dev
         }
 
 
