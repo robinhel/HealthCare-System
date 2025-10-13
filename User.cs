@@ -9,6 +9,7 @@ public class User
     public string Username;
     public string Password;
     public bool IsLoggedIn;
+    public string Role = null;
 
     public User(string username, string password, bool isloggedin)
     {
@@ -18,7 +19,7 @@ public class User
         IsLoggedIn = isloggedin;
 
     }
-    public static void ShowUser(User activeuser)
+    public void ShowUser(User activeuser)
     {
         Console.WriteLine($"{activeuser.Username} ID: {activeuser.Id}");
     }
@@ -35,8 +36,8 @@ public class User
             return false;
         }
     }
-    public static void SaveString(User Username, User Password, User Id, User Role)
+    public string SaveUserCsv(User activeuser)
     {
-        string[] Userdata = new string[] { $"{Username},{Password},{Id},{Role}" };
+        return $"{activeuser.Username},{activeuser.Password},{activeuser.Id},{activeuser.Role}";
     }
 }
