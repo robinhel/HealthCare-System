@@ -61,7 +61,18 @@ while (Running)
 
         if (activeUser is Patient p)
         {
-            Console.WriteLine(p.Username);
+            Console.WriteLine($"Welcome {p.Username}");
+        }
+
+        if (activeUser is Admin a)
+        {
+            Console.WriteLine($"Welcome {a.Username}");
+        }
+        
+         if (activeUser is Doctor d)
+        {
+            Console.WriteLine($"Welcome {d.Username}");
+            
         }
 
 
