@@ -104,6 +104,7 @@ while (Running)
 
 /*
 
+
 TODO:
 
 1. Patient
@@ -130,4 +131,6 @@ Ska kunna lägga till platser (sjukhus, vårdcentraler).
 Ska kunna godkänna eller avslå patientregistreringar.
 Ska kunna se vem som har vilka behörigheter.
 Systemet ska vara uppbyggt så att varje användare bara har tillgång till det som deras roll behöver.
+
+
 */
