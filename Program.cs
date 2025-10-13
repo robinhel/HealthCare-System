@@ -1,10 +1,14 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Collections;
+using System.Reflection.Metadata.Ecma335;
 using App;
 
 
 List<User> users = new List<User>();
+List<Patient> patients = new List<Patient>();
+List<Journal> journal = new List<Journal>();
 User activeUser = null;
 
+SaveData.LoadUserDataCsv(users);
 
 bool Running = true;
 
@@ -45,6 +49,7 @@ while (Running)
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
+                SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
                 break;
 
@@ -72,6 +77,28 @@ while (Running)
         if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
+            Console.WriteLine($"[1] Write journal for patient");
+
+
+            string menuChoice = Console.ReadLine();
+            switch (menuChoice)
+            {
+                case "1":
+                    Console.WriteLine("Name of patient?");
+                    foreach (Patient patient in patients)
+                    {
+                        Console.WriteLine($"ID: [ {patient.Id}]     Username: {patient.Username}");
+                    }
+                    string InputPatient = Console.ReadLine(); // Vill lägga till if sats här
+                    Console.WriteLine("Enter title of journal post: ");
+                    string TitleJournal = Console.ReadLine();
+                    Console.WriteLine($"Enter description of {TitleJournal}");
+                    string DescriptionJournal = Console.ReadLine();
+
+                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
+
+                    break;
+            }
 
         }
 
@@ -117,6 +144,7 @@ Ska kunna se sitt schema (bokade tider).
 2. Personal (vårdpersonal)
 
 Ska kunna se patientjournaler.
+Ska kunna skriva en patientjournal.
 Ska kunna markera journaler med olika läsbehörigheter.
 Ska kunna registrera och ändra tider.
 Ska kunna godkänna eller avslå tidsförfrågningar.
