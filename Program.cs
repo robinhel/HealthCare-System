@@ -2,8 +2,8 @@
 using App;
 
 
-List<IUser> users = new List<IUser>();
-IUser activeUser = null;
+List<User> users = new List<User>();
+User activeUser = null;
 
 
 bool Running = true;
@@ -24,7 +24,7 @@ while (Running)
                 string L_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string L_password = Console.ReadLine();
-                foreach (IUser user in users)
+                foreach (User user in users)
                 {
 
                     if (user.TryLogin(L_username, L_password))
@@ -43,7 +43,7 @@ while (Running)
                 string C_password = Console.ReadLine();
                 bool isloggedin = false;
 
-                IUser newUser = new Patient(C_username, C_password, isloggedin);
+                User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
                 break;
