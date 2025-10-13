@@ -4,11 +4,12 @@ namespace App;
 
 public class User
 {
-    private int IdCount = 0;
+    private static int IdCount = 0;
     public int Id;
     public string Username;
     public string Password;
     public bool IsLoggedIn;
+    public string Role = null;
 
     public User(string username, string password, bool isloggedin)
     {
@@ -18,9 +19,9 @@ public class User
         IsLoggedIn = isloggedin;
 
     }
-    public static void ShowUser(User Username, User Id)
+    public void ShowUser(User activeuser)
     {
-        Console.WriteLine($"{Username} ID: {Id}");
+        Console.WriteLine($"{activeuser.Username} ID: {activeuser.Id}");
     }
     public bool TryLogin(string username, string password)
     {
@@ -34,5 +35,9 @@ public class User
             IsLoggedIn = false;
             return false;
         }
+    }
+    public string SaveUserCsv(User activeuser)
+    {
+        return $"{activeuser.Username},{activeuser.Password},{activeuser.Id},{activeuser.Role},{activeuser.IsLoggedIn}";
     }
 }

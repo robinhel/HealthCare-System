@@ -68,11 +68,11 @@ while (Running)
         {
             Console.WriteLine($"Welcome {a.Username}");
         }
-        
-         if (activeUser is Doctor d)
+
+        if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
-            
+
         }
 
 
