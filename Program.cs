@@ -8,6 +8,7 @@ List<Patient> patients = new List<Patient>();
 List<Journal> journal = new List<Journal>();
 User activeUser = null;
 
+SaveData.LoadUserDataCsv(users);
 
 bool Running = true;
 
@@ -48,6 +49,7 @@ while (Running)
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
+                SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
                 break;
 
