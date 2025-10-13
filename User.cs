@@ -4,7 +4,7 @@ namespace App;
 
 public class User
 {
-    private int IdCount = 0;
+    private static int IdCount = 0;
     public int Id;
     public string Username;
     public string Password;
@@ -18,9 +18,9 @@ public class User
         IsLoggedIn = isloggedin;
 
     }
-    public static void ShowUser(User Username, User Id)
+    public static void ShowUser(User activeuser)
     {
-        Console.WriteLine($"{Username} ID: {Id}");
+        Console.WriteLine($"{activeuser.Username} ID: {activeuser.Id}");
     }
     public bool TryLogin(string username, string password)
     {
@@ -34,5 +34,9 @@ public class User
             IsLoggedIn = false;
             return false;
         }
+    }
+    public static void SaveString(User Username, User Password, User Id, User Role)
+    {
+        string[] Userdata = new string[] { $"{Username},{Password},{Id},{Role}" };
     }
 }
