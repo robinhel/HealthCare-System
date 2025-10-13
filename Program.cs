@@ -8,6 +8,7 @@ List<Patient> patients = new List<Patient>();
 List<Journal> journal = new List<Journal>();
 User activeUser = null;
 
+SaveData.LoadUserDataCsv(users);
 
 bool Running = true;
 
@@ -48,6 +49,7 @@ while (Running)
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
+                SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
                 break;
 
@@ -71,15 +73,15 @@ while (Running)
         {
             Console.WriteLine($"Welcome {a.Username}");
         }
-        
-         if (activeUser is Doctor d)
+
+        if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
             Console.WriteLine($"[1] Write journal for patient");
 
 
             string menuChoice = Console.ReadLine();
-            switch(menuChoice)
+            switch (menuChoice)
             {
                 case "1":
                     Console.WriteLine("Name of patient?");
@@ -93,11 +95,11 @@ while (Running)
                     Console.WriteLine($"Enter description of {TitleJournal}");
                     string DescriptionJournal = Console.ReadLine();
 
-                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username , InputPatient)
-                                        
+                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
+
                     break;
             }
-            
+
         }
 
 
