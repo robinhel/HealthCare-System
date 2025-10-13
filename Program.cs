@@ -71,16 +71,15 @@ while (Running)
         {
             Console.WriteLine($"Welcome {a.Username}");
         }
-
-        if (activeUser is Doctor d)
+        
+         if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
-<<<<<<< HEAD
             Console.WriteLine($"[1] Write journal for patient");
 
 
-            string inputDoctor = Console.ReadLine();
-            switch(inputDoctor)
+            string menuChoice = Console.ReadLine();
+            switch(menuChoice)
             {
                 case "1":
                     Console.WriteLine("Name of patient?");
@@ -94,14 +93,11 @@ while (Running)
                     Console.WriteLine($"Enter description of {TitleJournal}");
                     string DescriptionJournal = Console.ReadLine();
 
-                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, d.Username , InputPatient)
-                    (string title, string description, Admin publisher, Patient patient)
+                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username , InputPatient)
+                                        
                     break;
             }
             
-=======
-
->>>>>>> dev
         }
 
 
