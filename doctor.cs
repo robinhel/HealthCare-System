@@ -12,7 +12,7 @@ public class Doctor : User
         int i = 0;
         while(i < journals.Count)
         {
-            if (journals[i].Patient != null && journals[i].Patient == patientName)
+            //if (journals[i].Patient != null && journals[i].Patient.Username == patientName)
             {
                 Console.WriteLine($"Title: {journals[i].Title} ");
                 Console.WriteLine($"Description: {journals[i].Description }");
@@ -20,6 +20,7 @@ public class Doctor : User
             }
         }
     }
+    
 
 }
 
