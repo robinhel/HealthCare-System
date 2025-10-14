@@ -3,9 +3,9 @@ using System.Reflection.Metadata.Ecma335;
 using App;
 
 
-List<User> users = new List<User>();
-List<Patient> patients = new List<Patient>();
-List<Journal> journal = new List<Journal>();
+List<User> users = new List<User>(); // Lista för alla users
+List<Patient> patients = new List<Patient>(); // Lista för patienter
+List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 
 SaveData.LoadUserDataCsv(users);
@@ -28,6 +28,7 @@ while (Running)
                 string L_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string L_password = Console.ReadLine();
+                bool loginSuccess = false;
                 foreach (User user in users)
                 {
 
@@ -35,9 +36,14 @@ while (Running)
                     {
                         activeUser = user;
                         Console.WriteLine("Login Succesfull!");
+                        loginSuccess = true;
                         break;
                     }
                 }
+                    if(!loginSuccess)
+                    {
+                        Console.WriteLine("Invalid input, try again ");
+                    }
                 break;
 
             case "2":               //---------------------CREATE ACCOUNT------------------
@@ -45,13 +51,40 @@ while (Running)
                 string C_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
+                Console.WriteLine("------------------");
+                Console.Write("Select your role: \n[1] Admin \n[2] Doctor \n[3] Patient \n");
+                Console.Write("Your choice: ");
+                string C_status = Console.ReadLine();
                 bool isloggedin = false;
+
+                switch(C_status)
+                {
+                    case "1":
+                        User newAdmin = new Admin(C_username, C_password, isloggedin);
+                        users.Add(newAdmin);
+                        Console.WriteLine($"Account: {C_username} has been created. ");
+                        break;
+                    case "2":
+                        User newDoctor = new Doctor(C_username, C_password, isloggedin);
+                        users.Add(newDoctor);
+                        Console.WriteLine($"Account: {C_username} has been created: ");
+                        break;
+
+                    case "3":
+                    
+                    User newUser = new Patient(C_username, C_password, isloggedin);
+                    users.Add(newUser);
+                    Console.WriteLine($"Account: {C_username} has been created.");
+                    break;
+                }
+
+                /*bool isloggedin = false;
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
-                break;
+                */break;
 
             case "3":               //------------------------EXIT-----------------------
                 Console.WriteLine("Exiting System!");
@@ -72,6 +105,24 @@ while (Running)
         if (activeUser is Admin a)
         {
             Console.WriteLine($"Welcome {a.Username}");
+            System.Console.WriteLine("[1] Create personel account"); //NEW
+
+            string AdminInput = Console.ReadLine();
+
+            switch (AdminInput)
+            {
+                case "1":
+                    Console.WriteLine("Username?");
+                    string PersonelUsername = Console.ReadLine();
+                    Console.WriteLine("Password?");
+                    string PersonelPassword = Console.ReadLine();
+                    User newuser = new Doctor(PersonelUsername, PersonelPassword, false);
+                    users.Add(newuser); // case 1 är ny, berätta för gruppen
+                    break;
+            }
+
+           // Ska kunna skapa konton för personal.
+
         }
 
         if (activeUser is Doctor d)
@@ -83,7 +134,7 @@ while (Running)
             string menuChoice = Console.ReadLine();
             switch (menuChoice)
             {
-                case "1":
+                case "1":  //Ska kunna skriva en patientjournal. Klar \/
                     Console.WriteLine("Name of patient?");
                     foreach (Patient patient in patients)
                     {
@@ -96,10 +147,11 @@ while (Running)
                     string DescriptionJournal = Console.ReadLine();
 
                     Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
+                    journal.Add(newJournal);
 
                     break;
             }
-
+            
         }
 
 
@@ -143,8 +195,8 @@ Ska kunna se sitt schema (bokade tider).
 
 2. Personal (vårdpersonal)
 
-Ska kunna se patientjournaler.
-Ska kunna skriva en patientjournal.
+Ska kunna se patientjournaler. ---
+Ska kunna skriva en patientjournal. ---
 Ska kunna markera journaler med olika läsbehörigheter.
 Ska kunna registrera och ändra tider.
 Ska kunna godkänna eller avslå tidsförfrågningar.

@@ -8,3 +8,24 @@ public class Admin : User
 
     }
 }
+
+/* Event 
+
+List<Participent>
+Datetime Start
+Datetime end
+string description
+string title
+(List<documents>)
+location location
+EventType Type
+
+-- Participent --
+User user
+Enum role role 
+
+-- User --
+
+-- Location -- 
+
+*/
