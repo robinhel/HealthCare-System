@@ -9,14 +9,15 @@ public class User
     public string Username;
     public string Password;
     public bool IsLoggedIn;
-    public string Role = null;
+    public UserRole Role;
 
-    public User(string username, string password, bool isloggedin)
+    public User(string username, string password, bool isloggedin, UserRole role)
     {
         Id = IdCount++;
         Username = username;
         Password = password;
         IsLoggedIn = isloggedin;
+        Role = role;
 
     }
     public void ShowUser(User activeuser)
