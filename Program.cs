@@ -51,40 +51,14 @@ while (Running)
                 string C_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
-                Console.WriteLine("------------------");
-                Console.Write("Select your role: \n[1] Admin \n[2] Doctor \n[3] Patient \n");
-                Console.Write("Your choice: ");
-                string C_status = Console.ReadLine();
+                
                 bool isloggedin = false;
-
-                switch(C_status)
-                {
-                    case "1":
-                        User newAdmin = new Admin(C_username, C_password, isloggedin);
-                        users.Add(newAdmin);
-                        Console.WriteLine($"Account: {C_username} has been created. ");
-                        break;
-                    case "2":
-                        User newDoctor = new Doctor(C_username, C_password, isloggedin);
-                        users.Add(newDoctor);
-                        Console.WriteLine($"Account: {C_username} has been created: ");
-                        break;
-
-                    case "3":
-                    
-                    User newUser = new Patient(C_username, C_password, isloggedin);
-                    users.Add(newUser);
-                    Console.WriteLine($"Account: {C_username} has been created.");
-                    break;
-                }
-
-                /*bool isloggedin = false;
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
-                */break;
+                break;
 
             case "3":               //------------------------EXIT-----------------------
                 Console.WriteLine("Exiting System!");
@@ -213,4 +187,33 @@ Ska kunna se vem som har vilka behörigheter.
 Systemet ska vara uppbyggt så att varje användare bara har tillgång till det som deras roll behöver.
 
 
+*/
+
+/*
+Console.WriteLine("------------------");
+                Console.Write("Select your role: \n[1] Admin \n[2] Doctor \n[3] Patient \n");
+                Console.Write("Your choice: ");
+                string C_status = Console.ReadLine();
+                bool isloggedin = false;
+
+                switch(C_status)
+                {
+                    case "1":
+                        User newAdmin = new Admin(C_username, C_password, isloggedin);
+                        users.Add(newAdmin);
+                        Console.WriteLine($"Account: {C_username} has been created. ");
+                        break;
+                    case "2":
+                        User newDoctor = new Doctor(C_username, C_password, isloggedin);
+                        users.Add(newDoctor);
+                        Console.WriteLine($"Account: {C_username} has been created: ");
+                        break;
+
+                    case "3":
+                    
+                    User newUser = new Patient(C_username, C_password, isloggedin);
+                    users.Add(newUser);
+                    Console.WriteLine($"Account: {C_username} has been created.");
+                    break;
+                }
 */
