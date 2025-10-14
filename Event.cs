@@ -35,7 +35,7 @@ string title
 location location
 EventType Type
 
--- Participent --
+-- Participent -- 
 User user
 Enum role role 
 

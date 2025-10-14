@@ -4,7 +4,7 @@ using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
-List<Patient> patients = new List<Patient>(); // Lista för patienter
+List<string> patients = new List<string>(); // Lista för patienter
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 
@@ -54,7 +54,7 @@ while (Running)
                 
                 bool isloggedin = false;
 
-                User newUser = new Patient(C_username, C_password, isloggedin);
+                User newUser = new User(C_username, C_password, isloggedin);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
@@ -99,7 +99,7 @@ while (Running)
 
         }
 
-        if (activeUser is Doctor d)
+        if (UserRole.Doctor)
         {
             Console.WriteLine($"Welcome {d.Username}");
             Console.WriteLine($"[1] Write journal for patient");
@@ -108,6 +108,7 @@ while (Running)
             string menuChoice = Console.ReadLine();
             switch (menuChoice)
             {
+                
             }
             
         }
