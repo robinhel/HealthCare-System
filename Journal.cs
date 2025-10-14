@@ -11,6 +11,7 @@ public class Journal
     public string Patient;
     public List<Patient> patientJournal = new List<Patient>();
 
+
     public Journal(string title, string description, string publisher, string patient)
     {
         Title = title;

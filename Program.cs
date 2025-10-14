@@ -105,13 +105,30 @@ while (Running)
         if (activeUser is Admin a)
         {
             Console.WriteLine($"Welcome {a.Username}");
+            System.Console.WriteLine("[1] Create personel account"); //NEW
+
+            string AdminInput = Console.ReadLine();
+
+            switch (AdminInput)
+            {
+                case "1":
+                    Console.WriteLine("Username?");
+                    string PersonelUsername = Console.ReadLine();
+                    Console.WriteLine("Password?");
+                    string PersonelPassword = Console.ReadLine();
+                    User newuser = new Doctor(PersonelUsername, PersonelPassword, false);
+                    users.Add(newuser); // case 1 är ny, berätta för gruppen
+                    break;
+            }
+
+           // Ska kunna skapa konton för personal.
+
         }
 
         if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
             Console.WriteLine($"[1] Write journal for patient");
-            Console.WriteLine($"[2] View journals for patient ");
 
 
             string menuChoice = Console.ReadLine();
@@ -130,10 +147,11 @@ while (Running)
                     string DescriptionJournal = Console.ReadLine();
 
                     Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
+                    journal.Add(newJournal);
 
                     break;
             }
-
+            
         }
 
 
