@@ -111,14 +111,14 @@ while (Running)
 
             switch (AdminInput)
             {
-                case "1":
+               /*  case "1": SKAPA KONTO FÖR PERSONAL/DOCTOR
                     Console.WriteLine("Username?");
                     string PersonelUsername = Console.ReadLine();
                     Console.WriteLine("Password?");
                     string PersonelPassword = Console.ReadLine();
                     User newuser = new Doctor(PersonelUsername, PersonelPassword, false);
                     users.Add(newuser); // case 1 är ny, berätta för gruppen
-                    break;
+                    break; */
             }
 
            // Ska kunna skapa konton för personal.
@@ -134,22 +134,6 @@ while (Running)
             string menuChoice = Console.ReadLine();
             switch (menuChoice)
             {
-                case "1":  //Ska kunna skriva en patientjournal. Klar \/
-                    Console.WriteLine("Name of patient?");
-                    foreach (Patient patient in patients)
-                    {
-                        Console.WriteLine($"ID: [ {patient.Id}]     Username: {patient.Username}");
-                    }
-                    string InputPatient = Console.ReadLine(); // Vill lägga till if sats här
-                    Console.WriteLine("Enter title of journal post: ");
-                    string TitleJournal = Console.ReadLine();
-                    Console.WriteLine($"Enter description of {TitleJournal}");
-                    string DescriptionJournal = Console.ReadLine();
-
-                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
-                    journal.Add(newJournal);
-
-                    break;
             }
             
         }
@@ -214,3 +198,19 @@ Systemet ska vara uppbyggt så att varje användare bara har tillgång till det 
 
 
 */
+                /* case "1":  //Ska kunna skriva en patientjournal. Klar \/
+                    Console.WriteLine("Name of patient?");
+                    foreach (Patient patient in patients)
+                    {
+                        Console.WriteLine($"ID: [ {patient.Id}]     Username: {patient.Username}");
+                    }
+                    string InputPatient = Console.ReadLine(); // Vill lägga till if sats här
+                    Console.WriteLine("Enter title of journal post: ");
+                    string TitleJournal = Console.ReadLine();
+                    Console.WriteLine($"Enter description of {TitleJournal}");
+                    string DescriptionJournal = Console.ReadLine();
+
+                    Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
+                    journal.Add(newJournal);
+
+                    break; */
