@@ -36,6 +36,7 @@ public class SaveData
                 bool isloggedin = bool.Parse(part[4]);
 
                 User user = new User(username, password, isloggedin);
+                users.Add(user);
             }
         }
     }

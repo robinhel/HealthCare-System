@@ -8,6 +8,7 @@ List<Patient> patients = new List<Patient>(); // Lista för patienter
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 
+SaveData.LoadUserDataCsv(users);
 
 bool Running = true;
 
@@ -81,6 +82,7 @@ while (Running)
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
                 users.Add(newUser);
+                SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
                 */break;
 
@@ -104,8 +106,8 @@ while (Running)
         {
             Console.WriteLine($"Welcome {a.Username}");
         }
-        
-         if (activeUser is Doctor d)
+
+        if (activeUser is Doctor d)
         {
             Console.WriteLine($"Welcome {d.Username}");
             Console.WriteLine($"[1] Write journal for patient");
@@ -113,7 +115,7 @@ while (Running)
 
 
             string menuChoice = Console.ReadLine();
-            switch(menuChoice)
+            switch (menuChoice)
             {
                 case "1":  //Ska kunna skriva en patientjournal. Klar \/
                     Console.WriteLine("Name of patient?");
@@ -128,16 +130,19 @@ while (Running)
                     string DescriptionJournal = Console.ReadLine();
 
                     Journal newJournal = new Journal(TitleJournal, DescriptionJournal, activeUser.Username, InputPatient);
+
                     break;
+                    
                 case "2":
                     Console.WriteLine("-- Enter patient name to view journals -- ");
                     Console.Write("Name: ");
                     string patientName = Console.ReadLine().ToLower();
 
                     d.ShowPatientJournals(patientName, journal);
+
                     break;
             }
-            
+
         }
 
 
