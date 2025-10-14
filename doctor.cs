@@ -11,17 +11,18 @@ public class Doctor : User
     {
         Console.WriteLine($"=== Journals for {patientName} ===");
         int i = 0;
-        while(i < journals.Count)
+        while (i < journals.Count)
         {
-            //if (journals[i].Patient != null && journals[i].Patient.Username == patientName)
+            if (journals[i].Patient != null && journals[i].Patient == patientName)
             {
                 Console.WriteLine($"Title: {journals[i].Title} ");
-                Console.WriteLine($"Description: {journals[i].Description }");
+                Console.WriteLine($"Description: {journals[i].Description}");
                 Console.WriteLine("--------------------------");
             }
+            i++;    
         }
     }
-    
+
 
 }
 
