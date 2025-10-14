@@ -41,10 +41,10 @@ while (Running)
                         break;
                     }
                 }
-                    if(!loginSuccess)
-                    {
-                        Console.WriteLine("Invalid input, try again ");
-                    }
+                if (!loginSuccess)
+                {
+                    Console.WriteLine("Invalid input, try again ");
+                }
                 break;
 
             case "2":               //---------------------CREATE ACCOUNT------------------
@@ -52,7 +52,7 @@ while (Running)
                 string C_username = Console.ReadLine();
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
-                
+
                 bool isloggedin = false;
 
                 User newUser = new Patient(C_username, C_password, isloggedin);
@@ -86,17 +86,17 @@ while (Running)
 
             switch (AdminInput)
             {
-               /*  case "1": SKAPA KONTO FÖR PERSONAL/DOCTOR
-                    Console.WriteLine("Username?");
-                    string PersonelUsername = Console.ReadLine();
-                    Console.WriteLine("Password?");
-                    string PersonelPassword = Console.ReadLine();
-                    User newuser = new Doctor(PersonelUsername, PersonelPassword, false);
-                    users.Add(newuser); // case 1 är ny, berätta för gruppen
-                    break; */
+                /*  case "1": SKAPA KONTO FÖR PERSONAL/DOCTOR
+                     Console.WriteLine("Username?");
+                     string PersonelUsername = Console.ReadLine();
+                     Console.WriteLine("Password?");
+                     string PersonelPassword = Console.ReadLine();
+                     User newuser = new Doctor(PersonelUsername, PersonelPassword, false);
+                     users.Add(newuser); // case 1 är ny, berätta för gruppen
+                     break; */
             }
 
-           // Ska kunna skapa konton för personal.
+            // Ska kunna skapa konton för personal.
 
         }
 
@@ -110,7 +110,7 @@ while (Running)
             switch (menuChoice)
             {
             }
-            
+
         }
 
 
@@ -138,6 +138,18 @@ while (Running)
 
 
 
+}
+
+static void LocationAdd(List<Location> locations)
+{
+    // ta in input
+    System.Console.WriteLine("Name?");
+    string LocationName = Console.ReadLine();
+    System.Console.WriteLine("Address?");
+    string LocationAddress = Console.ReadLine();
+    System.Console.WriteLine("Description?");
+    string LocationDescription = Console.ReadLine();
+    locations.Add(new Location(LocationName, LocationAddress, LocationDescription));
 }
 
 /*
