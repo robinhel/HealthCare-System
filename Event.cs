@@ -22,8 +22,6 @@ public class Event
         Start = start;
         End = end;
     }
-
-
 }
 
 /* Event 
