@@ -4,12 +4,13 @@ using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
-List<Patient> patients = new List<Patient>(); // Lista för patienter
+//List<Patient> patients = new List<Patient>(); // Lista för patienter
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
 
 SaveData.LoadUserDataCsv(users);
+LocationSaveData.LoadLocationDataCsv(locations);
 
 bool Running = true;
 
@@ -140,7 +141,7 @@ while (Running)
 
 }
 
-static void LocationAdd(List<Location> locations)
+static void LocationAdd(List<Location> locations) // Denna funktionen kallas på för att lägga till en address.
 {
     // ta in input
     System.Console.WriteLine("Name?");
@@ -149,7 +150,13 @@ static void LocationAdd(List<Location> locations)
     string LocationAddress = Console.ReadLine();
     System.Console.WriteLine("Description?");
     string LocationDescription = Console.ReadLine();
-    locations.Add(new Location(LocationName, LocationAddress, LocationDescription));
+    Location newloc = new Location(LocationName, LocationAddress, LocationDescription);
+    locations.Add(newloc);
+
+    LocationSaveData.SaveLocationDataCsv(newloc);
+    System.Console.WriteLine("Location saved and added.");
+    Console.ReadLine();
+    // Behövs lägga till filsystem i location.
 }
 
 /*
