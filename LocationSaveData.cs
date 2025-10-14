@@ -1,15 +1,14 @@
 namespace App;
-
-public class LocationSaveData
+class LocationSaveData
 {
     public string LocationFile = "Locations.csv";
 
-    public static void SaveLocationDatacsv(Location locations)
+    public static void SaveLocationDataCsv(Location location)
     {
         LocationSaveData save = new LocationSaveData();
         if (File.Exists(save.LocationFile))
         {
-            string line = $"{locations.Name},{locations.Address},{locations.Description}";
+            string line = $"{location.Name},{location.Address},{location.Description}";
             File.AppendAllLines(save.LocationFile, new[] { line });
         }
         else
@@ -17,28 +16,27 @@ public class LocationSaveData
             Console.WriteLine("Didn't find location file!");
         }
     }
-}
-
-
-
-
-
-
-public class SaveData
-{
-    public string UserFile = "Users.csv";
-    public string BookingFile = "Bookings.csv";
-
-    public static void SaveUserDataCsv(User activeuser)
+    public static void LoadLocationDataCsv(List<Location> locations)
     {
-        SaveData save = new SaveData();
-        if (File.Exists(save.UserFile))
+        LocationSaveData save = new LocationSaveData();
+        if (File.Exists(save.LocationFile))
         {
-            string line = activeuser.SaveUserCsv(activeuser);
-            File.AppendAllLines(save.UserFile, new[] { line });
+            string[] lines = File.ReadAllLines(save.LocationFile);
+            foreach (string line in lines)
+            {
+                string[] part = line.Split(",");
+                string name = part[0];
+                string address = part[1];
+                string description = part[2];
+
+                Location location = new Location(name, address, description);
+                locations.Add(location);
+            }
         }
         else
         {
-            Console.WriteLine("Didn´t find that file!");
+            Console.WriteLine("Didnt find location file!");
         }
     }
+
+}
