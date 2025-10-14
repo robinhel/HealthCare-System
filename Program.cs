@@ -7,6 +7,7 @@ List<User> users = new List<User>(); // Lista för alla users
 List<Patient> patients = new List<Patient>(); // Lista för patienter
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
+List<Location> locations = new();
 
 SaveData.LoadUserDataCsv(users);
 

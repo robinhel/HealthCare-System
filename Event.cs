@@ -1,6 +1,8 @@
+using System.ComponentModel;
+
 namespace App;
 
-public class Event
+class Event
 {
 
     List<Event> events = new List<Event>();
@@ -9,12 +11,12 @@ public class Event
 
     public string Title { get; set; }
     public string Description { get; set; }
-    public string Location { get; set; }
+    public Location Location;
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
 
 
-    public Event(string title, string description, string location, DateTime start, DateTime end)
+    public Event(string title, string description, Location location, DateTime start, DateTime end)
     {
         Title = title;
         Description = description;
@@ -22,6 +24,7 @@ public class Event
         Start = start;
         End = end;
     }
+
 }
 
 /* Event 
