@@ -99,7 +99,7 @@ while (Running)
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
             Console.WriteLine("[q] - Quit"); // Nicklas
-            
+
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
             // Ska kunna begära en tid (bokning).
@@ -108,8 +108,8 @@ while (Running)
             switch (Console.ReadLine())
             {
                 case "1":
-                // gör funktion för att visa användarens journaler
-                // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
+                    // gör funktion för att visa användarens journaler
+                    // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
                 case "2":
 
@@ -118,7 +118,7 @@ while (Running)
 
                     break;
                 case "4":
-                // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
+                    // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
                     break;
                 case "5":
                     break;
@@ -137,7 +137,7 @@ while (Running)
             Console.WriteLine("[q] - Quit"); //  Nicklas  
 
             switch (Console.ReadLine())
-                {
+            {
                 case "1":
                     // gör en funktion för att admin ska kunna lägga till nya doctorer (sätta enum Doctor)
                     AddAdmin(users);
@@ -157,12 +157,12 @@ while (Running)
                     break;
                 case "q":
                     break;
-                }            
+            }
         }
-            // PATIENT VV
+        // PATIENT VV
 
 
-        
+
         // Ska kunna hantera rättigheter för andra användare.
         // Ska kunna skapa konton för personal.
         // Ska kunna godkänna eller avslå patientregistreringar.
@@ -171,55 +171,55 @@ while (Running)
         // Systemet ska vara uppbyggt så att varje användare bara har tillgång till det som deras roll behöver.
         // Ska kunna tilldela roller (t.ex. personal, lokal admin).
 
-  
+
         if (activeUser.Role == UserRole.Doctor)
         {
 
-        // DOCTOR VV
-        Console.WriteLine("[1] - View patient journals"); // Nicklas
-        Console.WriteLine("[2] - Write journals"); // FILIPH
-        Console.WriteLine("[3] - Accept Requested Event");
-        Console.WriteLine("[4]");
-        Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
-        Console.WriteLine("[6] - view location"); 
-        Console.WriteLine("[0] - Settings"); // Calle kanske
-        Console.WriteLine("[q] - Quit");
+            // DOCTOR VV
+            Console.WriteLine("[1] - View patient journals"); // Nicklas
+            Console.WriteLine("[2] - Write journals"); // FILIPH
+            Console.WriteLine("[3] - Accept Requested Event");
+            Console.WriteLine("[4]");
+            Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
+            Console.WriteLine("[6] - view location");
+            Console.WriteLine("[0] - Settings"); // Calle kanske
+            Console.WriteLine("[q] - Quit");
 
 
-        string input = Console.ReadLine();
-        switch (input)
-        {
+            string input = Console.ReadLine();
+            switch (input)
+            {
                 case "1":
-                // funktion för att visa alla journaler i systemet (historik)
-                break;
+                    // funktion för att visa alla journaler i systemet (historik)
+                    break;
                 case "2":
-                // funktion för att skriva journaler
-                break;
+                    // funktion för att skriva journaler
+                    break;
                 case "3":
 
-                break;
+                    break;
                 case "4":
 
-                break;
+                    break;
                 case "5":
-                // funktion för att ändra gamla journaler
-                break;
+                    // funktion för att ändra gamla journaler
+                    break;
                 case "6":
-                // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
-                break;
-            case "q":
-                activeUser.IsLoggedIn = false;
-                activeUser = null;
-                break;
+                    // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
+                    break;
+                case "q":
+                    activeUser.IsLoggedIn = false;
+                    activeUser = null;
+                    break;
 
+            }
         }
-        }
-            // Ska kunna se patientjournaler. ---
-            // Ska kunna skriva en patientjournal. ---
-            // Ska kunna markera journaler med olika läsbehörigheter.
-            // Ska kunna registrera och ändra tider.
-            // Ska kunna godkänna eller avslå tidsförfrågningar.
-            // Ska kunna se schema för en plats (t.ex. vårdcentral).
+        // Ska kunna se patientjournaler. ---
+        // Ska kunna skriva en patientjournal. ---
+        // Ska kunna markera journaler med olika läsbehörigheter.
+        // Ska kunna registrera och ändra tider.
+        // Ska kunna godkänna eller avslå tidsförfrågningar.
+        // Ska kunna se schema för en plats (t.ex. vårdcentral).
 
 
     }
@@ -253,7 +253,7 @@ static void AddAdmin(List<User> users)
     Console.WriteLine("\n \n   New account succesfully created! \n");
     System.Console.WriteLine("-----------------------------------------------------------------");
 
-    
+
 
     User newAdmin = new User(AdminUsername, AdminPassword, false, UserRole.Doctor);
     users.Add(newAdmin);
