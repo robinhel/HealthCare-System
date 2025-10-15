@@ -66,6 +66,7 @@ while (Running)
                 Console.WriteLine("Exiting System!");
                 Running = false;
                 break;
+                // ------------------- >> LOGGA IN & SKAPA KONTO KLART << ----------------------- \\
         }
 
     }
