@@ -11,12 +11,13 @@ public class User
     public bool IsLoggedIn;
     public UserRole Role;
 
-    public User(string username, string password, bool isloggedin)
+    public User(string username, string password, bool isloggedin, UserRole role)
     {
         Id = IdCount++;
         Username = username;
         Password = password;
         IsLoggedIn = isloggedin;
+        Role = role;
 
     }
     public void ShowUser(User activeuser)
