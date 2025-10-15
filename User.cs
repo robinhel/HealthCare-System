@@ -18,7 +18,6 @@ public class User
         Password = password;
         IsLoggedIn = isloggedin;
         Role = role;
-        
 
     }
     public void ShowUser(User activeuser)

@@ -32,10 +32,11 @@ public class SaveData
                 string username = part[0];
                 string password = part[1];
                 string id = part[2];
-                UserRole role = (UserRole)Enum.Parse(typeof(UserRole),part[3]);
+                string rolestring = part[3];
+                Enum.TryParse(rolestring, true, out UserRole Role); ;
                 bool isloggedin = bool.Parse(part[4]);
 
-                User user = new User(username, password, isloggedin,role);
+                User user = new User(username, password, isloggedin, Role);
                 users.Add(user);
             }
         }
