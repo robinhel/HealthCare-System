@@ -56,7 +56,7 @@ while (Running)
 
                 bool isloggedin = false;
 
-                User newUser = new Patient(C_username, C_password, isloggedin);
+                User newUser = new User(C_username, C_password, isloggedin);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
@@ -101,7 +101,7 @@ while (Running)
 
         }
 
-        if (activeUser is Doctor d)
+        if (UserRole.Doctor)
         {
             Console.WriteLine($"Welcome {d.Username}");
             Console.WriteLine($"[1] Write journal for patient");
@@ -110,6 +110,7 @@ while (Running)
             string menuChoice = Console.ReadLine();
             switch (menuChoice)
             {
+                
             }
 
         }
