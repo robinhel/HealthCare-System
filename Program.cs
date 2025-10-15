@@ -9,6 +9,8 @@ List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
 
+users.Add(new User("a", "a", false));
+
 SaveData.LoadUserDataCsv(users);
 LocationSaveData.LoadLocationDataCsv(locations);
 
@@ -73,73 +75,39 @@ while (Running)
     else
     {
 
-        if (activeUser is Patient p)
-        {
-            Console.WriteLine($"Welcome {p.Username}");
-        }
+        Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
+        Console.WriteLine("[1]");
+        Console.WriteLine("[2]");
+        Console.WriteLine("[3]");
+        Console.WriteLine("[4]");
+        Console.WriteLine("[5]");
+        Console.WriteLine("[6]");
+        Console.WriteLine("[7]");
+        Console.WriteLine("[8]");
+        Console.WriteLine("[9]");
 
-        if (activeUser is Admin a)
-        {
-            Console.WriteLine($"Welcome {a.Username}");
-            System.Console.WriteLine("[1] Create personel account"); //NEW
-
-            string AdminInput = Console.ReadLine();
-
-            switch (AdminInput)
-            {
-                /*  case "1": SKAPA KONTO FÖR PERSONAL/DOCTOR
-                     Console.WriteLine("Username?");
-                     string PersonelUsername = Console.ReadLine();
-                     Console.WriteLine("Password?");
-                     string PersonelPassword = Console.ReadLine();
-                     User newuser = new Doctor(PersonelUsername, PersonelPassword, false);
-                     users.Add(newuser); // case 1 är ny, berätta för gruppen
-                     break; */
-            }
-
-            // Ska kunna skapa konton för personal.
-
-        }
-
-        if (UserRole.Doctor)
-        {
-            Console.WriteLine($"Welcome {d.Username}");
-            Console.WriteLine($"[1] Write journal for patient");
-
-
-            string menuChoice = Console.ReadLine();
-            switch (menuChoice)
-            {
-                
-            }
-
-        }
-
-
-        Console.WriteLine($"Welcome {activeUser} to a terminal based HealthCare.");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
-        Console.WriteLine("");
         string input = Console.ReadLine();
         switch (input)
         {
-
-
-
-
+            case "1":
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            case "5":
+                break;
+            case "6":
+                break;
+            case "q":
+                activeUser.IsLoggedIn = false;
+                activeUser = null;
+                break;
 
         }
-
-
-
-
-
-
     }
-
-
-
 }
 
 static void LocationAdd(List<Location> locations) // Denna funktionen kallas på för att lägga till en address.
