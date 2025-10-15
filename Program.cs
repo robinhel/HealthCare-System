@@ -140,6 +140,7 @@ while (Running)
                 {
                 case "1":
                     // gör en funktion för att admin ska kunna lägga till nya doctorer (sätta enum Doctor)
+                    AddAdmin(users);
                     break;
                 case "2":
                     // gör en klass för olika privliges med hjälp av enums?
@@ -240,6 +241,22 @@ static void LocationAdd(List<Location> locations) // Denna funktionen kallas på
     System.Console.WriteLine("Location saved and added.");
     Console.ReadLine();
     // Behövs lägga till filsystem i location.
+}
+static void AddAdmin(List<User> users)
+{
+    System.Console.WriteLine("");
+    System.Console.WriteLine("----------   CREATE A NEW DOCTOR ACCOUNT   ----------");
+    System.Console.WriteLine("\n   Enter username: ");
+    string AdminUsername = Console.ReadLine();
+    System.Console.WriteLine("\n   Enter password: ");
+    string AdminPassword = Console.ReadLine();
+    Console.WriteLine("\n \n   New account succesfully created! \n");
+    System.Console.WriteLine("-----------------------------------------------------------------");
+
+    
+
+    User newAdmin = new User(AdminUsername, AdminPassword, false, UserRole.Doctor);
+    users.Add(newAdmin);
 }
 
 /*
