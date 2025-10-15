@@ -2,10 +2,10 @@ namespace App;
 
 class Participant
 {
-    public string name;
+    public string name; // 
     public EventRole eventRole;
 
-    public Participant(string name, EventRole eventRole)
+    public Participant(string name, EventRole eventRole) // Förväntas att få tillbaka två parametrar
     {
         this.name = name;    // göra det tydligt vilken som e klass och vilken som är klassens fält och parametrar
         this.eventRole = eventRole;
@@ -13,7 +13,7 @@ class Participant
     
     public void ShowUser()
     {
-        Console.WriteLine($"Hello {name}, your role is {eventRole}");
+        Console.WriteLine($"Hello {name}, your role is a {eventRole}");
     }
 }
 public enum EventRole
