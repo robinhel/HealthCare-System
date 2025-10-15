@@ -19,16 +19,18 @@ public class Journal
         Publisher = publisher;
         Patient = patient;
     }
-    public void ShowPatientJournals(string patientName, List<Journal> journals)
+    public static void ShowPatientJournals(string patientName, List<Journal> journals)
     {
         Console.WriteLine($"=== Journals for {patientName} ===");
         int i = 0;
         while (i < journals.Count)
         {
-            if (journals[i].Patient != null && journals[i].Patient == patientName)
+            if (journals[i].Patient != null && journals[i].Patient.ToLower() == patientName)
             {
+                Console.WriteLine("--- Journal history ---");
+                Console.WriteLine($"Name: {patientName}");
                 Console.WriteLine($"Title: {journals[i].Title} ");
-                Console.WriteLine($"Description: {journals[i].Description}");
+                //Console.WriteLine($"Description: {journals[i].Description}");
                 Console.WriteLine("--------------------------");
             }
             i++;
