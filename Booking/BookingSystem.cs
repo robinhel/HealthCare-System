@@ -8,35 +8,58 @@ public class BookingSystem
     public TimeSpan openingHour = new(8, 0, 0);
     public bool isOpenWeekends = false;
 
+
     public void ShowAvailableTimes(User doctor)
     {
-        Console.WriteLine($"Available times for Dr. {doctor.Username}:");
+        Console.WriteLine($"available times for doctor: {doctor.Username}");
         DateTime date = DateTime.Today;
-
         for (int hour = 8; hour < 16; hour++)
         {
-            DateTime time = new(date.Year, date.Month, date.Day, hour, 0, 0);
-            bool isBooked = bookings.Any(b => b.Doctor == doctor && b.Start == time);
+            DateTime time = new DateTime(date.Year, date.Month, date.Day, hour, 0, 0);
 
-            string status = isBooked ? "busy" : "available";
-            Console.WriteLine($"{hour}:00 - {hour + 1}:00 ({status})");
+            bool isBooked = false;
+
+            foreach (Booking b in bookings)
+            {
+                if (b.Doctor == doctor && b.Start.Hour == hour && b.Start.Date == date.Date) { isBooked = true; break; }
+            }
+            if (isBooked)
+            {
+                Console.WriteLine($"{hour}:00 - {hour + 1}:00 (busy)");
+
+            }
+            else
+            {
+                Console.WriteLine($"{hour}:00 - {hour + 1}:00 (available)");
+            }
         }
     }
 
     public void CreateBooking(User doctor, User patient, DateTime time)
     {
-        if (bookings.Any(b => b.Doctor == doctor && b.Start == time))
+        bool timeTaken = false;
+        foreach (Booking b in bookings)
         {
-            Console.WriteLine($"Time {time:HH:mm} is already booked for Dr. {doctor.Username}.");
-            return;
+            if (b.Start == time)
+            {
+                timeTaken = true;
+                break;
+            }
         }
+        if (timeTaken == true)
+        {
+            Console.WriteLine($"Time: {time:HH:mm} is already book for Dr.{doctor.Username}.");
+        }
+        else
+        {
+            int newId = bookings.Count + 1;
 
-        int newId = bookings.Count + 1;
-        Booking booking = new(newId, patient, doctor, time);
-        bookings.Add(booking);
+            Booking booking = new Booking(newId, patient, doctor, time);
+            bookings.Add(booking);
 
-        Console.WriteLine($"New booking created for Dr. {doctor.Username}");
-        Console.WriteLine($"Patient: {patient.Username}");
-        Console.WriteLine($"Time: {time:HH:mm}");
+            Console.WriteLine($"new booking for doctor: {doctor.Username}");
+            Console.WriteLine($"Patient is: {patient.Username}");
+            Console.WriteLine($"Time: {time}");
+        }
     }
 }
