@@ -10,32 +10,40 @@ public class Permissions
     public bool CreateEvent = false;
     public bool ShowPermissions = false;
 
-
-    public Permissions(User activeUser)
+    public Permissions()
     {
-        if (activeUser.Role == UserRole.Patient)
+
+    }
+    public void SetPatientPermissions(User user)
+    {
+        if (user.Role == UserRole.Patient)
         {
-            ViewPatient = true;
-        }
-        if (activeUser.Role == UserRole.Doctor)
-        {
-            ViewPatient = true;
-            EditPatient = true;
-            GiveMed = true;
-            ShowPermissions = true;
-        }
-        if (activeUser.Role == UserRole.Admin)
-        {
-            ViewPatient = true;
-            EditPatient = true;
-            AddDoctor = true;
-            ManageUsers = true;
-            GiveMed = true;
-            CreateEvent = true;
-            ShowPermissions = true;
+            // Standard patient permissions set
+            user.permissions.ViewPatient = true;
+            user.permissions.EditPatient = true;
+            user.permissions.AddDoctor = false;
+            user.permissions.ManageUsers = false;
+            user.permissions.GiveMed = false;
+            user.permissions.CreateEvent = false;
+            user.permissions.ShowPermissions = false;
         }
     }
-    public void ShowAllPermission(User activeUser)
+    public void SetDoctorPermissions(User user)
+    {
+        if (user.Role == UserRole.Doctor)
+        {
+            // Standard doctor permissions set
+            user.permissions.ViewPatient = true;
+            user.permissions.EditPatient = true;
+            user.permissions.AddDoctor = false;
+            user.permissions.ManageUsers = false;
+            user.permissions.GiveMed = true;
+            user.permissions.CreateEvent = true;
+            user.permissions.ShowPermissions = true;
+        }
+
+    }
+    public void ShowAllPermission()
     {
         Console.WriteLine("All active permissions\n");
         Console.WriteLine($"[1] - ViewPatient: {ViewPatient}");
@@ -54,10 +62,9 @@ public class Permissions
         Console.WriteLine("-----All users in system-----\n");
         foreach (User user in users)
         {
-            if (user.Role == UserRole.Patient)
-                Console.WriteLine($"Id: {user.Id} Name: {user.Username} Role: {user.Role}");
+            Console.WriteLine($"Id: {user.Id} Name: {user.Username} Role: {user.Role}");
         }
-        Console.Write("\nChoose a user by ID:");
+        Console.Write("\nChoose a user by ID: ");
         string inputid = Console.ReadLine();
         int intinputid = int.Parse(inputid);
         foreach (User user in users)
@@ -67,9 +74,6 @@ public class Permissions
                 User ChoosenUser = user;
                 return ChoosenUser;
             }
-            return null;
-
-
         }
         return null;
     }
@@ -81,94 +85,54 @@ public class Permissions
         while (Choosing)
         {
             Console.WriteLine($"Choosen user: {user.Username}");
-            ShowAllPermission(user);
+            user.permissions.ShowAllPermission();
+            Console.WriteLine("Q to quit");
             Console.Write("\nChoose a permission in the list:");
 
             string ChangePermission = Console.ReadLine();
             switch (ChangePermission)
             {
                 case "1":
-                    Console.WriteLine($"[1] - ViewPatient: {ViewPatient}");
-                    Console.WriteLine("T = true  |  F = false");
-                    switch (Console.ReadLine())
-                    {
-                        case "t":
-                            ViewPatient = true;
-                            break;
-                        case "f":
-                            ViewPatient = false;
-                            break;
-                    }
+                    user.permissions.ViewPatient = AskBool(1, "ViewPatient", user.permissions.ViewPatient);
                     break;
                 case "2":
-                    Console.WriteLine($"[2] - EditPatient: {EditPatient}");
-                    Console.WriteLine("T = true  |  F = false");
-                    switch (Console.ReadLine())
-                    {
-                        case "t":
-                            EditPatient = true;
-                            break;
-                        case "f":
-                            EditPatient = false;
-                            break;
-                    }
+                    user.permissions.EditPatient = AskBool(2, "EditPatient", user.permissions.EditPatient);
                     break;
                 case "3":
-                    Console.WriteLine($"[3] - AddDoctor: {AddDoctor}");
-                    Console.WriteLine("T = true  |  F = false");
-                    switch (Console.ReadLine())
-                    {
-                        case "t":
-                            AddDoctor = true;
-                            break;
-                        case "f":
-                            AddDoctor = false;
-                            break;
-                    }
+                    user.permissions.AddDoctor = AskBool(3, "AddDoctor", user.permissions.AddDoctor);
                     break;
                 case "4":
-                    Console.WriteLine($"[4] - GiveMed: {GiveMed}");
-                    Console.WriteLine("T = true  |  F = false");
-                    switch (Console.ReadLine())
-                    {
-                        case "t":
-                            GiveMed = true;
-                            break;
-                        case "f":
-                            GiveMed = false;
-                            break;
-                    }
+                    user.permissions.GiveMed = AskBool(4, "GiveMed", user.permissions.GiveMed);
                     break;
                 case "5":
-                    Console.WriteLine($"[5] - ManageUsers: {ManageUsers}");
-                    Console.WriteLine("T = true  |  F = false");
-                    switch (Console.ReadLine())
-                    {
-                        case "t":
-                            ManageUsers = true;
-                            break;
-                        case "f":
-                            ManageUsers = false;
-                            break;
-                    }
+                    user.permissions.ManageUsers = AskBool(5, "ManageUsers", user.permissions.ManageUsers);
                     break;
                 case "6":
-                    Console.WriteLine($"[6] - CreateEvent: {CreateEvent}");
-                    Console.WriteLine("T = true  |  F = false");
-                    switch (Console.ReadLine())
-                    {
-                        case "t":
-                            CreateEvent = true;
-                            break;
-                        case "f":
-                            CreateEvent = false;
-                            break;
-                    }
+                    user.permissions.CreateEvent = AskBool(6, "CreateEvent", user.permissions.CreateEvent);
                     break;
-
+                case "q":
+                    Choosing = false;
+                    break;
             }
 
         }
 
+    }
+
+    private bool AskBool(int num, string perm, bool currentbool)
+    {
+        while (true)
+        {
+            Console.WriteLine($"[{num}] - {perm}: {currentbool}");
+            Console.WriteLine("T = true  |  F = false");
+            switch (Console.ReadLine())
+            {
+                case "t":
+                    return true;
+                case "f":
+                    return false;
+            }
+            Console.WriteLine("invalid input");
+        }
     }
 }

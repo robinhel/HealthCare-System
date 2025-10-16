@@ -55,7 +55,7 @@ while (Running)
                     if (user.TryLogin(L_username, L_password))
                     {
                         activeUser = user;
-                        permission = new Permissions(activeUser);
+                        permission = new Permissions();
                         Console.WriteLine("Login Succesfull!");
                         loginSuccess = true;
                         break;
@@ -75,7 +75,9 @@ while (Running)
 
                 bool isloggedin = false;
 
+
                 User newUser = new User(C_username, C_password, isloggedin, UserRole.Patient);
+                permission.SetPatientPermissions(newUser);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
@@ -193,7 +195,7 @@ while (Running)
                     // gör en klass för olika privliges med hjälp av Bools, försöker göra så att admin kan toggla true or false på individuella användare
                     break;
                 case "3":
-                    permission?.ShowAllPermission(activeUser);
+                    activeUser.permissions?.ShowAllPermission();
                     // funktion för att visa privileges på alla olika typer av användare (admin,patient,doctor)
                     break;
                 case "4":
@@ -266,7 +268,7 @@ while (Running)
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "7":
-                    permission?.ShowAllPermission(activeUser);
+                    activeUser.permissions?.ShowAllPermission();
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;
