@@ -7,13 +7,8 @@ using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
-<<<<<<< HEAD
-List<User> patients = new (); // Lista för patienter
-List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
-=======
 //List<Patient> patients = new List<Patient>(); // Lista för patienter
 List<Journal> journals = new List<Journal>(); //  // Lista för alla journaler
->>>>>>> dev
 User activeUser = null;
 List<Location> locations = new();
 Permissions permission = null;
@@ -249,28 +244,8 @@ while (Running)
             switch (input)
             {
                 case "1":
-                    foreach(User u in users)
-                    {
-                        if(u.Role == UserRole.Patient)
-                        {
-                            System.Console.WriteLine($"Name: {u.Username} Role: {u.Role} ID: {u.Id} ");
-                            Console.WriteLine("Which users journal do you want to see? ");
-                            string userJournal = Console.ReadLine();
-
-                        }
-                    }
                     
-
-
-
-
-                /* Journal newJournal = new Journal(TitleJournal, DescJournal, activeUser.Username, user.Username);
-                journals.Add(newJournal);
-                System.Console.WriteLine($"Journal for {user.Username} succesfully created.");
-                Console.ReadLine();
-                userFound = true;
-                DoctorFound = false; */
-
+                    ShowAllJournals(journals);
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
@@ -398,32 +373,32 @@ static void RemoveDoctor(List<User> users)
 
     static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
 {
+    try { Console.Clear(); } catch { }
+    bool DoctorFound = false;
+    System.Console.WriteLine("----------   CREATE JOURNAL FOR PATIENT   ----------");
+    foreach (User user in users)
+    {
+        if (user.Role == UserRole.Doctor) ;
+        DoctorFound = true;
+    }
+    if (DoctorFound)
+    {
         try { Console.Clear(); } catch { }
-        bool DoctorFound = false;
-        System.Console.WriteLine("----------   CREATE JOURNAL FOR PATIENT   ----------");
+        ;
+        Console.WriteLine("----------   ENTER ID OF USER YOU'D LIKE TO CREATE JOURNAL FOR   ----------");
         foreach (User user in users)
         {
-            if (user.Role == UserRole.Doctor) ;
-            DoctorFound = true;
+            if (user.Role == UserRole.Patient)
+            {
+                System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
+            }
         }
-        if (DoctorFound)
+        int EnteredID = Convert.ToInt32(Console.ReadLine());
+        bool userFound = false;
+        foreach (User user in users)
         {
             try { Console.Clear(); } catch { }
             ;
-            Console.WriteLine("----------   ENTER ID OF USER YOU'D LIKE TO CREATE JOURNAL FOR   ----------");
-            foreach (User user in users)
-            {
-                if (user.Role == UserRole.Patient)
-                {
-                    System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
-                }
-            }
-            int EnteredID = Convert.ToInt32(Console.ReadLine());
-            bool userFound = false;
-            foreach (User user in users)
-            {
-                try { Console.Clear(); } catch { }
-                ;
             if (EnteredID == user.Id)
             {
                 Console.WriteLine($"----------   Creating a journal copy for {user.Username}    ----------");
@@ -439,31 +414,55 @@ static void RemoveDoctor(List<User> users)
                 userFound = true;
                 DoctorFound = false;
             }
-                if(!userFound)
+            if (!userFound)
             {
                 System.Console.WriteLine($"User with [ID {EnteredID}] not found.");
                 Console.ReadLine();
-                break; 
-            }
-                
-                
-                /*  public string Title;
-
-                 public string Description;
-
-                 public string Publisher;
-
-                 public string Patient; */
+                break;
             }
 
-        }
-        else
-        {
-            System.Console.WriteLine("You don't have the right permissions to access this. ");
-        }
 
+            /*  public string Title;
+
+             public string Description;
+
+             public string Publisher;
+
+             public string Patient; */
+        }
 
     }
+    else
+    {
+        System.Console.WriteLine("You don't have the right permissions to access this. ");
+    }
+
+
+
+}
+   static void ShowAllJournals(List<Journal> journals)
+{
+    System.Console.WriteLine("==== ALL JOURNALS IN THE SYSTEM ====");
+    System.Console.WriteLine();
+    if (journals.Count == 0)
+    {
+        System.Console.WriteLine("No journals found. ");
+    }
+    else
+    {
+        for (int i = 0; i < journals.Count; i++)
+        {
+            Journal j = journals[i];
+            Console.WriteLine($"{i + 1}");
+            Console.WriteLine($"Publisher: {j.Publisher}");
+            Console.WriteLine($"Name: {j.Patient}");
+            Console.WriteLine($"Title: {j.Title}");
+            Console.WriteLine("-----------------------");
+
+        }
+    }
+    Console.ReadLine();
+}
 
 
 /*
