@@ -20,7 +20,7 @@ users.Add(new User("d", "d", false, UserRole.Doctor));
 
 users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
-journal.Add(test);
+journals.Add(test);
 
 
 SaveData.LoadUserDataCsv(users);
@@ -121,11 +121,11 @@ while (Running)
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
 
-                    foreach (Journal j in journal)
+                    foreach (Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
-                            Journal.ShowPatientJournals(username, journal);
+                            Journal.ShowPatientJournals(username, journals);
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
@@ -137,9 +137,9 @@ while (Running)
 
                     if (int.TryParse(number, out int input))
                     {
-                        if (journal[input].Patient == username)
+                        if (journals[input].Patient == username)
                         {
-                            Journal showJournal = journal[input];
+                            Journal showJournal = journals[input];
                             Console.WriteLine($"---- {showJournal.Title} ----");
                             Console.WriteLine($"Description: {showJournal.Description} ");
                             Console.WriteLine($"Publisher: {showJournal.Publisher}");
@@ -189,6 +189,7 @@ while (Running)
                     AddDoctor(users);
                     break;
                 case "2":
+                    permission?.EditUserPermissionById(users);
                     // gör en klass för olika privliges med hjälp av Bools, försöker göra så att admin kan toggla true or false på individuella användare
                     break;
                 case "3":
