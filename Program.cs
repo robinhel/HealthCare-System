@@ -5,7 +5,7 @@ using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
-//List<Patient> patients = new List<Patient>(); // Lista för patienter
+List<User> patients = new (); // Lista för patienter
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
@@ -231,6 +231,22 @@ while (Running)
             switch (input)
             {
                 case "1":
+                    Console.WriteLine("--- Patient journal ---");
+                    for (int i = 0; i < patients.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1} - {patients[i].Username}");
+                    }
+                    System.Console.WriteLine("Select a patient by number to view their journals: ");
+                    string number = Console.ReadLine();
+                    if (int.TryParse(number, out int choose))
+                    {
+                        int index = choose - 1;
+                        User showCurrentJournal = patients[index];
+                    }
+                    else
+                    {
+                        System.Console.WriteLine("Invalid input, try again!");
+                    }
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
