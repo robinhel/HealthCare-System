@@ -24,7 +24,7 @@ users.Add(new User("d", "d", false, UserRole.Doctor));
 
 users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
-journal.Add(test);
+journals.Add(test);
 
 
 SaveData.LoadUserDataCsv(users);
@@ -59,7 +59,7 @@ while (Running)
                     if (user.TryLogin(L_username, L_password))
                     {
                         activeUser = user;
-                        permission = new Permissions(activeUser);
+                        permission = new Permissions();
                         Console.WriteLine("Login Succesfull!");
                         loginSuccess = true;
                         break;
@@ -77,9 +77,12 @@ while (Running)
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
 
+                permission = new Permissions();
                 bool isloggedin = false;
 
+
                 User newUser = new User(C_username, C_password, isloggedin, UserRole.Patient);
+                permission.SetPatientPermissions(newUser);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
@@ -125,11 +128,11 @@ while (Running)
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
 
-                    foreach (Journal j in journal)
+                    foreach (Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
-                            Journal.ShowPatientJournals(username, journal);
+                            Journal.ShowPatientJournals(username, journals);
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
@@ -141,9 +144,9 @@ while (Running)
 
                     if (int.TryParse(number, out int input))
                     {
-                        if (journal[input].Patient == username)
+                        if (journals[input].Patient == username)
                         {
-                            Journal showJournal = journal[input];
+                            Journal showJournal = journals[input];
                             Console.WriteLine($"---- {showJournal.Title} ----");
                             Console.WriteLine($"Description: {showJournal.Description} ");
                             Console.WriteLine($"Publisher: {showJournal.Publisher}");
@@ -193,10 +196,11 @@ while (Running)
                     AddDoctor(users);
                     break;
                 case "2":
+                    permission?.EditUserPermissionById(users);
                     // gör en klass för olika privliges med hjälp av Bools, försöker göra så att admin kan toggla true or false på individuella användare
                     break;
                 case "3":
-                    permission?.ShowAllPermission(activeUser);
+                    activeUser.permissions?.ShowAllPermission();
                     // funktion för att visa privileges på alla olika typer av användare (admin,patient,doctor)
                     break;
                 case "4":
@@ -286,7 +290,7 @@ while (Running)
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "7":
-                    permission?.ShowAllPermission(activeUser);
+                    activeUser.permissions?.ShowAllPermission();
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;

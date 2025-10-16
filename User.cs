@@ -10,6 +10,7 @@ public class User
     public string Password;
     public bool IsLoggedIn;
     public UserRole Role;
+    public Permissions permissions;
 
     public User(string username, string password, bool isloggedin, UserRole role)
     {
@@ -18,7 +19,7 @@ public class User
         Password = password;
         IsLoggedIn = isloggedin;
         Role = role;
-
+        permissions = new Permissions();
     }
     public void ShowUser(User activeuser)
     {
