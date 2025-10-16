@@ -206,6 +206,7 @@ while (Running)
                     // funktion för att ändra gamla journaler
                     break;
                 case "6":
+                    Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "q":
@@ -264,9 +265,9 @@ static void RemoveDoctor(List<User> users)
     System.Console.WriteLine("----------   REMOVE A DOCTOR ACCOUNT   ----------");
     User? deletedUser = null;
 
-    foreach(User user in users)
+    foreach (User user in users)
     {
-        if(user.Role == UserRole.Doctor)
+        if (user.Role == UserRole.Doctor)
         {
             System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
 
@@ -293,7 +294,7 @@ static void RemoveDoctor(List<User> users)
         System.Console.WriteLine($"User with that ID not found.");
     }
 
-    
+
 }
 
 /*
