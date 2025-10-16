@@ -25,7 +25,7 @@ users.Add(new User("d", "d", false, UserRole.Doctor));
 
 users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
-journal.Add(test);
+journals.Add(test);
 
 
 SaveData.LoadUserDataCsv(users);
@@ -126,11 +126,11 @@ while (Running)
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
                     
-                    foreach(Journal j in journal)
+                    foreach(Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
-                            Journal.ShowPatientJournals(username, journal);
+                            Journal.ShowPatientJournals(username, journals);
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
@@ -142,9 +142,9 @@ while (Running)
 
                     if (int.TryParse(number, out int input))
                     {
-                        if (journal[input].Patient == username)
+                        if (journals[input].Patient == username)
                         {
-                            Journal showJournal = journal[input];
+                            Journal showJournal = journals[input];
                             Console.WriteLine($"---- {showJournal.Title} ----");
                             Console.WriteLine($"Description: {showJournal.Description} ");
                             Console.WriteLine($"Publisher: {showJournal.Publisher}");
@@ -249,22 +249,28 @@ while (Running)
             switch (input)
             {
                 case "1":
-                    Console.WriteLine("--- Patient journal ---");
-                    for (int i = 0; i < patients.Count; i++)
+                    foreach(User u in users)
                     {
-                        Console.WriteLine($"{i + 1} - {patients[i].Username}");
+                        if(u.Role == UserRole.Patient)
+                        {
+                            System.Console.WriteLine($"Name: {u.Username} Role: {u.Role} ID: {u.Id} ");
+                            Console.WriteLine("Which users journal do you want to see? ");
+                            string userJournal = Console.ReadLine();
+
+                        }
                     }
-                    System.Console.WriteLine("Select a patient by number to view their journals: ");
-                    string number = Console.ReadLine();
-                    if (int.TryParse(number, out int choose))
-                    {
-                        int index = choose - 1;
-                        User showCurrentJournal = patients[index];
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Invalid input, try again!");
-                    }
+                    
+
+
+
+
+                /* Journal newJournal = new Journal(TitleJournal, DescJournal, activeUser.Username, user.Username);
+                journals.Add(newJournal);
+                System.Console.WriteLine($"Journal for {user.Username} succesfully created.");
+                Console.ReadLine();
+                userFound = true;
+                DoctorFound = false; */
+
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
