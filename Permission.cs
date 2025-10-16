@@ -49,7 +49,7 @@ public class Permissions
     {
         return $"{activeuser.Id}, {activeuser.Username}, {activeuser.Role}, {ViewPatient}, {EditPatient}, {AddDoctor}, {GiveMed}, {ManageUsers}, {CreateEvent}";
     }
-    public int ChooseUserByIdAdmin(List<User> users)
+    public User ChooseUserByIdAdmin(List<User> users)
     {
         Console.WriteLine("-----All users in system-----");
         foreach (User user in users)
@@ -60,7 +60,23 @@ public class Permissions
         Console.Write("Choose a user by ID:");
         string inputid = Console.ReadLine();
         int intinputid = int.Parse(inputid);
-        return intinputid;
+        foreach (User user in users)
+        {
+            if (intinputid == user.Id)
+            {
+                User ChoosenUser = user;
+                return ChoosenUser;
+            }
+            else
+            {
+                Console.WriteLine("No user with that id found!");
+            }
+        }
+
     }
 
+    public void ViewChoosenUserPermission()
+    {
+
+    }
 }
