@@ -108,7 +108,7 @@ while (Running)
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
             Console.WriteLine("[q] - Quit"); // Nicklas klar
-            
+
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
             // Ska kunna begära en tid (bokning).
@@ -120,8 +120,8 @@ while (Running)
                     Console.WriteLine("Write your name: ");
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
-                    
-                    foreach(Journal j in journal)
+
+                    foreach (Journal j in journal)
                     {
                         if (j.Patient == username)
                         {
@@ -129,11 +129,11 @@ while (Running)
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
-                            index++;
-                        
+                        index++;
+
                     }
-                        Console.WriteLine("Type the journal number to view the journal");
-                        string number = Console.ReadLine();
+                    Console.WriteLine("Type the journal number to view the journal");
+                    string number = Console.ReadLine();
 
                     if (int.TryParse(number, out int input))
                     {
@@ -150,8 +150,8 @@ while (Running)
                         }
                     }
                     Console.ReadLine();
-                // gör funktion för att visa användarens journaler
-                // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
+                    // gör funktion för att visa användarens journaler
+                    // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
                 case "2":
 
@@ -176,8 +176,8 @@ while (Running)
             // ADMIN VV
             try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - Add Doctor"); // FILIPH
-            Console.WriteLine("[2] - Edit Privileges"); // Calle
-            Console.WriteLine("[3] - Show Privileges"); // Calle
+            Console.WriteLine("[2] - Edit Privileges"); // Calle Jobbar på det
+            Console.WriteLine("[3] - Show Privileges"); // Calle Klar !!
             Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
             Console.WriteLine("[5] - Remove Doctor"); // FILIPH KAN TESTA
             Console.WriteLine("[q] - Quit"); //  Nicklas  
@@ -189,7 +189,7 @@ while (Running)
                     AddDoctor(users);
                     break;
                 case "2":
-                    // gör en klass för olika privliges med hjälp av enums?
+                    // gör en klass för olika privliges med hjälp av Bools, försöker göra så att admin kan toggla true or false på individuella användare
                     break;
                 case "3":
                     permission?.ShowAllPermission(activeUser);
@@ -235,7 +235,7 @@ while (Running)
             Console.WriteLine("[4]");
             Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
             Console.WriteLine("[6] - view location"); // Klar !!
-            Console.WriteLine("[7] - Show priviliges");
+            Console.WriteLine("[7] - Show priviliges"); // Klar !!
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Quit");
 
@@ -248,7 +248,7 @@ while (Running)
                     break;
                 case "2":
                     CreateJournal(journals, users, activeUser);
-                
+
                     // funktion för att skriva journaler
                     break;
                 case "3":
@@ -369,34 +369,34 @@ static void RemoveDoctor(List<User> users)
 
 
 
-    static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
+static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
 {
+    try { Console.Clear(); } catch { }
+    bool DoctorFound = false;
+    System.Console.WriteLine("----------   CREATE JOURNAL FOR PATIENT   ----------");
+    foreach (User user in users)
+    {
+        if (user.Role == UserRole.Doctor) ;
+        DoctorFound = true;
+    }
+    if (DoctorFound)
+    {
         try { Console.Clear(); } catch { }
-        bool DoctorFound = false;
-        System.Console.WriteLine("----------   CREATE JOURNAL FOR PATIENT   ----------");
+        ;
+        Console.WriteLine("----------   ENTER ID OF USER YOU'D LIKE TO CREATE JOURNAL FOR   ----------");
         foreach (User user in users)
         {
-            if (user.Role == UserRole.Doctor) ;
-            DoctorFound = true;
+            if (user.Role == UserRole.Patient)
+            {
+                System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
+            }
         }
-        if (DoctorFound)
+        int EnteredID = Convert.ToInt32(Console.ReadLine());
+        bool userFound = false;
+        foreach (User user in users)
         {
             try { Console.Clear(); } catch { }
             ;
-            Console.WriteLine("----------   ENTER ID OF USER YOU'D LIKE TO CREATE JOURNAL FOR   ----------");
-            foreach (User user in users)
-            {
-                if (user.Role == UserRole.Patient)
-                {
-                    System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
-                }
-            }
-            int EnteredID = Convert.ToInt32(Console.ReadLine());
-            bool userFound = false;
-            foreach (User user in users)
-            {
-                try { Console.Clear(); } catch { }
-                ;
             if (EnteredID == user.Id)
             {
                 Console.WriteLine($"----------   Creating a journal copy for {user.Username}    ----------");
@@ -412,31 +412,31 @@ static void RemoveDoctor(List<User> users)
                 userFound = true;
                 DoctorFound = false;
             }
-                if(!userFound)
+            if (!userFound)
             {
                 System.Console.WriteLine($"User with [ID {EnteredID}] not found.");
                 Console.ReadLine();
-                break; 
-            }
-                
-                
-                /*  public string Title;
-
-                 public string Description;
-
-                 public string Publisher;
-
-                 public string Patient; */
+                break;
             }
 
-        }
-        else
-        {
-            System.Console.WriteLine("You don't have the right permissions to access this. ");
-        }
 
+            /*  public string Title;
+
+             public string Description;
+
+             public string Publisher;
+
+             public string Patient; */
+        }
 
     }
+    else
+    {
+        System.Console.WriteLine("You don't have the right permissions to access this. ");
+    }
+
+
+}
 
 
 /*
