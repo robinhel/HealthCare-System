@@ -1,14 +1,23 @@
 ﻿using System.Collections;
+using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
+<<<<<<< HEAD
 List<User> patients = new (); // Lista för patienter
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
+=======
+//List<Patient> patients = new List<Patient>(); // Lista för patienter
+List<Journal> journals = new List<Journal>(); //  // Lista för alla journaler
+>>>>>>> dev
 User activeUser = null;
 List<Location> locations = new();
+Permissions permission = null;
+
 
 users.Add(new User("p", "p", false, UserRole.Patient));
 
@@ -51,6 +60,7 @@ while (Running)
                     if (user.TryLogin(L_username, L_password))
                     {
                         activeUser = user;
+                        permission = new Permissions(activeUser);
                         Console.WriteLine("Login Succesfull!");
                         loginSuccess = true;
                         break;
@@ -94,8 +104,9 @@ while (Running)
         // - Participant (Visa vilken roll som är med i eventet )
         // - Journal (Skriva journaler och visa journaler)
         // - UserRoles (Tilldela roller)
-        if (activeUser.Role == UserRole.Patient)
+        if (activeUser != null && activeUser.Role == UserRole.Patient)
         {
+            try { Console.Clear(); } catch { }
             Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
             Console.WriteLine("[1] - Browse Journal"); // Nicklas kanske klar? ingen aning? hoppas det?
             Console.WriteLine("[2] - Request Event"); // Robin
@@ -160,13 +171,15 @@ while (Running)
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;
+                    permission = null;
                     activeUser = null;
                     break;
             }
         }
-        if (activeUser.Role == UserRole.Admin)
+        if (activeUser != null && activeUser.Role == UserRole.Admin)
         {
             // ADMIN VV
+            try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - Add Doctor"); // FILIPH
             Console.WriteLine("[2] - Edit Privileges"); // Calle
             Console.WriteLine("[3] - Show Privileges"); // Calle
@@ -184,6 +197,7 @@ while (Running)
                     // gör en klass för olika privliges med hjälp av enums?
                     break;
                 case "3":
+                    permission?.ShowAllPermission(activeUser);
                     // funktion för att visa privileges på alla olika typer av användare (admin,patient,doctor)
                     break;
                 case "4":
@@ -196,7 +210,9 @@ while (Running)
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;
+                    permission = null;
                     activeUser = null;
+
                     break;
             }
         }
@@ -213,16 +229,18 @@ while (Running)
         // Ska kunna tilldela roller (t.ex. personal, lokal admin).
 
 
-        if (activeUser.Role == UserRole.Doctor)
+        if (activeUser != null && activeUser.Role == UserRole.Doctor)
         {
 
             // DOCTOR VV
+            try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - View patient journals"); // Nicklas
             Console.WriteLine("[2] - Write journals"); // FILIPH
             Console.WriteLine("[3] - Accept Requested Event");
             Console.WriteLine("[4]");
             Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
             Console.WriteLine("[6] - view location"); // Klar !!
+            Console.WriteLine("[7] - Show priviliges");
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Quit");
 
@@ -250,6 +268,8 @@ while (Running)
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
+                    CreateJournal(journals, users, activeUser);
+                
                     // funktion för att skriva journaler
                     break;
                 case "3":
@@ -265,8 +285,12 @@ while (Running)
                     Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
+                case "7":
+                    permission?.ShowAllPermission(activeUser);
+                    break;
                 case "q":
                     activeUser.IsLoggedIn = false;
+                    permission = null;
                     activeUser = null;
                     break;
 
@@ -300,6 +324,13 @@ static void LocationAdd(List<Location> locations) // Denna funktionen kallas på
     Console.ReadLine();
     // Behövs lägga till filsystem i location.
 }
+
+
+
+
+
+
+
 static void AddDoctor(List<User> users)
 {
     System.Console.WriteLine("");
@@ -316,6 +347,11 @@ static void AddDoctor(List<User> users)
     User newAdmin = new User(AdminUsername, AdminPassword, false, UserRole.Doctor);
     users.Add(newAdmin);
 }
+
+
+
+
+
 static void RemoveDoctor(List<User> users)
 {
     System.Console.WriteLine("----------   REMOVE A DOCTOR ACCOUNT   ----------");
@@ -350,8 +386,79 @@ static void RemoveDoctor(List<User> users)
         System.Console.WriteLine($"User with that ID not found.");
     }
 
-
 }
+
+
+
+    static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
+{
+        try { Console.Clear(); } catch { }
+        bool DoctorFound = false;
+        System.Console.WriteLine("----------   CREATE JOURNAL FOR PATIENT   ----------");
+        foreach (User user in users)
+        {
+            if (user.Role == UserRole.Doctor) ;
+            DoctorFound = true;
+        }
+        if (DoctorFound)
+        {
+            try { Console.Clear(); } catch { }
+            ;
+            Console.WriteLine("----------   ENTER ID OF USER YOU'D LIKE TO CREATE JOURNAL FOR   ----------");
+            foreach (User user in users)
+            {
+                if (user.Role == UserRole.Patient)
+                {
+                    System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
+                }
+            }
+            int EnteredID = Convert.ToInt32(Console.ReadLine());
+            bool userFound = false;
+            foreach (User user in users)
+            {
+                try { Console.Clear(); } catch { }
+                ;
+            if (EnteredID == user.Id)
+            {
+                Console.WriteLine($"----------   Creating a journal copy for {user.Username}    ----------");
+                System.Console.WriteLine("Enter title of new journal");
+                string TitleJournal = Console.ReadLine();
+                System.Console.WriteLine("Enter descrition of new journal");
+                string DescJournal = Console.ReadLine();
+
+                Journal newJournal = new Journal(TitleJournal, DescJournal, activeUser.Username, user.Username);
+                journals.Add(newJournal);
+                System.Console.WriteLine($"Journal for {user.Username} succesfully created.");
+                Console.ReadLine();
+                userFound = true;
+                DoctorFound = false;
+            }
+                if(!userFound)
+            {
+                System.Console.WriteLine($"User with [ID {EnteredID}] not found.");
+                Console.ReadLine();
+                break; 
+            }
+                
+                
+                /*  public string Title;
+
+                 public string Description;
+
+                 public string Publisher;
+
+                 public string Patient; */
+            }
+
+        }
+        else
+        {
+            System.Console.WriteLine("You don't have the right permissions to access this. ");
+        }
+
+
+    }
+
 
 /*
 
