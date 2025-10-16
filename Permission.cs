@@ -1,0 +1,53 @@
+namespace App;
+
+public class Permissions
+{
+    public bool ViewPatient = false;
+    public bool EditPatient = false;
+    public bool AddDoctor = false;
+    public bool GiveMed = false;
+    public bool ManageUsers = false;
+    public bool CreateEvent = false;
+    public bool ShowPermissions = false;
+
+
+    public Permissions(User activeUser)
+    {
+        if (activeUser.Role == UserRole.Patient)
+        {
+            ViewPatient = true;
+        }
+        if (activeUser.Role == UserRole.Doctor)
+        {
+            ViewPatient = true;
+            EditPatient = true;
+            GiveMed = true;
+            ShowPermissions = true;
+        }
+        if (activeUser.Role == UserRole.Admin)
+        {
+            ViewPatient = true;
+            EditPatient = true;
+            AddDoctor = true;
+            ManageUsers = true;
+            GiveMed = true;
+            CreateEvent = true;
+            ShowPermissions = true;
+        }
+    }
+    public void ShowAllPermission(User activeUser)
+    {
+        Console.WriteLine("All active permissions");
+        Console.WriteLine($"ViewPatient: {ViewPatient}");
+        Console.WriteLine($"EditPatient: {EditPatient}");
+        Console.WriteLine($"AddDoctor: {AddDoctor}");
+        Console.WriteLine($"GiveMed: {GiveMed}");
+        Console.WriteLine($"ManageUsers: {ManageUsers}");
+        Console.WriteLine($"CreateEvent: {CreateEvent}");
+    }
+    public string ToCsv(User activeuser)
+    {
+        return $"{activeuser.Id}, {activeuser.Username}, {activeuser.Role}, {ViewPatient}, {EditPatient}, {AddDoctor}, {GiveMed}, {ManageUsers}, {CreateEvent}";
+    }
+
+}

@@ -15,7 +15,7 @@ public class SaveData
             string line = activeuser.SaveUserCsv(activeuser);
             File.AppendAllLines(save.UserFile, new[] { line });
         }
-        else
+        else if (!File.Exists(save.UserFile))
         {
             Console.WriteLine("Didn´t find that file!");
         }
@@ -39,6 +39,10 @@ public class SaveData
                 User user = new User(username, password, isloggedin, Role);
                 users.Add(user);
             }
+        }
+        else if (!File.Exists(save.UserFile))
+        {
+            Console.WriteLine("Didn´t find Users.csv file!");
         }
     }
 
