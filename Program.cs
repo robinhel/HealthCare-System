@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using App;
@@ -204,9 +205,18 @@ while (Running)
                 // funktion för att ändra gamla journaler
                 break;
                 case "6":
-                // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
+                    // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
+                    Console.WriteLine("view location you are available at");
+                    if (activeUser.Role != UserRole.Doctor)
+                    {
+                        Console.WriteLine("du har inte behörigheten att se detta. endast personal kan se tillgängliga platser.");
+                        Console.WriteLine("tryck enter för atergå");
+                        Console.WriteLine();
+                        break;
+                    }
+                    if (activeUser.AvailableLocations == null || activeUser.AvailableLocations.Count == 0)
                 break;
-            case "q":
+                case "q":
                 activeUser.IsLoggedIn = false;
                 activeUser = null;
                 break;
