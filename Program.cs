@@ -157,6 +157,8 @@ while (Running)
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "q":
+                    activeUser.IsLoggedIn = false;
+                    activeUser = null;
                     break;
             }
         }
