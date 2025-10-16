@@ -140,7 +140,7 @@ while (Running)
                 {
                 case "1":
                     // gör en funktion för att admin ska kunna lägga till nya doctorer (sätta enum Doctor)
-                    AddAdmin(users);
+                    AddDoctor(users);
                     break;
                 case "2":
                     // gör en klass för olika privliges med hjälp av enums?
@@ -153,7 +153,7 @@ while (Running)
                     LocationAdd(locations);
                     break;
                 case "5":
-                    RemoveAdmin(users);
+                    RemoveDoctor(users);
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "q":
@@ -243,7 +243,7 @@ static void LocationAdd(List<Location> locations) // Denna funktionen kallas på
     Console.ReadLine();
     // Behövs lägga till filsystem i location.
 }
-static void AddAdmin(List<User> users)
+static void AddDoctor(List<User> users)
 {
     System.Console.WriteLine("");
     System.Console.WriteLine("----------   CREATE A NEW DOCTOR ACCOUNT   ----------");
@@ -259,11 +259,11 @@ static void AddAdmin(List<User> users)
     User newAdmin = new User(AdminUsername, AdminPassword, false, UserRole.Doctor);
     users.Add(newAdmin);
 }
-static void RemoveAdmin(List<User> users)
+static void RemoveDoctor(List<User> users)
 {
     System.Console.WriteLine("----------   REMOVE A DOCTOR ACCOUNT   ----------");
     User? deletedUser = null;
-  
+
     foreach(User user in users)
     {
         if(user.Role == UserRole.Doctor)
