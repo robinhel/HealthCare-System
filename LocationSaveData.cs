@@ -1,4 +1,5 @@
 namespace App;
+
 class LocationSaveData
 {
     public string LocationFile = "Locations.csv";
@@ -35,7 +36,7 @@ class LocationSaveData
         }
         else
         {
-            Console.WriteLine("Didnt find location file!");
+            Console.WriteLine("Didnt find location.csv file!");
         }
     }
 

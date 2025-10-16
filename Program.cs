@@ -181,7 +181,7 @@ while (Running)
             Console.WriteLine("[3] - Accept Requested Event");
             Console.WriteLine("[4]");
             Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
-            Console.WriteLine("[6] - view location"); // Calle
+            Console.WriteLine("[6] - view location"); // Klar !!
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Quit");
 
