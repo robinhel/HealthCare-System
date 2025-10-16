@@ -9,12 +9,16 @@ List<User> users = new List<User>(); // Lista för alla users
 List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
+Permissions permission = null;
+
 
 users.Add(new User("p", "p", false, UserRole.Patient));
 
 users.Add(new User("d", "d", false, UserRole.Doctor));
 
 users.Add(new User("a", "a", false, UserRole.Admin));
+Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
+journal.Add(test);
 
 
 SaveData.LoadUserDataCsv(users);
@@ -49,6 +53,7 @@ while (Running)
                     if (user.TryLogin(L_username, L_password))
                     {
                         activeUser = user;
+                        permission = new Permissions(activeUser);
                         Console.WriteLine("Login Succesfull!");
                         loginSuccess = true;
                         break;
@@ -78,6 +83,7 @@ while (Running)
                 Console.WriteLine("Exiting System!");
                 Running = false;
                 break;
+                // ------------------- >> LOGGA IN & SKAPA KONTO KLART << ----------------------- \\
         }
 
     }
@@ -91,14 +97,14 @@ while (Running)
         // - Participant (Visa vilken roll som är med i eventet )
         // - Journal (Skriva journaler och visa journaler)
         // - UserRoles (Tilldela roller)
-        if (activeUser.Role == UserRole.Patient)
+        if (activeUser != null && activeUser.Role == UserRole.Patient)
         {
             Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
-            Console.WriteLine("[1] - Browse Journal"); // Nicklas
+            Console.WriteLine("[1] - Browse Journal"); // Nicklas kanske klar? ingen aning? hoppas det?
             Console.WriteLine("[2] - Request Event"); // Robin
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
-            Console.WriteLine("[q] - Quit"); // Nicklas
+            Console.WriteLine("[q] - Quit"); // Nicklas klar
 
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
@@ -108,6 +114,39 @@ while (Running)
             switch (Console.ReadLine())
             {
                 case "1":
+                    Console.WriteLine("Write your name: ");
+                    string username = Console.ReadLine().ToLower();
+                    int index = 0;
+
+                    foreach (Journal j in journal)
+                    {
+                        if (j.Patient == username)
+                        {
+                            Journal.ShowPatientJournals(username, journal);
+                            System.Console.WriteLine();
+                            Console.WriteLine($"[{index}], {j.Title}");
+                        }
+                        index++;
+
+                    }
+                    Console.WriteLine("Type the journal number to view the journal");
+                    string number = Console.ReadLine();
+
+                    if (int.TryParse(number, out int input))
+                    {
+                        if (journal[input].Patient == username)
+                        {
+                            Journal showJournal = journal[input];
+                            Console.WriteLine($"---- {showJournal.Title} ----");
+                            Console.WriteLine($"Description: {showJournal.Description} ");
+                            Console.WriteLine($"Publisher: {showJournal.Publisher}");
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("You dont have acess to this journal.");
+                        }
+                    }
+                    Console.ReadLine();
                     // gör funktion för att visa användarens journaler
                     // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
@@ -123,10 +162,13 @@ while (Running)
                 case "5":
                     break;
                 case "q":
+                    activeUser.IsLoggedIn = false;
+                    permission = null;
+                    activeUser = null;
                     break;
             }
         }
-        if (activeUser.Role == UserRole.Admin)
+        if (activeUser != null && activeUser.Role == UserRole.Admin)
         {
             // ADMIN VV
             Console.WriteLine("[1] - Add Doctor"); // FILIPH
@@ -146,6 +188,7 @@ while (Running)
                     // gör en klass för olika privliges med hjälp av enums?
                     break;
                 case "3":
+                    permission?.ShowAllPermission(activeUser);
                     // funktion för att visa privileges på alla olika typer av användare (admin,patient,doctor)
                     break;
                 case "4":
@@ -158,7 +201,9 @@ while (Running)
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;
+                    permission = null;
                     activeUser = null;
+
                     break;
             }
         }
@@ -175,7 +220,7 @@ while (Running)
         // Ska kunna tilldela roller (t.ex. personal, lokal admin).
 
 
-        if (activeUser.Role == UserRole.Doctor)
+        if (activeUser != null && activeUser.Role == UserRole.Doctor)
         {
 
             // DOCTOR VV
@@ -185,6 +230,7 @@ while (Running)
             Console.WriteLine("[4]");
             Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
             Console.WriteLine("[6] - view location"); // Klar !!
+            Console.WriteLine("[7] - Show priviliges");
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Quit");
 
@@ -211,8 +257,12 @@ while (Running)
                     Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
+                case "7":
+                    permission?.ShowAllPermission(activeUser);
+                    break;
                 case "q":
                     activeUser.IsLoggedIn = false;
+                    permission = null;
                     activeUser = null;
                     break;
 
