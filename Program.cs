@@ -73,6 +73,7 @@ while (Running)
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
 
+                permission = new Permissions();
                 bool isloggedin = false;
 
 
