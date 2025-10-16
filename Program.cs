@@ -15,6 +15,8 @@ users.Add(new User("p", "p", false, UserRole.Patient));
 users.Add(new User("d", "d", false, UserRole.Doctor));
 
 users.Add(new User("a", "a", false, UserRole.Admin));
+Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
+journal.Add(test);
 
 
 SaveData.LoadUserDataCsv(users);
@@ -118,7 +120,7 @@ while (Running)
                         if (j.Patient == username)
                         {
                             Journal.ShowPatientJournals(username, journal);
-                            System.Console.WriteLine("------------------");
+                            System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
                             index++;
@@ -141,6 +143,7 @@ while (Running)
                             System.Console.WriteLine("You dont have acess to this journal.");
                         }
                     }
+                    Console.ReadLine();
                 // gör funktion för att visa användarens journaler
                 // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
