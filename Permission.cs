@@ -49,5 +49,18 @@ public class Permissions
     {
         return $"{activeuser.Id}, {activeuser.Username}, {activeuser.Role}, {ViewPatient}, {EditPatient}, {AddDoctor}, {GiveMed}, {ManageUsers}, {CreateEvent}";
     }
+    public int ChooseUserByIdAdmin(List<User> users)
+    {
+        Console.WriteLine("-----All users in system-----");
+        foreach (User user in users)
+        {
+            if (user.Role == UserRole.Patient)
+                Console.WriteLine($"Id: {user.Id} Name: {user.Username} Role: {user.Role}");
+        }
+        Console.Write("Choose a user by ID:");
+        string inputid = Console.ReadLine();
+        int intinputid = int.Parse(inputid);
+        return intinputid;
+    }
 
 }
