@@ -105,7 +105,7 @@ while (Running)
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
             Console.WriteLine("[q] - Quit"); // Nicklas klar
-
+            
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
             // Ska kunna begära en tid (bokning).
@@ -117,8 +117,8 @@ while (Running)
                     Console.WriteLine("Write your name: ");
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
-
-                    foreach (Journal j in journal)
+                    
+                    foreach(Journal j in journal)
                     {
                         if (j.Patient == username)
                         {
@@ -126,11 +126,11 @@ while (Running)
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
-                        index++;
-
+                            index++;
+                        
                     }
-                    Console.WriteLine("Type the journal number to view the journal");
-                    string number = Console.ReadLine();
+                        Console.WriteLine("Type the journal number to view the journal");
+                        string number = Console.ReadLine();
 
                     if (int.TryParse(number, out int input))
                     {
@@ -147,8 +147,8 @@ while (Running)
                         }
                     }
                     Console.ReadLine();
-                    // gör funktion för att visa användarens journaler
-                    // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
+                // gör funktion för att visa användarens journaler
+                // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
                 case "2":
 
