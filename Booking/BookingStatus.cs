@@ -1,10 +1,11 @@
 namespace App;
 
-public enum BookingStates
+public enum BookingStatus
 {
     busy,
     pending,
     available,
     denied,
+    approved,
 }
 

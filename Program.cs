@@ -35,6 +35,7 @@ class MyProgram
         // Vald doktor från lista med index
         User choosenDoctor = users[index];
 
+
         // Se lediga tider för vald doktor
         bookingSystem.ShowAvailableTimes(choosenDoctor);
         Console.WriteLine("Enter starting Hour of booking");
@@ -45,9 +46,9 @@ class MyProgram
 
         bookingSystem.RequestBooking(choosenDoctor, activeUser, bookedTime);
 
+        bookingSystem.HandleRequestBooking(choosenDoctor);
 
 
-        bookingSystem.ShowAvailableTimes(choosenDoctor);
 
 
 

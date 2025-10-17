@@ -7,7 +7,7 @@ public class Booking
     public User Doctor { get; set; }
     public DateTime Start { get; set; }
     public TimeSpan Duration = TimeSpan.FromMinutes(60);
-    public bool Approved;
+    public BookingStatus status;
 
 
     public Booking(int id, User patient, User doctor, DateTime start)
@@ -17,6 +17,6 @@ public class Booking
         Patient = patient;
         Doctor = doctor;
         Start = start;
-        Approved = false;
+        status = BookingStatus.pending;
     }
 }
