@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using App;
+﻿using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
@@ -55,7 +50,7 @@ while (Running)
                     if (user.TryLogin(L_username, L_password))
                     {
                         activeUser = user;
-                        permission = new Permissions(activeUser);
+                        permission = new Permissions();
                         Console.WriteLine("Login Succesfull!");
                         loginSuccess = true;
                         break;
@@ -73,9 +68,12 @@ while (Running)
                 Console.Write("Enter password: ");
                 string C_password = Console.ReadLine();
 
+                permission = new Permissions();
                 bool isloggedin = false;
 
+
                 User newUser = new User(C_username, C_password, isloggedin, UserRole.Patient);
+                permission.SetPatientPermissions(newUser);
                 users.Add(newUser);
                 SaveData.SaveUserDataCsv(newUser);
                 Console.WriteLine($"Account: {C_username} has been created.");
@@ -108,7 +106,7 @@ while (Running)
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
             Console.WriteLine("[q] - Quit"); // Nicklas klar
-            
+
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
             // Ska kunna begära en tid (bokning).
@@ -120,20 +118,19 @@ while (Running)
                     Console.WriteLine("Write your name: ");
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
-                    
                     foreach(Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
                             j.ShowPatientJournals(username, journals);
+
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
-                            index++;
-                        
+                        index++;
                     }
-                        Console.WriteLine("Type the journal number to view the journal");
-                        string number = Console.ReadLine();
+                    Console.WriteLine("Type the journal number to view the journal");
+                    string number = Console.ReadLine();
 
                     if (int.TryParse(number, out int input))
                     {
@@ -150,8 +147,8 @@ while (Running)
                         }
                     }
                     Console.ReadLine();
-                // gör funktion för att visa användarens journaler
-                // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
+                    // gör funktion för att visa användarens journaler
+                    // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
                 case "2":
 
@@ -176,8 +173,8 @@ while (Running)
             // ADMIN VV
             try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - Add Doctor"); // FILIPH
-            Console.WriteLine("[2] - Edit Privileges"); // Calle
-            Console.WriteLine("[3] - Show Privileges"); // Calle
+            Console.WriteLine("[2] - Edit Privileges"); // Calle Jobbar på det
+            Console.WriteLine("[3] - Show Privileges"); // Calle Klar !!
             Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
             Console.WriteLine("[5] - Remove Doctor"); // FILIPH KAN TESTA
             Console.WriteLine("[q] - Quit"); //  Nicklas  
@@ -189,10 +186,11 @@ while (Running)
                     AddDoctor(users);
                     break;
                 case "2":
-                    // gör en klass för olika privliges med hjälp av enums?
+                    permission?.EditUserPermissionById(users);
+                    // gör en klass för olika privliges med hjälp av Bools, försöker göra så att admin kan toggla true or false på individuella användare
                     break;
                 case "3":
-                    permission?.ShowAllPermission(activeUser);
+                    activeUser.permissions?.ShowAllPermission();
                     // funktion för att visa privileges på alla olika typer av användare (admin,patient,doctor)
                     break;
                 case "4":
@@ -235,7 +233,7 @@ while (Running)
             Console.WriteLine("[4]");
             Console.WriteLine("[5] - edit journal entry"); // (Nicklas)
             Console.WriteLine("[6] - view location"); // Klar !!
-            Console.WriteLine("[7] - Show priviliges");
+            Console.WriteLine("[7] - Show priviliges"); // Klar !!
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Quit");
 
@@ -262,7 +260,7 @@ while (Running)
                     break;
                 case "2":
                     CreateJournal(journals, users, activeUser);
-                
+
                     // funktion för att skriva journaler
                     break;
                 case "3":
@@ -279,14 +277,13 @@ while (Running)
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "7":
-                    permission?.ShowAllPermission(activeUser);
+                    activeUser.permissions?.ShowAllPermission();
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;
                     permission = null;
                     activeUser = null;
                     break;
-
             }
         }
         // Ska kunna se patientjournaler. ---
@@ -383,7 +380,7 @@ static void RemoveDoctor(List<User> users)
 
 
 
-    static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
+static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
 {
     try { Console.Clear(); } catch { }
     bool DoctorFound = false;
@@ -450,9 +447,12 @@ static void RemoveDoctor(List<User> users)
     }
 
 
-
 }
-   static void ShowAllJournals(List<Journal> journals)
+
+
+
+
+static void ShowAllJournals(List<Journal> journals)
 {
     try { Console.Clear(); } catch { }
     System.Console.WriteLine("==== ALL JOURNALS IN THE SYSTEM ====");

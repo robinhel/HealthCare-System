@@ -29,3 +29,14 @@ class Location
 
     }
 }
+
+class Assignment
+{
+    public int userId;
+    public Location Loc;
+    public Assignment(int userId, Location loc)
+    {
+        userId = userId;
+        loc = loc;
+    }
+}
