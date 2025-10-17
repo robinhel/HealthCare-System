@@ -1,9 +1,6 @@
 ﻿using System.Collections;
-<<<<<<< HEAD
 using System.ComponentModel;
-=======
 using System.Reflection.Metadata;
->>>>>>> origin/dev
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
@@ -241,7 +238,7 @@ while (Running)
             Console.WriteLine("[2] - Write journals"); // FILIPH
             Console.WriteLine("[3] - Accept Requested Event");
             Console.WriteLine("[4]");
-            Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
+            Console.WriteLine("[5] - create/(edit??) journal entry"); // (Filiph)
             Console.WriteLine("[6] - view location"); // Klar !!
             Console.WriteLine("[7] - Show priviliges"); // Klar !!
             Console.WriteLine("[0] - Settings"); // Calle kanske
@@ -266,27 +263,11 @@ while (Running)
 
                     break;
                 case "5":
+                    EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
                 case "6":
-<<<<<<< HEAD
-                    // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
-                    Console.WriteLine("view location you are available at");
-                    if (activeUser.Role != UserRole.Doctor)
-                    {
-                        Console.WriteLine("du har inte behörigheten att se detta. endast personal kan se tillgängliga platser.");
-                        Console.WriteLine("tryck enter för atergå");
-                        Console.WriteLine();
-                        break;
-                    }
-                    if (activeUser.AvailableLocations == null || activeUser.AvailableLocations.Count == 0)
-                break;
-                case "q":
-                activeUser.IsLoggedIn = false;
-                activeUser = null;
-                break;
-=======
-                    Location.ShowAllLocations(locations);
+                    // Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "7":
@@ -297,7 +278,6 @@ while (Running)
                     permission = null;
                     activeUser = null;
                     break;
->>>>>>> origin/dev
 
             }
         }
@@ -464,6 +444,49 @@ static void CreateJournal(List<Journal> journals, List<User> users, User activeU
 
 }
 
+
+
+
+//             Console.WriteLine("[5] - create/(edit??) journal entry"); // (Filiph)
+
+static void EditJournal(List<Journal> journals, List<User> users)
+{
+    if (journals.Count >= 1 )
+    {
+        System.Console.WriteLine("----------   EDIT JOURNAL ENTRY   ----------");
+
+        foreach (User user in users)
+        {
+            if (user.Role == UserRole.Patient)
+            {
+                System.Console.WriteLine($"[ID {user.Id}] ---- Username - {user.Username}");
+            }
+        }
+        System.Console.WriteLine("Enter the ID of the user you'd like to change journal entry");
+        int ID_input = Convert.ToInt32(Console.ReadLine());
+        foreach (User user in users)
+        {
+            if (ID_input == user.Id)
+            {
+                System.Console.WriteLine("---- USER FOUND ----");
+                System.Console.WriteLine("\n \n-- JOURNAL TITLES --");
+                for (int i = 1; i < journals.Count; i++)
+                {
+                    Console.WriteLine(i + journals[i].Title);
+                }
+            }
+        }
+        System.Console.WriteLine("Enter INDEX of the journal you'd like to change");
+        int journal_change = Convert.ToInt32(Console.ReadLine());
+        Journal chosenIndex = journals[journal_change - 1];
+        /* chosenIndex */
+
+    }
+    else
+    {
+        System.Console.WriteLine("There is no journals saved in the system.");
+    }
+}
 
 /*
 
