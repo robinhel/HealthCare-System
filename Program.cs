@@ -1,4 +1,7 @@
+
 ﻿using App;
+
+
 
 
 List<User> users = new List<User>(); // Lista för alla users
@@ -6,8 +9,8 @@ List<User> users = new List<User>(); // Lista för alla users
 List<Journal> journals = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
+List<Assignment> assignments = new List<Assignment>();
 Permissions permission = null;
-
 
 users.Add(new User("p", "p", false, UserRole.Patient));
 
@@ -83,7 +86,6 @@ while (Running)
                 Console.WriteLine("Exiting System!");
                 Running = false;
                 break;
-                // ------------------- >> LOGGA IN & SKAPA KONTO KLART << ----------------------- \\
         }
 
     }
@@ -97,16 +99,15 @@ while (Running)
         // - Participant (Visa vilken roll som är med i eventet )
         // - Journal (Skriva journaler och visa journaler)
         // - UserRoles (Tilldela roller)
-        if (activeUser != null && activeUser.Role == UserRole.Patient)
+        if (activeUser.Role == UserRole.Patient)
         {
-            try { Console.Clear(); } catch { }
             Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
-            Console.WriteLine("[1] - Browse Journal"); // Nicklas kanske klar? ingen aning? hoppas det?
+            Console.WriteLine("[1] - Browse Journal"); // Nicklas
             Console.WriteLine("[2] - Request Event"); // Robin
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
-            Console.WriteLine("[q] - Quit"); // Nicklas klar
-
+            Console.WriteLine("[q] - Quit"); // Nicklas
+            
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
             // Ska kunna begära en tid (bokning).
@@ -118,11 +119,13 @@ while (Running)
                     Console.WriteLine("Write your name: ");
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
+
                     foreach(Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
                             j.ShowPatientJournals(username, journals);
+
 
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
@@ -157,33 +160,28 @@ while (Running)
 
                     break;
                 case "4":
-                    // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
+                // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
                     break;
                 case "5":
                     break;
                 case "q":
-                    activeUser.IsLoggedIn = false;
-                    permission = null;
-                    activeUser = null;
                     break;
             }
         }
-        if (activeUser != null && activeUser.Role == UserRole.Admin)
+        if (activeUser.Role == UserRole.Admin)
         {
             // ADMIN VV
-            try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - Add Doctor"); // FILIPH
-            Console.WriteLine("[2] - Edit Privileges"); // Calle Jobbar på det
-            Console.WriteLine("[3] - Show Privileges"); // Calle Klar !!
+            Console.WriteLine("[2] - Edit Privileges"); // Calle
+            Console.WriteLine("[3] - Show Privileges"); // Calle
             Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
             Console.WriteLine("[5] - Remove Doctor"); // FILIPH KAN TESTA
             Console.WriteLine("[q] - Quit"); //  Nicklas  
 
             switch (Console.ReadLine())
-            {
+                {
                 case "1":
                     // gör en funktion för att admin ska kunna lägga till nya doctorer (sätta enum Doctor)
-                    AddDoctor(users);
                     break;
                 case "2":
                     permission?.EditUserPermissionById(users);
@@ -198,21 +196,16 @@ while (Running)
                     LocationAdd(locations);
                     break;
                 case "5":
-                    RemoveDoctor(users);
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "q":
-                    activeUser.IsLoggedIn = false;
-                    permission = null;
-                    activeUser = null;
-
                     break;
-            }
+                }            
         }
-        // PATIENT VV
+            // PATIENT VV
 
 
-
+        
         // Ska kunna hantera rättigheter för andra användare.
         // Ska kunna skapa konton för personal.
         // Ska kunna godkänna eller avslå patientregistreringar.
@@ -221,8 +214,8 @@ while (Running)
         // Systemet ska vara uppbyggt så att varje användare bara har tillgång till det som deras roll behöver.
         // Ska kunna tilldela roller (t.ex. personal, lokal admin).
 
-
-        if (activeUser != null && activeUser.Role == UserRole.Doctor)
+  
+        if (activeUser.Role == UserRole.Doctor)
         {
 
             // DOCTOR VV
@@ -238,9 +231,9 @@ while (Running)
             Console.WriteLine("[q] - Quit");
 
 
-            string input = Console.ReadLine();
-            switch (input)
-            {
+        string input = Console.ReadLine();
+        switch (input)
+        {
                 case "1":
 
                     ShowAllJournals(journals);
@@ -259,20 +252,37 @@ while (Running)
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
-                    CreateJournal(journals, users, activeUser);
-
-                    // funktion för att skriva journaler
-                    break;
+                // funktion för att skriva journaler
+                break;
                 case "3":
 
-                    break;
+                break;
                 case "4":
 
-                    break;
+                break;
                 case "5":
-                    // funktion för att ändra gamla journaler
-                    break;
+                // funktion för att ändra gamla journaler
+                break;
                 case "6":
+                    // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
+                    Console.WriteLine("view location you are available at");
+                    if (activeUser.Role != UserRole.Doctor)
+                    {
+                        Console.WriteLine("du har inte behörigheten att se detta. endast personal kan se tillgängliga platser.");
+                        Console.WriteLine("tryck enter för atergå");
+                        Console.WriteLine();
+                        break;
+                    }
+                    List<Location> myLocation = new List<Location>();
+                    for (int i =0; i <assignments.Count; i++)
+                    {
+                        if (assignments[i].UserId == activeUser.Id)
+                        {
+                            myLocation.Add(assignments[i].Loc);
+                        }
+                    }
+                break;
+                
                     Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
@@ -284,18 +294,21 @@ while (Running)
                     permission = null;
                     activeUser = null;
                     break;
+
+
             }
         }
-        // Ska kunna se patientjournaler. ---
-        // Ska kunna skriva en patientjournal. ---
-        // Ska kunna markera journaler med olika läsbehörigheter.
-        // Ska kunna registrera och ändra tider.
-        // Ska kunna godkänna eller avslå tidsförfrågningar.
-        // Ska kunna se schema för en plats (t.ex. vårdcentral).
+        }
+            // Ska kunna se patientjournaler. ---
+            // Ska kunna skriva en patientjournal. ---
+            // Ska kunna markera journaler med olika läsbehörigheter.
+            // Ska kunna registrera och ändra tider.
+            // Ska kunna godkänna eller avslå tidsförfrågningar.
+            // Ska kunna se schema för en plats (t.ex. vårdcentral).
 
 
     }
-}
+
 
 static void LocationAdd(List<Location> locations) // Denna funktionen kallas på för att lägga till en address.
 {
