@@ -115,17 +115,31 @@ public class BookingSystem
 
     public void Patientscheduele(User patient)
     {
-        Console.WriteLine("upcoming bookings:");
+
+        Console.WriteLine($"upcoming appointments for {patient.Username},");
         for (int i = 0; i < bookings.Count; i++)
         {
             Booking b = bookings[i];
-            if (b.status == BookingStatus.approved)
+            if (b.status == BookingStatus.approved && b.Patient == patient)
             {
-                Console.WriteLine($"booking: {i} with {b.Patient.Username}, time: {b.Start}, status: {b.status}");
+                Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
             }
         }
 
     }
 
+    public void Doctorscheduele(User doctor)
+    {
 
+        Console.WriteLine($"upcoming appointments for {doctor.Username},");
+        for (int i = 0; i < bookings.Count; i++)
+        {
+            Booking b = bookings[i];
+            if (b.status == BookingStatus.approved && b.Doctor == doctor)
+            {
+                Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
+            }
+        }
+
+    }
 }

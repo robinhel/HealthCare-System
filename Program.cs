@@ -36,9 +36,10 @@ class MyProgram
         User choosenDoctor = users[index];
 
 
+
         // Se lediga tider för vald doktor
         bookingSystem.ShowAvailableTimes(choosenDoctor);
-        Console.WriteLine("Enter starting Hour of booking");
+        Console.WriteLine("Enter starting Hour of booking (8-15)");
 
         Double startTime = Convert.ToInt32(Console.ReadLine());
 
@@ -48,7 +49,7 @@ class MyProgram
 
         bookingSystem.HandleRequestBooking(choosenDoctor);
 
-
+        bookingSystem.Patientscheduele(activeUser);
 
 
 
