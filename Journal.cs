@@ -19,7 +19,16 @@ public class Journal
         Publisher = publisher;
         Patient = patient;
     }
-    public static void ShowPatientJournals(string patientName, List<Journal> journals)
+
+    public void Info()
+    {
+        System.Console.WriteLine($"Doctor: {Publisher}");
+        Console.WriteLine($"Title: {Title}");
+        System.Console.WriteLine($"Patient: {Patient}");
+        System.Console.WriteLine("--------------------");
+        System.Console.WriteLine($"Description: {Description}");
+    }
+    public void ShowPatientJournals(string patientName, List<Journal> journals)
     {
         Console.WriteLine($"=== Journals for {patientName} ===");
         System.Console.WriteLine();
