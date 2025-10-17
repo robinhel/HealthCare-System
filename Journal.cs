@@ -28,6 +28,22 @@ public class Journal
         System.Console.WriteLine("--------------------");
         System.Console.WriteLine($"Description: {Description}");
     }
+    public void ChangeTitle()
+    {
+        System.Console.WriteLine($"------  Changing title of journal entry [{Title}]  ------");
+        Title = null;
+        System.Console.WriteLine("Enter the new title");
+        string ChangedTitle = Console.ReadLine();
+        Title = ChangedTitle;
+    }
+    public void ChangeDesc()
+    {
+        System.Console.WriteLine($"------  Changing description of journal entry [{Title}]  ------");
+        Description = null;
+        System.Console.WriteLine("Enter the new description");
+        string ChangedDesc = Console.ReadLine();
+        Description = ChangedDesc;
+    }
     public void ShowPatientJournals(string patientName, List<Journal> journals)
     {
         Console.WriteLine($"=== Journals for {patientName} ===");
