@@ -7,7 +7,6 @@ public class Booking
     public User Doctor { get; set; }
     public DateTime Start { get; set; }
     public TimeSpan Duration = TimeSpan.FromMinutes(60);
-
     public bool Approved;
 
 
@@ -20,7 +19,4 @@ public class Booking
         Start = start;
         Approved = false;
     }
-
-
-
 }
