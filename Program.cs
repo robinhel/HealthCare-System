@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using App;
+
+﻿using App;
 
 
 
 
 List<User> users = new List<User>(); // Lista för alla users
 //List<Patient> patients = new List<Patient>(); // Lista för patienter
-List<Journal> journal = new List<Journal>(); //  // Lista för alla journaler
+List<Journal> journals = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
 List<Assignment> assignments = new List<Assignment>();
+Permissions permission = null;
 
 users.Add(new User("p", "p", false, UserRole.Patient));
 
@@ -20,7 +18,7 @@ users.Add(new User("d", "d", false, UserRole.Doctor));
 
 users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
-journal.Add(test);
+journals.Add(test);
 
 
 SaveData.LoadUserDataCsv(users);
@@ -122,25 +120,26 @@ while (Running)
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
 
-                    foreach (Journal j in journal)
+                    foreach(Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
-                            Journal.ShowPatientJournals(username, journal);
+                            j.ShowPatientJournals(username, journals);
+
+
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
                         index++;
-
                     }
                     Console.WriteLine("Type the journal number to view the journal");
                     string number = Console.ReadLine();
 
                     if (int.TryParse(number, out int input))
                     {
-                        if (journal[input].Patient == username)
+                        if (journals[input].Patient == username)
                         {
-                            Journal showJournal = journal[input];
+                            Journal showJournal = journals[input];
                             Console.WriteLine($"---- {showJournal.Title} ----");
                             Console.WriteLine($"Description: {showJournal.Description} ");
                             Console.WriteLine($"Publisher: {showJournal.Publisher}");
@@ -219,23 +218,39 @@ while (Running)
         if (activeUser.Role == UserRole.Doctor)
         {
 
-        // DOCTOR VV
-        Console.WriteLine("[1] - View patient journals"); // Nicklas
-        Console.WriteLine("[2] - Write journals"); // FILIPH
-        Console.WriteLine("[3] - Accept Requested Event");
-        Console.WriteLine("[4]");
-        Console.WriteLine("[5] - create/(edit??) journal entry"); // (Nicklas)
-        Console.WriteLine("[6] - view location"); 
-        Console.WriteLine("[0] - Settings"); // Calle kanske
-        Console.WriteLine("[q] - Quit");
+            // DOCTOR VV
+            try { Console.Clear(); } catch { }
+            Console.WriteLine("[1] - View patient journals"); // Nicklas
+            Console.WriteLine("[2] - Write journals"); // FILIPH
+            Console.WriteLine("[3] - Accept Requested Event");
+            Console.WriteLine("[4]");
+            Console.WriteLine("[5] - edit journal entry"); // (Nicklas)
+            Console.WriteLine("[6] - view location"); // Klar !!
+            Console.WriteLine("[7] - Show priviliges"); // Klar !!
+            Console.WriteLine("[0] - Settings"); // Calle kanske
+            Console.WriteLine("[q] - Quit");
 
 
         string input = Console.ReadLine();
         switch (input)
         {
                 case "1":
-                // funktion för att visa alla journaler i systemet (historik)
-                break;
+
+                    ShowAllJournals(journals);
+                    Console.WriteLine();
+                    System.Console.WriteLine("What journal do you wanna see? ");
+                    int patientChoose = Convert.ToInt32(Console.ReadLine());
+                    Journal selected_journal = journals[patientChoose-1];
+
+                    selected_journal.Info();
+
+                    Console.WriteLine("\nPress ENTER to continue...");
+                    Console.ReadLine();
+                                        
+                    
+                    
+                    // funktion för att visa alla journaler i systemet (historik)
+                    break;
                 case "2":
                 // funktion för att skriva journaler
                 break;
@@ -267,11 +282,7 @@ while (Running)
                         }
                     }
                 break;
-                case "q":
-                activeUser.IsLoggedIn = false;
-                activeUser = null;
-                break;
-
+                
                     Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
@@ -285,6 +296,7 @@ while (Running)
                     break;
 
 
+            }
         }
         }
             // Ska kunna se patientjournaler. ---
@@ -296,7 +308,7 @@ while (Running)
 
 
     }
-}
+
 
 static void LocationAdd(List<Location> locations) // Denna funktionen kallas på för att lägga till en address.
 {
@@ -316,6 +328,171 @@ static void LocationAdd(List<Location> locations) // Denna funktionen kallas på
     // Behövs lägga till filsystem i location.
 }
 
+
+
+
+
+
+
+static void AddDoctor(List<User> users)
+{
+    System.Console.WriteLine("");
+    System.Console.WriteLine("----------   CREATE A NEW DOCTOR ACCOUNT   ----------");
+    System.Console.WriteLine("\n   Enter username: ");
+    string AdminUsername = Console.ReadLine();
+    System.Console.WriteLine("\n   Enter password: ");
+    string AdminPassword = Console.ReadLine();
+    Console.WriteLine("\n \n   New account succesfully created! \n");
+    System.Console.WriteLine("-----------------------------------------------------------------");
+
+
+
+    User newAdmin = new User(AdminUsername, AdminPassword, false, UserRole.Doctor);
+    users.Add(newAdmin);
+}
+
+
+
+
+
+static void RemoveDoctor(List<User> users)
+{
+    System.Console.WriteLine("----------   REMOVE A DOCTOR ACCOUNT   ----------");
+    User? deletedUser = null;
+
+    foreach (User user in users)
+    {
+        if (user.Role == UserRole.Doctor)
+        {
+            System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
+
+        }
+    }
+    System.Console.WriteLine("Enter ID of doctor which you wish to remove: ");
+    int idRemove = Convert.ToInt32(Console.ReadLine());
+
+    foreach (User user in users)
+    {
+        if (idRemove == user.Id && user.Role == UserRole.Doctor)
+        {
+            deletedUser = user;
+            break;
+        }
+    }
+    if (deletedUser != null)
+    {
+        users.Remove(deletedUser);
+        System.Console.WriteLine($"Succesfully deleted {deletedUser.Username} with ID: {deletedUser.Id}");
+    }
+    else
+    {
+        System.Console.WriteLine($"User with that ID not found.");
+    }
+
+}
+
+
+
+static void CreateJournal(List<Journal> journals, List<User> users, User activeUser)
+{
+    try { Console.Clear(); } catch { }
+    bool DoctorFound = false;
+    System.Console.WriteLine("----------   CREATE JOURNAL FOR PATIENT   ----------");
+    foreach (User user in users)
+    {
+        if (user.Role == UserRole.Doctor) ;
+        DoctorFound = true;
+    }
+    if (DoctorFound)
+    {
+        try { Console.Clear(); } catch { }
+        ;
+        Console.WriteLine("----------   ENTER ID OF USER YOU'D LIKE TO CREATE JOURNAL FOR   ----------");
+        foreach (User user in users)
+        {
+            if (user.Role == UserRole.Patient)
+            {
+                System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
+            }
+        }
+        int EnteredID = Convert.ToInt32(Console.ReadLine());
+        bool userFound = false;
+        foreach (User user in users)
+        {
+            try { Console.Clear(); } catch { }
+            ;
+            if (EnteredID == user.Id)
+            {
+                Console.WriteLine($"----------   Creating a journal copy for {user.Username}    ----------");
+                System.Console.WriteLine("Enter title of new journal");
+                string TitleJournal = Console.ReadLine();
+                System.Console.WriteLine("Enter descrition of new journal");
+                string DescJournal = Console.ReadLine();
+
+                Journal newJournal = new Journal(TitleJournal, DescJournal, activeUser.Username, user.Username);
+                journals.Add(newJournal);
+                System.Console.WriteLine($"Journal for {user.Username} succesfully created.");
+                Console.ReadLine();
+                userFound = true;
+                DoctorFound = false;
+            }
+            if (!userFound)
+            {
+                System.Console.WriteLine($"User with [ID {EnteredID}] not found.");
+                Console.ReadLine();
+                break;
+            }
+
+
+            /*  public string Title;
+
+             public string Description;
+
+             public string Publisher;
+
+             public string Patient; */
+        }
+
+    }
+    else
+    {
+        System.Console.WriteLine("You don't have the right permissions to access this. ");
+    }
+
+
+}
+
+
+
+
+static void ShowAllJournals(List<Journal> journals)
+{
+    try { Console.Clear(); } catch { }
+    System.Console.WriteLine("==== ALL JOURNALS IN THE SYSTEM ====");
+    System.Console.WriteLine();
+    if (journals.Count == 0)
+    {
+        System.Console.WriteLine("No journals found. ");
+    }
+    else
+    {
+        for (int i = 0; i < journals.Count; i++)
+        {
+            Journal j = journals[i];
+            Console.WriteLine($"{i + 1}");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine($"Publisher: {j.Publisher}");
+            Console.WriteLine($"Name: {j.Patient}");
+            Console.WriteLine($"Title: {j.Title}");
+            Console.WriteLine("-----------------------");
+
+        }
+    }
+}
+
+
+
+// 
 /*
 
 
