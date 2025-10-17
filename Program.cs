@@ -107,7 +107,7 @@ while (Running)
             Console.WriteLine("[3] - Create Event"); // Robin
             Console.WriteLine("[4] - Show schedule"); // Robin
             Console.WriteLine("[q] - Quit"); // Nicklas
-            
+
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
             // Ska kunna begära en tid (bokning).
@@ -120,7 +120,7 @@ while (Running)
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
 
-                    foreach(Journal j in journals)
+                    foreach (Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
@@ -160,20 +160,29 @@ while (Running)
 
                     break;
                 case "4":
-                // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
+                    // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
                     break;
                 case "5":
                     break;
                 case "q":
+                activeUser.IsLoggedIn = false;
+                    permission = null;
+                    activeUser = null;
                     break;
             }
-        }
-        if (activeUser.Role == UserRole.Admin)
-        {
+            {
+                if (activeUser != null && activeUser.Role == UserRole.Admin) ;
+                }
+                    if (activeUser.Role == UserRole.Admin)
+                {
+            }
+        
+            
             // ADMIN VV
+            try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - Add Doctor"); // FILIPH
-            Console.WriteLine("[2] - Edit Privileges"); // Calle
-            Console.WriteLine("[3] - Show Privileges"); // Calle
+            Console.WriteLine("[2] - Edit Privileges"); // Calle jobbar på det!!
+            Console.WriteLine("[3] - Show Privileges"); // Calle klar!!
             Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
             Console.WriteLine("[5] - Remove Doctor"); // FILIPH KAN TESTA
             Console.WriteLine("[q] - Quit"); //  Nicklas  
@@ -196,6 +205,8 @@ while (Running)
                     LocationAdd(locations);
                     break;
                 case "5":
+                                    RemoveDoctor(users);
+
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "q":
@@ -251,7 +262,8 @@ while (Running)
                     
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
-                case "2":
+                case "2": 
+                CreateJournal(journals, users, activeUser);
                 // funktion för att skriva journaler
                 break;
                 case "3":
