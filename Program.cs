@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using App;
+﻿using App;
 
 
 List<User> users = new List<User>(); // Lista för alla users
@@ -124,17 +118,16 @@ while (Running)
                     Console.WriteLine("Write your name: ");
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
-
-                    foreach (Journal j in journals)
+                    foreach(Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
-                            Journal.ShowPatientJournals(username, journals);
+                            j.ShowPatientJournals(username, journals);
+
                             System.Console.WriteLine();
                             Console.WriteLine($"[{index}], {j.Title}");
                         }
                         index++;
-
                     }
                     Console.WriteLine("Type the journal number to view the journal");
                     string number = Console.ReadLine();
@@ -238,7 +231,7 @@ while (Running)
             Console.WriteLine("[2] - Write journals"); // FILIPH
             Console.WriteLine("[3] - Accept Requested Event");
             Console.WriteLine("[4]");
-            Console.WriteLine("[5] - create/(edit??) journal entry"); // (Filiph)
+            Console.WriteLine("[5] - edit journal entry"); // (filiph)
             Console.WriteLine("[6] - view location"); // Klar !!
             Console.WriteLine("[7] - Show priviliges"); // Klar !!
             Console.WriteLine("[0] - Settings"); // Calle kanske
@@ -249,6 +242,20 @@ while (Running)
             switch (input)
             {
                 case "1":
+
+                    ShowAllJournals(journals);
+                    Console.WriteLine();
+                    System.Console.WriteLine("What journal do you wanna see? ");
+                    int patientChoose = Convert.ToInt32(Console.ReadLine());
+                    Journal selected_journal = journals[patientChoose-1];
+
+                    selected_journal.Info();
+
+                    Console.WriteLine("\nPress ENTER to continue...");
+                    Console.ReadLine();
+                                        
+                    
+                    
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
@@ -267,7 +274,7 @@ while (Running)
                     // funktion för att ändra gamla journaler
                     break;
                 case "6":
-                    // Location.ShowAllLocations(locations);
+                   // Location.ShowAllLocations(locations); // funkar ej
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "7":
@@ -278,7 +285,6 @@ while (Running)
                     permission = null;
                     activeUser = null;
                     break;
-
             }
         }
         // Ska kunna se patientjournaler. ---
@@ -470,17 +476,37 @@ static void EditJournal(List<Journal> journals, List<User> users)
             {
                 System.Console.WriteLine("---- USER FOUND ----");
                 System.Console.WriteLine("\n \n-- JOURNAL TITLES --");
-                for (int i = 1; i < journals.Count; i++)
+                for (int i = 0; i < journals.Count; i++)
                 {
-                    Console.WriteLine(i + journals[i].Title);
+                    Console.WriteLine((i+ 1) + ". "+ journals[i].Title);
                 }
             }
         }
         System.Console.WriteLine("Enter INDEX of the journal you'd like to change");
         int journal_change = Convert.ToInt32(Console.ReadLine());
         Journal chosenIndex = journals[journal_change - 1];
-        /* chosenIndex */
+        chosenIndex.Info();
+        bool changeJournal = true;
+        while (changeJournal)
+        {
+        System.Console.WriteLine("What would you like to change? Title/Description");
+        string inputChange = Console.ReadLine().ToLower();
+            if (inputChange.ToLower() == "title")
+            {
+                chosenIndex.ChangeTitle();
+            }
+            if (inputChange.ToLower() == "description")
+            {
+                chosenIndex.ChangeDesc();
+            }
 
+            System.Console.WriteLine("\n \n \nWrite DONE to leave, press ENTER to change more ");
+            string userLeave = Console.ReadLine().ToLower();
+            if(userLeave.ToLower() == "done")
+            {
+                changeJournal = false;
+            }
+        }
     }
     else
     {
@@ -488,6 +514,34 @@ static void EditJournal(List<Journal> journals, List<User> users)
     }
 }
 
+static void ShowAllJournals(List<Journal> journals)
+{
+    try { Console.Clear(); } catch { }
+    System.Console.WriteLine("==== ALL JOURNALS IN THE SYSTEM ====");
+    System.Console.WriteLine();
+    if (journals.Count == 0)
+    {
+        System.Console.WriteLine("No journals found. ");
+    }
+    else
+    {
+        for (int i = 0; i < journals.Count; i++)
+        {
+            Journal j = journals[i];
+            Console.WriteLine($"{i + 1}");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine($"Publisher: {j.Publisher}");
+            Console.WriteLine($"Name: {j.Patient}");
+            Console.WriteLine($"Title: {j.Title}");
+            Console.WriteLine("-----------------------");
+
+        }
+    }
+}
+
+
+
+// 
 /*
 
 
