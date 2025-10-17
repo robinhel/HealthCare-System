@@ -468,7 +468,7 @@ static void EditJournal(List<Journal> journals, List<User> users)
                 System.Console.WriteLine($"[ID {user.Id}] ---- Username - {user.Username}");
             }
         }
-        System.Console.WriteLine("Enter the ID of the user you'd like to change journal entry");
+        System.Console.WriteLine("Enter the ID of the user you'd like to change journal entry: ");
         int ID_input = Convert.ToInt32(Console.ReadLine());
         foreach (User user in users)
         {
