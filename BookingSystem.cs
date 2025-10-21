@@ -120,7 +120,7 @@ public class BookingSystem
         for (int i = 0; i < bookings.Count; i++)
         {
             Booking b = bookings[i];
-            if (b.status == BookingStatus.approved && b.Patient == patient)
+            if (b.Patient == patient)
             {
                 Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
             }
@@ -151,7 +151,7 @@ public class BookingSystem
             Booking b = bookings[i];
             if (b.Patient == patient)
             {
-                Console.WriteLine($"Appointment: {i}, Doctor: {b.Doctor} time: {b.Start}, status: {b.status}");
+                Console.WriteLine($"Appointment Index: {i}, Doctor: {b.Doctor.Username} time: {b.Start}, status: {b.status}");
             }
         }
         Console.WriteLine("Enter the index of the appointment to cancel");
