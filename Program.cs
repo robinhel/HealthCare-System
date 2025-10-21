@@ -298,10 +298,10 @@ while (Running)
                     // funktion för att skriva journaler
                     break;
                 case "3":// Handle Requested Events
-
+                    bookingSystem.HandleRequestBooking(activeUser);
                     break;
                 case "4":// Show upcoming appointments
-
+                    bookingSystem.DoctorScheduele(activeUser);
                     break;
                 case "5":
 
