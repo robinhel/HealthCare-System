@@ -49,7 +49,7 @@ class MyProgram
 
         bookingSystem.HandleRequestBooking(choosenDoctor);
 
-        bookingSystem.Patientscheduele(activeUser);
+        bookingSystem.PatientScheduele(activeUser);
 
 
 

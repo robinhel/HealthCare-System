@@ -113,7 +113,7 @@ public class BookingSystem
         }
     }
 
-    public void Patientscheduele(User patient)
+    public void PatientScheduele(User patient)
     {
 
         Console.WriteLine($"upcoming appointments for {patient.Username},");
@@ -128,7 +128,7 @@ public class BookingSystem
 
     }
 
-    public void Doctorscheduele(User doctor)
+    public void DoctorScheduele(User doctor)
     {
 
         Console.WriteLine($"upcoming appointments for {doctor.Username},");
@@ -141,5 +141,25 @@ public class BookingSystem
             }
         }
 
+    }
+
+    public void CancelBooking(User patient)
+    {
+        Console.WriteLine("Your apointments:");
+        for (int i = 0; i < bookings.Count; i++)
+        {
+            Booking b = bookings[i];
+            if (b.Patient == patient)
+            {
+                Console.WriteLine($"Appointment: {i}, Doctor: {b.Doctor} time: {b.Start}, status: {b.status}");
+            }
+        }
+        Console.WriteLine("Enter the index of the appointment to cancel");
+        int index = Convert.ToInt32(Console.ReadLine());
+
+
+        Booking Selectedbooking = bookings[index];
+        bookings.Remove(Selectedbooking);
+        Console.WriteLine("Appontment has been canceled.");
     }
 }

@@ -1,3 +1,5 @@
+
+/*
 namespace App;
 
 class Participant
@@ -10,7 +12,7 @@ class Participant
         this.name = name;    // göra det tydligt vilken som e klass och vilken som är klassens fält och parametrar
         this.eventRole = eventRole;
     }
-    
+
     public void ShowUser()
     {
         Console.WriteLine($"Hello {name}, your role is a {eventRole}");
