@@ -21,7 +21,7 @@ DateTime now = DateTime.Now;
 
 
 users.Add(new User("a", "a", false, UserRole.Admin));
-Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
+Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p-1");
 journals.Add(test);
 
 
@@ -128,61 +128,80 @@ while (Running)
             switch (Console.ReadLine())
             {
                 case "1":
-
-                    Console.WriteLine("Write your name: ");
-                    string username = Console.ReadLine().ToLower();
-                    int index = 0;
-                    foreach (Journal j in journals)
+                    try
                     {
-                        if (j.Patient == username)
+                        if (journals.Count == 0)
                         {
-                            j.ShowPatientJournals(username, journals);
-
-                            System.Console.WriteLine();
-                            Console.WriteLine($"[{index}], {j.Title}");
-                        }
-                        index++;
-                    }
-                    Console.WriteLine("Type the journal number to view the journal");
-                    string number = Console.ReadLine();
-
-                    if (int.TryParse(number, out int input))
-                    {
-                        if (journals[input].Patient == username)
-                        {
-                            Journal showJournal = journals[input];
-                            Console.WriteLine($"---- {showJournal.Title} ----");
-                            Console.WriteLine($"Description: {showJournal.Description} ");
-                            Console.WriteLine($"Publisher: {showJournal.Publisher}");
+                            System.Console.WriteLine("No journals to show, try again later! ");
                         }
                         else
                         {
-                            System.Console.WriteLine("You dont have acess to this journal.");
+                            Console.WriteLine("Write your name: ");
+                            string username = Console.ReadLine().ToLower();
+                            int index = 0;
+                            try{ Console.Clear(); } catch{} 
+                            foreach (Journal j in journals)
+                            {
+                                if (j.Patient == username)
+                                {
+                                    j.ShowPatientJournals(username, journals);
+
+                                    System.Console.WriteLine();
+                                    Console.WriteLine($"[{index}]. {j.Title}");
+                                }
+                                index++;
+                            }
+                            Console.WriteLine("Type the journal number to view the journal");
+                            string number = Console.ReadLine();
+
+                            if (int.TryParse(number, out int input))
+                            {
+                                if (journals[input].Patient == username)
+                                {
+                                    try{ Console.Clear(); } catch{}
+                                    Journal showJournal = journals[input];
+                                    Console.WriteLine($"---- {showJournal.Title} ----");
+                                    Console.WriteLine($"Description: {showJournal.Description} ");
+                                    Console.WriteLine($"Publisher: {showJournal.Publisher}");
+                                    System.Console.WriteLine();
+                                    System.Console.WriteLine("press ENTER to continue.. ");
+                                    Console.ReadLine();
+                                }
+                                else
+                                {
+                                    System.Console.WriteLine("You dont have acess to this journal.");
+                                }
+                            }
+                            Console.ReadLine();
+                            
                         }
+                        // gör funktion för att visa användarens journaler
                     }
-                    Console.ReadLine();
-                    // gör funktion för att visa användarens journaler
+                    catch
+                    {
+                        System.Console.WriteLine("Wrong input ");
+                    }
                     // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
                 case "2":
-                    //booking.ShowAvailableTimes();
+                        //booking.ShowAvailableTimes();
 
-                    break;
-                case "3":
+                        break;
+                    case "3":
 
-                    break;
-                case "4":
-                    // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
-                    break;
-                case "5":
-                    break;
-                case "q":
-                    activeUser.IsLoggedIn = false;
-                    permission = null;
-                    activeUser = null;
-                    break;
-            }
-        }
+                        break;
+                    case "4":
+                        // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
+                        break;
+                    case "5":
+                        break;
+                    case "q":
+                        activeUser.IsLoggedIn = false;
+                        permission = null;
+                        activeUser = null;
+                        break;
+                    }
+                    }
         if (activeUser != null && activeUser.Role == UserRole.Admin)
         {
             // ADMIN VV
@@ -246,10 +265,9 @@ while (Running)
             Console.WriteLine("[1] - View patient journals"); // Nicklas
             Console.WriteLine("[2] - Write journals"); // FILIPH
             Console.WriteLine("[3] - Accept Requested Event");
-            Console.WriteLine("[4]");
-            Console.WriteLine("[5] - edit journal entry"); // (filiph)
-            Console.WriteLine("[6] - view location"); // Klar !!
-            Console.WriteLine("[7] - Show priviliges"); // Klar !!
+            Console.WriteLine("[4] - edit journal entry"); // (filiph)
+            Console.WriteLine("[5] - view location"); // Klar !!
+            Console.WriteLine("[6] - Show priviliges"); // Klar !!
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Quit");
 
@@ -259,17 +277,23 @@ while (Running)
             {
                 case "1":
 
+                    try
+                    {
+                        ShowAllJournals(journals);
+                        Console.WriteLine();
+                        System.Console.WriteLine("Enter the number of the journal you want to view: ");
+                        int patientChoose = Convert.ToInt32(Console.ReadLine());
+                        Journal selected_journal = journals[patientChoose - 1];
+                        try { Console.Clear(); } catch { };
+                        selected_journal.Info();
 
-                    ShowAllJournals(journals);
-                    Console.WriteLine();
-                    System.Console.WriteLine("What journal do you wanna see? ");
-                    int patientChoose = Convert.ToInt32(Console.ReadLine());
-                    Journal selected_journal = journals[patientChoose - 1];
-
-                    selected_journal.Info();
-
-                    Console.WriteLine("\nPress ENTER to continue...");
-                    Console.ReadLine();
+                        Console.WriteLine("\nPress ENTER to continue...");
+                        Console.ReadLine();
+                    }
+                    catch
+                    {
+                        System.Console.WriteLine("Wrong input");
+                    }
 
 
 
@@ -283,19 +307,17 @@ while (Running)
                 case "3":
 
                     break;
+             
                 case "4":
-
-                    break;
-                case "5":
 
                     EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
-                case "6":
+                case "5":
                     // Location.ShowAllLocations(locations); // funkar ej
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
-                case "7":
+                case "6":
                     activeUser.permissions?.ShowAllPermission();
                     break;
                 case "q":
@@ -543,10 +565,10 @@ static void ShowAllJournals(List<Journal> journals)
     }
     else
     {
-        for (int i = 0; i < journals.Count; i++)
+        for (int i = 0; i < journals.Count; i++) 
         {
             Journal j = journals[i];
-            Console.WriteLine($"{i + 1}");
+            Console.WriteLine($"[{i + 1}] ");
             Console.WriteLine("-----------------------");
             Console.WriteLine($"Publisher: {j.Publisher}");
             Console.WriteLine($"Name: {j.Patient}");
