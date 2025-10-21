@@ -1,6 +1,11 @@
-﻿using App;
+﻿
+using System.Collections;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
+using App;
 
 
+// Global lista med users, innehåller alla roller.
 List<User> users = new List<User>(); // Lista för alla users
 //List<Patient> patients = new List<Patient>(); // Lista för patienter
 List<Journal> journals = new List<Journal>(); //  // Lista för alla journaler
@@ -9,21 +14,28 @@ List<Location> locations = new();
 Permissions permission = null;
 
 
-users.Add(new User("p", "p", false, UserRole.Patient));
 
-users.Add(new User("d", "d", false, UserRole.Doctor));
+// Skapa ett globalt bokningssystem
+BookingSystem bookingSystem = new BookingSystem();
+DateTime now = DateTime.Now;
+
 
 users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p");
 journals.Add(test);
 
 
-SaveData.LoadUserDataCsv(users);
-LocationSaveData.LoadLocationDataCsv(locations);
+// Skapa 3st users med roller, patient, doctor, admin
+users.Add(new User("p-1", "a", false, UserRole.Patient));
+users.Add(new User("p-2", "a", false, UserRole.Patient));
+users.Add(new User("p-3", "a", false, UserRole.Patient));
+users.Add(new User("d-1", "a", false, UserRole.Doctor));
+users.Add(new User("d-2", "a", false, UserRole.Doctor));
+users.Add(new User("a-1", "a", false, UserRole.Admin));
 
-User admin1 = new User("b", "b", false, UserRole.Admin);
 
-
+// SaveData.LoadUserDataCsv(users);
+// LocationSaveData.LoadLocationDataCsv(locations);
 
 bool Running = true;
 
@@ -101,6 +113,7 @@ while (Running)
         {
             try { Console.Clear(); } catch { }
             Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
+
             Console.WriteLine("[1] - Browse Journal"); // Nicklas kanske klar? ingen aning? hoppas det?
             Console.WriteLine("[2] - Request Event"); // Robin
             Console.WriteLine("[3] - Create Event"); // Robin
@@ -115,10 +128,11 @@ while (Running)
             switch (Console.ReadLine())
             {
                 case "1":
+
                     Console.WriteLine("Write your name: ");
                     string username = Console.ReadLine().ToLower();
                     int index = 0;
-                    foreach(Journal j in journals)
+                    foreach (Journal j in journals)
                     {
                         if (j.Patient == username)
                         {
@@ -151,6 +165,7 @@ while (Running)
                     // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
                 case "2":
+                    //booking.ShowAvailableTimes();
 
                     break;
                 case "3":
@@ -222,6 +237,7 @@ while (Running)
         // Ska kunna tilldela roller (t.ex. personal, lokal admin).
 
 
+
         if (activeUser != null && activeUser.Role == UserRole.Doctor)
         {
 
@@ -243,19 +259,20 @@ while (Running)
             {
                 case "1":
 
+
                     ShowAllJournals(journals);
                     Console.WriteLine();
                     System.Console.WriteLine("What journal do you wanna see? ");
                     int patientChoose = Convert.ToInt32(Console.ReadLine());
-                    Journal selected_journal = journals[patientChoose-1];
+                    Journal selected_journal = journals[patientChoose - 1];
 
                     selected_journal.Info();
 
                     Console.WriteLine("\nPress ENTER to continue...");
                     Console.ReadLine();
-                                        
-                    
-                    
+
+
+
                     // funktion för att visa alla journaler i systemet (historik)
                     break;
                 case "2":
@@ -270,11 +287,12 @@ while (Running)
 
                     break;
                 case "5":
+
                     EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
                 case "6":
-                   // Location.ShowAllLocations(locations); // funkar ej
+                    // Location.ShowAllLocations(locations); // funkar ej
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "7":
@@ -457,7 +475,7 @@ static void CreateJournal(List<Journal> journals, List<User> users, User activeU
 
 static void EditJournal(List<Journal> journals, List<User> users)
 {
-    if (journals.Count >= 1 )
+    if (journals.Count >= 1)
     {
         System.Console.WriteLine("----------   EDIT JOURNAL ENTRY   ----------");
 
@@ -478,7 +496,7 @@ static void EditJournal(List<Journal> journals, List<User> users)
                 System.Console.WriteLine("\n \n-- JOURNAL TITLES --");
                 for (int i = 0; i < journals.Count; i++)
                 {
-                    Console.WriteLine((i+ 1) + ". "+ journals[i].Title);
+                    Console.WriteLine((i + 1) + ". " + journals[i].Title);
                 }
             }
         }
@@ -489,8 +507,8 @@ static void EditJournal(List<Journal> journals, List<User> users)
         bool changeJournal = true;
         while (changeJournal)
         {
-        System.Console.WriteLine("What would you like to change? Title/Description");
-        string inputChange = Console.ReadLine().ToLower();
+            System.Console.WriteLine("What would you like to change? Title/Description");
+            string inputChange = Console.ReadLine().ToLower();
             if (inputChange.ToLower() == "title")
             {
                 chosenIndex.ChangeTitle();
@@ -502,7 +520,7 @@ static void EditJournal(List<Journal> journals, List<User> users)
 
             System.Console.WriteLine("\n \n \nWrite DONE to leave, press ENTER to change more ");
             string userLeave = Console.ReadLine().ToLower();
-            if(userLeave.ToLower() == "done")
+            if (userLeave.ToLower() == "done")
             {
                 changeJournal = false;
             }
