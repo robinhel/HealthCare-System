@@ -162,4 +162,18 @@ public class BookingSystem
         bookings.Remove(Selectedbooking);
         Console.WriteLine("Appontment has been canceled.");
     }
+
+    public void CreatAppointment(User doctor, User patient, DateTime time)
+    {
+        Console.WriteLine($"new Appointment for Dr.{doctor.Username}");
+        Console.WriteLine($"Patient is: {patient.Username}");
+        Console.WriteLine($"Time: {time}");
+        Console.WriteLine("Booking has been approved and added to schedule");
+        int newId = bookings.Count + 1;
+        Booking booking = new Booking(newId, patient, doctor, time);
+        booking.status = BookingStatus.approved;
+        bookings.Add(booking);
+
+
+    }
 }
