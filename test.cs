@@ -1,8 +1,7 @@
-﻿
+
 using System.Collections;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
 using App;
 
 
@@ -129,61 +128,15 @@ while (Running)
             switch (Console.ReadLine())
             {
                 case "1":
-                    try
-                        {
-                            System.Console.WriteLine("Enter your name: ");
-                            string username = Console.ReadLine().ToLower();
-                            int index = 0;
-                            try { Console.Clear(); } catch { }
-                            bool found = false;
-                            foreach (Journal j in journals)
-                            {
-                                
-                                if (j.Patient == username)
-                                {
-                                    j.ShowPatientJournals(username, journals);
-                                    System.Console.WriteLine();
-                                    Console.WriteLine($"[{index}]. {j.Title}");
-                                    index++;
-                                    found = true;
-                                }
-                            } 
-                                if(!found)
-                                {
-                                System.Console.WriteLine("Wrong input, try again ");
-                                System.Console.WriteLine("Press ENTER to continue.. ");
-                                Console.ReadLine();
-                                break;
-                                }
-                            Console.WriteLine("Type the journal number to view the journal");
-                            string number = Console.ReadLine();
-
-                            if (int.TryParse(number, out int input))
-                            {
-                                if (journals[input].Patient == username)
-                                {
-                                    try{ Console.Clear(); } catch{}
-                                    Journal showJournal = journals[input];
-                                    Console.WriteLine($"---- {showJournal.Title} ----");
-                                    Console.WriteLine($"Description: {showJournal.Description} ");
-                                    Console.WriteLine($"Publisher: {showJournal.Publisher}");
-                                    System.Console.WriteLine();
-                                    System.Console.WriteLine("press ENTER to continue.. ");
-                                }
-                                else
-                                {
-                                    System.Console.WriteLine("You dont have acess to this journal.");
-                                }
-                            }
-                            Console.ReadLine();
-                          
-                        } 
-                        // gör funktion för att visa användarens journaler
-                    catch
+                        foreach(User user in users)
                     {
-                        System.Console.WriteLine("Wrong input ");
-                        System.Console.WriteLine("Press ENTER to continue...");
-                        Console.ReadLine();
+                        if(user == activeUser)
+                        {
+                            foreach(Journal journal in journals)
+                            {
+                                ShowAllJournals(journals);
+                            }
+                        }
                     }
                     // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
@@ -572,8 +525,7 @@ static void ShowAllJournals(List<Journal> journals)
             Console.WriteLine($"Publisher: {j.Publisher}");
             Console.WriteLine($"Name: {j.Patient}");
             Console.WriteLine($"Title: {j.Title}");
-            Console.WriteLine("========================");
-            System.Console.WriteLine();
+            Console.WriteLine("-----------------------");
 
         }
     }
