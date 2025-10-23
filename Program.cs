@@ -216,7 +216,15 @@ while (Running)
             {
                 case "1":
                     // gör en funktion för att admin ska kunna lägga till nya doctorer (sätta enum Doctor)
-                    AddDoctor(users);
+                    if (activeUser.permissions.AddDoctor == true)
+                    {
+                        AddDoctor(users);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You dont have permission for this!");
+                        Console.ReadLine();
+                    }
                     break;
                 case "2":
                     permission?.EditUserPermissionById(users);
