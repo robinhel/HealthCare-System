@@ -133,15 +133,15 @@ while (Running)
                 case "1":
                     try
                     {
-                        System.Console.WriteLine("Enter your name: ");
-                        string username = Console.ReadLine().ToLower();
+                        //System.Console.WriteLine("Enter your name: ");
+                        //string username = Console.ReadLine().ToLower();
                         int index = 1;
                         try { Console.Clear(); } catch { }
                         bool found = false;
                         foreach (Journal j in journals)
                         {
 
-                            if (j.Patient == username)
+                            if (j.Patient == activeUser.Username)
                             {
                                 System.Console.WriteLine();
                                 found = true;
@@ -149,12 +149,12 @@ while (Running)
                         }
                         if (found)
                         {
-                            journals[0].ShowPatientJournals(username, journals);
+                            journals[0].ShowPatientJournals(activeUser.Username, journals);
                         }
                         foreach (Journal j in journals)
                         {
 
-                            if (j.Patient == username)
+                            if (j.Patient == activeUser.Username)
                             {
                                 Console.WriteLine($"[{index}]. {j.Title}");
                                 index++;
@@ -173,7 +173,7 @@ while (Running)
                         if (int.TryParse(number, out int input))
                         {
                             input -= 1;
-                            if (journals[input].Patient == username)
+                            if (journals[input].Patient == activeUser.Username)
                             {
                                 try { Console.Clear(); } catch { }
                                 Journal showJournal = journals[input];
@@ -188,7 +188,6 @@ while (Running)
                                 System.Console.WriteLine("You dont have acess to this journal.");
                             }
                         }
-                        Console.ReadLine();
                     }
 
 
