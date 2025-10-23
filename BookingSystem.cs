@@ -94,35 +94,39 @@ public class BookingSystem
         {
             Console.WriteLine("you have no Appointments to cancel...");
         }
+        else
 
-        Console.WriteLine("Enter index of booking to Handle");
-        if (int.TryParse(Console.ReadLine(), out int index))
         {
-            Booking HandleBooking = bookings[index];
-
-
-            Console.WriteLine("Enter [a] to accept request or [d] to deny request");
-            string AcceptDeny = Console.ReadLine();
-
-            switch (AcceptDeny)
+            Console.WriteLine("Enter index of booking to Handle");
+            if (int.TryParse(Console.ReadLine(), out int index))
             {
-                case "a":
-                    HandleBooking.status = BookingStatus.approved;
-                    Console.WriteLine("Booking Approved");
-                    Console.ReadLine();
+                Booking HandleBooking = bookings[index];
 
-                    break;
 
-                case "d":
-                    HandleBooking.status = BookingStatus.denied;
-                    Console.WriteLine("Booking Denied");
-                    Console.ReadLine();
+                Console.WriteLine("Enter [a] to accept request or [d] to deny request");
+                string AcceptDeny = Console.ReadLine();
 
-                    break;
+                switch (AcceptDeny)
+                {
+                    case "a":
+                        HandleBooking.status = BookingStatus.approved;
+                        Console.WriteLine("Booking Approved");
+                        Console.ReadLine();
+
+                        break;
+
+                    case "d":
+                        HandleBooking.status = BookingStatus.denied;
+                        Console.WriteLine("Booking Denied");
+                        Console.ReadLine();
+
+                        break;
+                }
             }
         }
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
+
     }
 
     public void PatientScheduele(User patient)
