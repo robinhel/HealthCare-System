@@ -85,6 +85,11 @@ public class BookingSystem
             {
                 Console.WriteLine($"booking index: {i} patient:{b.Patient.Username}, time: {b.Start}, status: {b.status}");
             }
+            else
+            {
+                Console.WriteLine("No bookings to handle");
+                break;
+            }
         }
         Console.WriteLine("Enter index of booking to Handle");
         int index = Convert.ToInt32(Console.ReadLine());
@@ -155,6 +160,8 @@ public class BookingSystem
 
     public void CancelBooking(User patient)
     {
+        bool hasBookings = false;
+
         Console.WriteLine("Your apointments:");
         for (int i = 0; i < bookings.Count; i++)
         {
@@ -162,16 +169,29 @@ public class BookingSystem
             if (b.Patient == patient)
             {
                 Console.WriteLine($"Appointment Index: {i}, Doctor: {b.Doctor.Username} time: {b.Start}, status: {b.status}");
+                hasBookings = true;
             }
         }
-        Console.WriteLine("Enter the index of the appointment to cancel");
-        int index = Convert.ToInt32(Console.ReadLine());
+
+        if (hasBookings != true)
+        {
+            Console.WriteLine("you have no Appointments to cancel...");
+        }
+        else
+            Console.WriteLine("Enter the index of the appointment to cancel");
+        if (int.TryParse(Console.ReadLine(), out int index))
+        {
+
+            Booking Selectedbooking = bookings[index];
 
 
-        Booking Selectedbooking = bookings[index];
-        bookings.Remove(Selectedbooking);
-        Console.WriteLine("Appontment has been canceled.");
+            bookings.Remove(Selectedbooking);
+            Console.WriteLine("Appontment has been canceled.");
+        }
+
     }
+
+
 
     public void CreatAppointment(User doctor, User patient, DateTime time)
     {
