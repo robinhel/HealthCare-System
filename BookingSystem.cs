@@ -78,69 +78,79 @@ public class BookingSystem
     }
     public void HandleRequestBooking(User doctor)
     {
+        bool hasBookings = false;
+
         for (int i = 0; i < bookings.Count; i++)
         {
             Booking b = bookings[i];
             if (b.status == BookingStatus.pending)
             {
                 Console.WriteLine($"booking index: {i} patient:{b.Patient.Username}, time: {b.Start}, status: {b.status}");
-            }
-            else
-            {
-                Console.WriteLine("No bookings to handle");
-                break;
+                hasBookings = true;
             }
         }
-        Console.WriteLine("Enter index of booking to Handle");
-        int index = Convert.ToInt32(Console.ReadLine());
 
-        Booking HandleBooking = bookings[index];
-
-
-        Console.WriteLine("Enter [a] to accept request or [d] to deny request");
-        string AcceptDeny = Console.ReadLine();
-
-        switch (AcceptDeny)
+        if (hasBookings != true)
         {
-            case "a":
-                HandleBooking.status = BookingStatus.approved;
-                Console.WriteLine("Booking Approved");
-                Console.ReadLine();
-
-                break;
-
-            case "d":
-                HandleBooking.status = BookingStatus.denied;
-                Console.WriteLine("Booking Denied");
-                Console.ReadLine();
-
-                break;
+            Console.WriteLine("you have no Appointments to cancel...");
         }
+
+        Console.WriteLine("Enter index of booking to Handle");
+        if (int.TryParse(Console.ReadLine(), out int index))
+        {
+            Booking HandleBooking = bookings[index];
+
+
+            Console.WriteLine("Enter [a] to accept request or [d] to deny request");
+            string AcceptDeny = Console.ReadLine();
+
+            switch (AcceptDeny)
+            {
+                case "a":
+                    HandleBooking.status = BookingStatus.approved;
+                    Console.WriteLine("Booking Approved");
+                    Console.ReadLine();
+
+                    break;
+
+                case "d":
+                    HandleBooking.status = BookingStatus.denied;
+                    Console.WriteLine("Booking Denied");
+                    Console.ReadLine();
+
+                    break;
+            }
+        }
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
     }
 
     public void PatientScheduele(User patient)
     {
-
-
+        bool hasBookings = false;
 
         Console.WriteLine($"upcoming appointments for {patient.Username},");
         for (int i = 0; i < bookings.Count; i++)
         {
             Booking b = bookings[i];
-            if (b.Patient == patient)
+            if (b.Patient.Username == patient.Username)
             {
                 Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
-            }
-            else
-            {
-                Console.WriteLine("No up coming bookings");
+                hasBookings = true;
             }
         }
+        if (!hasBookings)
+        {
+            Console.WriteLine("you have no upcoming Appointments...");
+        }
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
 
     }
 
     public void DoctorScheduele(User doctor)
     {
+        bool hasBookings = false;
 
         Console.WriteLine($"upcoming appointments for {doctor.Username},");
         for (int i = 0; i < bookings.Count; i++)
@@ -149,13 +159,15 @@ public class BookingSystem
             if (b.status == BookingStatus.approved && b.Doctor == doctor)
             {
                 Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
-            }
-            else
-            {
-                Console.WriteLine("No upcoming bookings");
+                hasBookings = true;
             }
         }
-
+        if (hasBookings != true)
+        {
+            Console.WriteLine("you have no Appointments...");
+        }
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
     }
 
     public void CancelBooking(User patient)
@@ -178,17 +190,20 @@ public class BookingSystem
             Console.WriteLine("you have no Appointments to cancel...");
         }
         else
-            Console.WriteLine("Enter the index of the appointment to cancel");
-        if (int.TryParse(Console.ReadLine(), out int index))
         {
+            Console.WriteLine("Enter the index of the appointment to cancel");
+            if (int.TryParse(Console.ReadLine(), out int index))
+            {
 
-            Booking Selectedbooking = bookings[index];
+                Booking Selectedbooking = bookings[index];
 
 
-            bookings.Remove(Selectedbooking);
-            Console.WriteLine("Appontment has been canceled.");
+                bookings.Remove(Selectedbooking);
+                Console.WriteLine("Appontment has been canceled.");
+            }
         }
-
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
     }
 
 
