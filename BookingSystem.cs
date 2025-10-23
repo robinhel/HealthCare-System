@@ -224,5 +224,9 @@ public class BookingSystem
         bookings.Add(booking);
 
 
+        Console.WriteLine("Press enter to continue.");
+        Console.ReadLine();
+
+
     }
 }
