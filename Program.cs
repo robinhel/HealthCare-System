@@ -118,7 +118,7 @@ while (Running)
             Console.WriteLine("[1] - Browse Journal"); // Nicklas kanske klar? ingen aning? hoppas det?
             Console.WriteLine("[2] - Book appointment"); // Robin - klar
             Console.WriteLine("[3] - Show schedule"); // Robin - klar ish
-            Console.WriteLine("[4] - Cancel appointment"); // Robin - klar ish
+            Console.WriteLine("[4] - Cancel appointment"); // Robin - klar
             Console.WriteLine("[q] - Logout"); // Nicklas - klar
 
             // Request om att ändra lösenord (kanske)
@@ -225,7 +225,7 @@ while (Running)
                     bookingSystem.PatientScheduele(activeUser); // kolla så att om du inte har några så säger den det
                     break;
                 case "4": // cancel appointment
-                    bookingSystem.CancelBooking(activeUser); // kolla så att om du inte har några så säger den det
+                    bookingSystem.CancelBooking(activeUser);
                     break;
 
                 case "q":
@@ -244,7 +244,7 @@ while (Running)
             Console.WriteLine("[3] - Show Privileges"); // Calle - Klar !!
             Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
             Console.WriteLine("[5] - Remove Doctor"); // FILIPH - Klar !!
-            Console.WriteLine("[6] - Create Appointment"); // Robin
+            Console.WriteLine("[6] - Create Appointment"); // Robin 
             Console.WriteLine("[q] - Logout"); //  Nicklas - Klar !!
 
             switch (Console.ReadLine())
@@ -321,11 +321,11 @@ while (Running)
             try { Console.Clear(); } catch { }
             Console.WriteLine("[1] - View patient journals"); // Nicklas
             Console.WriteLine("[2] - Write journals"); // FILIPH
-            Console.WriteLine("[3] - Handle Requested Events"); // Robin
-            Console.WriteLine("[4] - Show upcoming appointments"); // Robin
+            Console.WriteLine("[3] - Handle Requested appointments"); // Robin ish
+            Console.WriteLine("[4] - Show upcoming appointments"); // Robin ish
             Console.WriteLine("[5] - edit journal entry"); // (filiph)
             Console.WriteLine("[6] - view location"); // COOKING !!
-            Console.WriteLine("[7] - Show priviliges"); // Klar !!
+            Console.WriteLine("[7] - Show priviliges"); // Klar !!  
             Console.WriteLine("[0] - Settings"); // Calle kanske
             Console.WriteLine("[q] - Logout");
 
