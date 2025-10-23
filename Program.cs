@@ -315,8 +315,8 @@ while (Running)
                     EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
-                case "5":
-                    // Location.ShowAllLocations(locations); // funkar ej
+                case "6":
+                    Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
                 case "6":
@@ -372,7 +372,8 @@ static void AddDoctor(List<User> users)
     string AdminUsername = Console.ReadLine();
     System.Console.WriteLine("\n   Enter password: ");
     string AdminPassword = Console.ReadLine();
-    Console.WriteLine("\n \n   New account succesfully created! \n");
+    Console.WriteLine($"\n \n   New account with username [{AdminUsername}] succesfully created! \n ");
+    Console.ReadLine();
     System.Console.WriteLine("-----------------------------------------------------------------");
 
 
@@ -413,6 +414,7 @@ static void RemoveDoctor(List<User> users)
     {
         users.Remove(deletedUser);
         System.Console.WriteLine($"Succesfully deleted {deletedUser.Username} with ID: {deletedUser.Id}");
+        Console.ReadLine();
     }
     else
     {
