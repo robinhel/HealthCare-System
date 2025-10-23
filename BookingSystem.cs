@@ -116,6 +116,8 @@ public class BookingSystem
     public void PatientScheduele(User patient)
     {
 
+
+
         Console.WriteLine($"upcoming appointments for {patient.Username},");
         for (int i = 0; i < bookings.Count; i++)
         {
@@ -123,6 +125,10 @@ public class BookingSystem
             if (b.Patient == patient)
             {
                 Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
+            }
+            else
+            {
+                Console.WriteLine("No up coming bookings");
             }
         }
 
@@ -138,6 +144,10 @@ public class BookingSystem
             if (b.status == BookingStatus.approved && b.Doctor == doctor)
             {
                 Console.WriteLine($"booking: {i} time: {b.Start}, status: {b.status}");
+            }
+            else
+            {
+                Console.WriteLine("No upcoming bookings");
             }
         }
 
