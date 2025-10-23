@@ -46,6 +46,7 @@ while (Running)
 {
     if (activeUser == null)  // ------------------------LOGIN MENU----------------------
     {
+        try { Console.Clear(); } catch { }
         Console.WriteLine("-=Welcome to the Healthcare system=-");
         Console.WriteLine("1. Login");
         Console.WriteLine("2. Create account");
