@@ -14,7 +14,7 @@ class Location
     }
     public static void ShowAllLocations(List<Location> locations)
     {
-        if (locations.Count <= 0)
+        if (locations.Count < 1)
         {
             Console.WriteLine("No hospitals available");
         }
@@ -23,10 +23,11 @@ class Location
             Console.WriteLine("Available hospitals:");
             foreach (Location location in locations)
             {
-                Console.WriteLine($"{location}");
+                Console.WriteLine($"{location.Name}");
             }
         }
-
+        Console.WriteLine("Enter to continue");
+        Console.ReadLine();
     }
 }
 

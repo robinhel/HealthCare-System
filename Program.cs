@@ -24,6 +24,8 @@ DateTime now = DateTime.Now;
 users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p-1");
 journals.Add(test);
+LocationSaveData.LoadLocationDataCsv(locations);
+
 
 
 // Skapa 3st users med roller, patient, doctor, admin
@@ -110,16 +112,16 @@ while (Running)
         // - Participant (Visa vilken roll som är med i eventet )
         // - Journal (Skriva journaler och visa journaler)
         // - UserRoles (Tilldela roller)
-        if (activeUser != null && activeUser.Role == UserRole.Patient)
+        if (activeUser != null && activeUser.Role == UserRole.Patient)//-----------------------------------patient menu--------------------------------------
         {
             try { Console.Clear(); } catch { }
             Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
 
-            Console.WriteLine("[1] - Browse Journal"); // Nicklas kanske klar? ingen aning? hoppas det?
-            Console.WriteLine("[2] - Request Event"); // Robin
-            Console.WriteLine("[3] - Create Event"); // Robin
-            Console.WriteLine("[4] - Show schedule"); // Robin
-            Console.WriteLine("[q] - Quit"); // Nicklas klar
+            Console.WriteLine("[1] - Browse Journal");      // Nicklas - klar
+            Console.WriteLine("[2] - Book appointment");    // Robin - klar
+            Console.WriteLine("[3] - Show schedule");       // Robin - klar
+            Console.WriteLine("[4] - Cancel appointment");  // Robin - klar
+            Console.WriteLine("[q] - Logout");              // Nicklas - klar
 
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
@@ -198,18 +200,35 @@ while (Running)
                     }
                     // eventuellt göra så att användaren kan välja ett event i journalen och kolla djupare på det
                     break;
-                case "2":
-                    //booking.ShowAvailableTimes();
+                case "2": // request booking
 
-                    break;
+                    Console.WriteLine("Enter index of Doctor to book.");
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        if (users[i].Role == UserRole.Doctor)
+                        {
+                            Console.WriteLine($"Doctor Index:{i} Dr.{users[i].Username}.");
+                        }
+                    }
+                    int ChooseDoctorindex = Convert.ToInt32(Console.ReadLine());
+                    User choosenDoctor = users[ChooseDoctorindex];
+                    bookingSystem.ShowAvailableTimes(choosenDoctor);
+
+                    Console.WriteLine("Enter starting hour of booking (8-15)");
+
+                    Double startTime = Convert.ToInt32(Console.ReadLine());
+                    DateTime bookedTime = DateTime.Today.AddHours(startTime);
+
+                    bookingSystem.RequestBooking(choosenDoctor, activeUser, bookedTime);
+
+                    break; // show schedule
                 case "3":
+                    bookingSystem.PatientScheduele(activeUser); // kolla så att om du inte har några så säger den det
+                    break;
+                case "4": // cancel appointment
+                    bookingSystem.CancelBooking(activeUser);
+                    break;
 
-                    break;
-                case "4":
-                    // en funktion för att patienten ska kunna se sina tider med location detaljer och doctor namn
-                    break;
-                case "5":
-                    break;
                 case "q":
                     activeUser.IsLoggedIn = false;
                     permission = null;
@@ -217,16 +236,17 @@ while (Running)
                     break;
             }
         }
-        if (activeUser != null && activeUser.Role == UserRole.Admin)
+        if (activeUser != null && activeUser.Role == UserRole.Admin)//-----------------------------------admin menu--------------------------------------
         {
             // ADMIN VV
             try { Console.Clear(); } catch { }
-            Console.WriteLine("[1] - Add Doctor"); // FILIPH
-            Console.WriteLine("[2] - Edit Privileges"); // Calle Jobbar på det
-            Console.WriteLine("[3] - Show Privileges"); // Calle Klar !!
-            Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
-            Console.WriteLine("[5] - Remove Doctor"); // FILIPH KAN TESTA
-            Console.WriteLine("[q] - Quit"); //  Nicklas  
+            Console.WriteLine("[1] - Add Doctor");          // FILIPH - Klar !!
+            Console.WriteLine("[2] - Edit Privileges");     // Calle - Klar !!
+            Console.WriteLine("[3] - Show Privileges");     // Calle - Klar !!
+            Console.WriteLine("[4] - Add Hospital");        // Filiph - klar !!
+            Console.WriteLine("[5] - Remove Doctor");       // FILIPH - Klar !!
+            Console.WriteLine("[6] - Create Appointment");  // Robin - klar !!
+            Console.WriteLine("[q] - Logout");              // Nicklas - Klar !!
 
             switch (Console.ReadLine())
             {
@@ -248,6 +268,29 @@ while (Running)
                     break;
                 case "5":
                     RemoveDoctor(users);
+                    // en funktion för att kunna ta bort doctorer
+                    break;
+                case "6":
+                    Console.WriteLine("Enter index of Doctor to book.");
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        if (users[i].Role == UserRole.Doctor)
+                        {
+                            Console.WriteLine($"Doctor Index:{i} Dr.{users[i].Username}.");
+                        }
+                    }
+                    int ChooseDoctorindex = Convert.ToInt32(Console.ReadLine());
+                    User choosenDoctor = users[ChooseDoctorindex];
+                    bookingSystem.ShowAvailableTimes(choosenDoctor);
+
+                    Console.WriteLine("Enter starting hour of booking (8-15)");
+
+                    Double startTime = Convert.ToInt32(Console.ReadLine());
+                    DateTime bookedTime = DateTime.Today.AddHours(startTime);
+
+                    bookingSystem.CreatAppointment(choosenDoctor, activeUser, bookedTime);
+
+
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "q":
@@ -272,19 +315,19 @@ while (Running)
 
 
 
-        if (activeUser != null && activeUser.Role == UserRole.Doctor)
+        if (activeUser != null && activeUser.Role == UserRole.Doctor)//-----------------------------------Doctor menu--------------------------------------
         {
 
             // DOCTOR VV
             try { Console.Clear(); } catch { }
-            Console.WriteLine("[1] - View patient journals"); // Nicklas
-            Console.WriteLine("[2] - Write journals"); // FILIPH
-            Console.WriteLine("[3] - Accept Requested Event");
-            Console.WriteLine("[4] - edit journal entry"); // (filiph)
-            Console.WriteLine("[5] - view location"); // Klar !!
-            Console.WriteLine("[6] - Show priviliges"); // Klar !!
-            Console.WriteLine("[0] - Settings"); // Calle kanske
-            Console.WriteLine("[q] - Quit");
+            Console.WriteLine("[1] - View patient journals");           // Nicklas klar
+            Console.WriteLine("[2] - Write journals");                  // FILIPH klar
+            Console.WriteLine("[3] - Handle Requested appointments");   // Robin klar
+            Console.WriteLine("[4] - Show upcoming appointments");      // Robin klar
+            Console.WriteLine("[5] - edit journal entry");              // filiph typ klar
+            Console.WriteLine("[6] - view location");                   // Calle klar
+            Console.WriteLine("[7] - Show priviliges");                 // Calle Klar  
+            Console.WriteLine("[q] - Logout");
 
 
             string input = Console.ReadLine();
@@ -322,21 +365,26 @@ while (Running)
 
                     // funktion för att skriva journaler
                     break;
-                case "3":
-
+                case "3":// Handle Requested Events
+                    bookingSystem.HandleRequestBooking(activeUser);
+                    Console.WriteLine("\nPress ENTER to continue...");
+                    Console.ReadLine();
                     break;
-
-                case "4":
-
+                case "4":// Show upcoming appointments
+                    bookingSystem.DoctorScheduele(activeUser);
+                    break;
+                case "5":
                     EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
-                case "5":
+                case "6":
                     Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
-                case "6":
+                case "7":
                     activeUser.permissions?.ShowAllPermission();
+                    Console.WriteLine("\nPress ENTER to continue...");
+                    Console.ReadLine();
                     break;
                 case "q":
                     activeUser.IsLoggedIn = false;
@@ -539,7 +587,10 @@ static void EditJournal(List<Journal> journals, List<User> users)
                 System.Console.WriteLine("\n \n-- JOURNAL TITLES --");
                 for (int i = 0; i < journals.Count; i++)
                 {
-                    Console.WriteLine((i + 1) + ". " + journals[i].Title);
+                    if (journals[i].Patient == user.Username)
+                    {
+                        Console.WriteLine((i + 1) + ". " + journals[i].Title);
+                    }
                 }
             }
         }
@@ -573,6 +624,8 @@ static void EditJournal(List<Journal> journals, List<User> users)
     {
         System.Console.WriteLine("There is no journals saved in the system.");
     }
+    Console.WriteLine("\nPress ENTER to continue...");
+    Console.ReadLine();
 }
 
 static void ShowAllJournals(List<Journal> journals)
