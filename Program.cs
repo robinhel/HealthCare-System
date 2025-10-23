@@ -182,6 +182,7 @@ while (Running)
                                 Console.WriteLine($"Publisher: {showJournal.Publisher}");
                                 System.Console.WriteLine();
                                 System.Console.WriteLine("press ENTER to continue.. ");
+                                Console.ReadLine();
                             }
                             else
                             {
