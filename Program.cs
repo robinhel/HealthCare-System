@@ -209,6 +209,7 @@ while (Running)
             Console.WriteLine("[3] - Show Privileges"); // Calle - Klar !!
             Console.WriteLine("[4] - Add Hospital"); // Ska kunna lägga till platser (sjukhus, vårdcentraler). Typ klar, filiph ska kolla på det
             Console.WriteLine("[5] - Remove Doctor"); // FILIPH - Klar !!
+            Console.WriteLine("[6] - Create Appointment"); // Robin
             Console.WriteLine("[q] - Logout"); //  Nicklas - Klar !!
 
             switch (Console.ReadLine())
@@ -231,6 +232,29 @@ while (Running)
                     break;
                 case "5":
                     RemoveDoctor(users);
+                    // en funktion för att kunna ta bort doctorer
+                    break;
+                case "6":
+                    Console.WriteLine("Enter index of Doctor to book.");
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        if (users[i].Role == UserRole.Doctor)
+                        {
+                            Console.WriteLine($"Doctor Index:{i} Dr.{users[i].Username}.");
+                        }
+                    }
+                    int ChooseDoctorindex = Convert.ToInt32(Console.ReadLine());
+                    User choosenDoctor = users[ChooseDoctorindex];
+                    bookingSystem.ShowAvailableTimes(choosenDoctor);
+
+                    Console.WriteLine("Enter starting hour of booking (8-15)");
+
+                    Double startTime = Convert.ToInt32(Console.ReadLine());
+                    DateTime bookedTime = DateTime.Today.AddHours(startTime);
+
+                    bookingSystem.CreatAppointment(choosenDoctor, activeUser, bookedTime);
+
+
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "q":
@@ -304,7 +328,6 @@ while (Running)
                     bookingSystem.DoctorScheduele(activeUser);
                     break;
                 case "5":
-
                     EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
