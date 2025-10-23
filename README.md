@@ -1,6 +1,7 @@
 # HealthCare System
 A terminal-based healthcare management system built in C#.
 
+
 ## Patient
 - Log in or create an account
 - Book appointments with doctors
@@ -11,14 +12,15 @@ A terminal-based healthcare management system built in C#.
 ## Doktor
 - Handle booking requests
 - View schedule
-- Create and edit patient records
+- Create and edit patient records// add create appointment
 - View all patient records
 
 ## Admin
 - Add or remove doctors
 - Manage user permissions
-- Create appointments directly
+- Create appointments directly // add handle bookings
 - Manage and save healthcare locations
+
 
 
 
