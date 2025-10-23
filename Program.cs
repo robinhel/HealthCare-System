@@ -374,11 +374,11 @@ while (Running)
                     EditJournal(journals, users);
                     // funktion för att ändra gamla journaler
                     break;
-                case "5":
+                case "6":
                     Location.ShowAllLocations(locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
-                case "6":
+                case "7":
                     activeUser.permissions?.ShowAllPermission();
                     break;
                 case "q":
