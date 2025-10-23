@@ -242,6 +242,8 @@ while (Running)
         {
             // ADMIN VV
             try { Console.Clear(); } catch { }
+            Console.WriteLine($"--- Welcome back: {activeUser.Username} ---");
+            Console.WriteLine();
             Console.WriteLine("[1] - Add Doctor");          // FILIPH - Klar !!
             Console.WriteLine("[2] - Edit Privileges");     // Calle - Klar !!
             Console.WriteLine("[3] - Show Privileges");     // Calle - Klar !!
@@ -322,6 +324,8 @@ while (Running)
 
             // DOCTOR VV
             try { Console.Clear(); } catch { }
+            Console.WriteLine($"--- Welcome back: {activeUser.Username} ---");
+            Console.WriteLine();
             Console.WriteLine("[1] - View patient journals");           // Nicklas klar
             Console.WriteLine("[2] - Write journals");                  // FILIPH klar
             Console.WriteLine("[3] - Handle Requested appointments");   // Robin klar
