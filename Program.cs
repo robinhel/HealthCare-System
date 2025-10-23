@@ -116,13 +116,16 @@ while (Running)
         if (activeUser != null && activeUser.Role == UserRole.Patient)//-----------------------------------patient menu--------------------------------------
         {
             try { Console.Clear(); } catch { }
-            Console.WriteLine($"Welcome {activeUser.Username} to a terminal based HealthCare.");
-
+            Console.WriteLine("=============================");
+            Console.WriteLine($"--- Welcome back: {activeUser.Username} ---");
+            Console.WriteLine("=============================");
+            System.Console.WriteLine();
             Console.WriteLine("[1] - Browse Journal");      // Nicklas - klar
             Console.WriteLine("[2] - Book appointment");    // Robin - klar
             Console.WriteLine("[3] - Show schedule");       // Robin - klar
             Console.WriteLine("[4] - Cancel appointment");  // Robin - klar
             Console.WriteLine("[q] - Logout");              // Nicklas - klar
+
 
             // Request om att ändra lösenord (kanske)
             // Ska kunna se sin egen journal.
@@ -242,7 +245,9 @@ while (Running)
         {
             // ADMIN VV
             try { Console.Clear(); } catch { }
+            Console.WriteLine("=============================");
             Console.WriteLine($"--- Welcome back: {activeUser.Username} ---");
+            Console.WriteLine("=============================");
             Console.WriteLine();
             Console.WriteLine("[1] - Add Doctor");          // FILIPH - Klar !!
             Console.WriteLine("[2] - Edit Privileges");     // Calle - Klar !!
@@ -324,7 +329,9 @@ while (Running)
 
             // DOCTOR VV
             try { Console.Clear(); } catch { }
+            Console.WriteLine("=============================");
             Console.WriteLine($"--- Welcome back: {activeUser.Username} ---");
+            Console.WriteLine("=============================");
             Console.WriteLine();
             Console.WriteLine("[1] - View patient journals");           // Nicklas klar
             Console.WriteLine("[2] - Write journals");                  // FILIPH klar
@@ -334,6 +341,7 @@ while (Running)
             Console.WriteLine("[6] - view location");                   // Calle klar
             Console.WriteLine("[7] - Show priviliges");                 // Calle Klar  
             Console.WriteLine("[q] - Logout");
+
 
 
             string input = Console.ReadLine();
