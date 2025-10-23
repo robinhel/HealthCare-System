@@ -12,13 +12,13 @@ A terminal-based healthcare management system built in C#.
 ## Doktor
 - Handle booking requests
 - View schedule
-- Create and edit patient records// add create appointment
+- Create and edit patient records
 - View all patient records
 
 ## Admin
 - Add or remove doctors
 - Manage user permissions
-- Create appointments directly // add handle bookings
+- Create appointments directly
 - Manage and save healthcare locations
 
 
