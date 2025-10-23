@@ -566,66 +566,96 @@ static void CreateJournal(List<Journal> journals, List<User> users, User activeU
 
 static void EditJournal(List<Journal> journals, List<User> users)
 {
+    if (journals.Count == 0)
+    {
+        System.Console.WriteLine("There is no journals saved in the system.");
+        System.Console.WriteLine("\nPress ENTER to continue...");
+        Console.ReadLine();
+        return;
+    }
     if (journals.Count >= 1)
     {
-        System.Console.WriteLine("----------   EDIT JOURNAL ENTRY   ----------");
-
-        foreach (User user in users)
+        try
         {
-            if (user.Role == UserRole.Patient)
+            System.Console.WriteLine("----------   EDIT JOURNAL ENTRY   ----------");
+            foreach (User user in users)
             {
-                System.Console.WriteLine($"[ID {user.Id}] ---- Username - {user.Username}");
-            }
-        }
-        System.Console.WriteLine("Enter the ID of the user you'd like to change journal entry: ");
-        int ID_input = Convert.ToInt32(Console.ReadLine());
-        foreach (User user in users)
-        {
-            if (ID_input == user.Id)
-            {
-                System.Console.WriteLine("---- USER FOUND ----");
-                System.Console.WriteLine("\n \n-- JOURNAL TITLES --");
-                for (int i = 0; i < journals.Count; i++)
+                if (user.Role == UserRole.Patient)
                 {
-                    if (journals[i].Patient == user.Username)
-                    {
-                        Console.WriteLine((i + 1) + ". " + journals[i].Title);
-                    }
+                    System.Console.WriteLine($"[ID {user.Id}] ---- Username - {user.Username}");
+                }
+            }
+            System.Console.WriteLine("Enter the ID of the user you'd like to change journal entry: ");
+            int ID_input = Convert.ToInt32(Console.ReadLine());
+
+            User selectedUser = null;
+
+            foreach (User user in users)
+            {
+                if (user.Id == ID_input)
+                {
+                    selectedUser = user;
+                    break;
+                }
+            }
+            if (selectedUser == null)
+            {
+                System.Console.WriteLine("User not found");
+                return;
+            }
+
+            List<Journal> userJournals = new();
+            foreach (Journal journal in journals)
+            {
+                if (journal.Patient == selectedUser.Username)
+                {
+                    userJournals.Add(journal);
+                }
+            }
+            if (userJournals.Count == 0)
+            {
+                System.Console.WriteLine("There is no journals to change.");
+                return;
+            }
+
+            for (int i = 0; i < userJournals.Count; i++)
+            {
+                System.Console.WriteLine($"{i + 1} . {userJournals[i].Title}");
+            }
+
+            System.Console.WriteLine("Enter INDEX of the journal you'd like to change");
+            int journal_change = Convert.ToInt32(Console.ReadLine());
+            Journal chosenIndex = userJournals[journal_change - 1];
+            chosenIndex.Info();
+            bool changeJournal = true;
+            while (changeJournal)
+            {
+                System.Console.WriteLine("What would you like to change? Title/Description");
+                string inputChange = Console.ReadLine().ToLower();
+                if (inputChange.ToLower() == "title")
+                {
+                    chosenIndex.ChangeTitle();
+                }
+                if (inputChange.ToLower() == "description")
+                {
+                    chosenIndex.ChangeDesc();
+                }
+
+                System.Console.WriteLine("\n \n \nWrite DONE to leave, press ENTER to change more ");
+                string userLeave = Console.ReadLine().ToLower();
+                if (userLeave.ToLower() == "done")
+                {
+                    changeJournal = false;
                 }
             }
         }
-        System.Console.WriteLine("Enter INDEX of the journal you'd like to change");
-        int journal_change = Convert.ToInt32(Console.ReadLine());
-        Journal chosenIndex = journals[journal_change - 1];
-        chosenIndex.Info();
-        bool changeJournal = true;
-        while (changeJournal)
-        {
-            System.Console.WriteLine("What would you like to change? Title/Description");
-            string inputChange = Console.ReadLine().ToLower();
-            if (inputChange.ToLower() == "title")
-            {
-                chosenIndex.ChangeTitle();
-            }
-            if (inputChange.ToLower() == "description")
-            {
-                chosenIndex.ChangeDesc();
-            }
 
-            System.Console.WriteLine("\n \n \nWrite DONE to leave, press ENTER to change more ");
-            string userLeave = Console.ReadLine().ToLower();
-            if (userLeave.ToLower() == "done")
-            {
-                changeJournal = false;
-            }
+        catch
+        {
+            System.Console.WriteLine("Wrong input or an unexpected error occurred, please try again.");
+            Console.ReadLine();
         }
     }
-    else
-    {
-        System.Console.WriteLine("There is no journals saved in the system.");
-    }
-    Console.WriteLine("\nPress ENTER to continue...");
-    Console.ReadLine();
 }
 
 static void ShowAllJournals(List<Journal> journals)
