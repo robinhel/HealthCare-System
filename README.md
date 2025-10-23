@@ -1,5 +1,7 @@
 # HealthCare System
-A terminal-based healthcare management system built in C#.
+Healthcare System is a journal system that runs in the terminal and has been developed in C#.
+The purpose of our project is to create a simple system where users can log in and perform different actions depending on their role (doctor, patient, admin).
+The idea was to mimic a real system, such as 1177, as a source of inspiration.
 
 
 ## Patient
