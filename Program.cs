@@ -11,7 +11,9 @@ List<User> users = new List<User>(); // Lista för alla users
 List<Journal> journals = new List<Journal>(); //  // Lista för alla journaler
 User activeUser = null;
 List<Location> locations = new();
+locations.Add(new Location("Hallands sjukhus Halmstad", "Lasarettsvägen 302 33", "sjukhuset i Halmsta"));
 Permissions permission = null;
+
 
 
 
@@ -229,7 +231,7 @@ while (Running)
                     break;
                 case "4":
                     // funktion för admin att lägga till tillgängliga sjukhus i listan av sjukhus  
-                    LocationAdd(locations);
+                    LocationAdd(locations, users);
                     break;
                 case "5":
                     RemoveDoctor(users);
@@ -314,10 +316,10 @@ while (Running)
                     // funktion för att ändra gamla journaler
                     break;
                 case "6":
-                    Location.ShowAllLocations(locations);
+                    SearchDoctorLocations(activeUser, locations);
                     // funktion för att visa vilka sjukhus den activa doctorn är tillgänglig på
                     break;
-                case "6":
+                case "7":
                     activeUser.permissions?.ShowAllPermission();
                     break;
                 case "q":
@@ -338,23 +340,6 @@ while (Running)
     }
 }
 
-static void LocationAdd(List<Location> locations) // Denna funktionen kallas på för att lägga till en address.
-{
-    // ta in input
-    System.Console.WriteLine("Name?");
-    string LocationName = Console.ReadLine();
-    System.Console.WriteLine("Address?");
-    string LocationAddress = Console.ReadLine();
-    System.Console.WriteLine("Description?");
-    string LocationDescription = Console.ReadLine();
-    Location newloc = new Location(LocationName, LocationAddress, LocationDescription);
-    locations.Add(newloc);
-
-    LocationSaveData.SaveLocationDataCsv(newloc);
-    System.Console.WriteLine("Location saved and added.");
-    Console.ReadLine();
-    // Behövs lägga till filsystem i location.
-}
 
 
 
@@ -567,7 +552,7 @@ static void ShowAllJournals(List<Journal> journals)
     }
     else
     {
-        for (int i = 0; i < journals.Count; i++) 
+        for (int i = 0; i < journals.Count; i++)
         {
             Journal j = journals[i];
             Console.WriteLine($"[{i + 1}] ");
@@ -580,8 +565,107 @@ static void ShowAllJournals(List<Journal> journals)
         }
     }
 }
+static void ShowAllLocations(List<Location> locations)
+{
+    if (locations == null || locations.Count == 0)
+    {
+        Console.WriteLine("No locations available.");
+        Console.ReadLine();
+        return;
+    }
 
+    for (int i = 0; i < locations.Count; i++)
+    {
+        Location loc = locations[i];
+        Console.WriteLine($"[{i + 1}] {loc.Name}, {loc.Address} - {loc.Description}");
+    }
 
+    Console.ReadLine();
+}
+                   static void LocationAdd(List<Location> locations, List<User> users)
+{
+    Console.WriteLine("Name?");
+    string name = Console.ReadLine();
+    Console.WriteLine("Address?");
+    string address = Console.ReadLine();
+    Console.WriteLine("Description?");
+    string description = Console.ReadLine();
+
+    Location newloc = new Location(name, address, description);
+
+    Console.WriteLine("Available doctors:");
+    for (int i = 0; i < users.Count; i++)
+        if (users[i].Role == UserRole.Doctor)
+            Console.WriteLine($"ID: {users[i].Id}  Username: {users[i].Username}");
+
+    Console.WriteLine("Enter doctor IDs (comma separated) or blank:");
+    string input = Console.ReadLine();
+    if (input != null && input != "")
+    {
+        string[] parts = input.Split(',');
+        for (int i = 0; i < parts.Length; i++)
+        {
+            int id;
+            if (int.TryParse(parts[i].Trim(), out id))
+                newloc.DoctorIds.Add(id);
+        }
+    }
+
+    locations.Add(newloc);
+    Console.WriteLine("Location saved.");
+    Console.ReadLine();
+}
+static void SearchDoctorLocations(User doctor, List<Location> locations)
+{
+    Console.WriteLine("Sök plats");
+    string q = Console.ReadLine();
+    if (q == null) q = "";
+    q = q.Trim().ToLower();
+
+    bool found = false;
+    if (locations == null || locations.Count == 0)
+    {
+        Console.WriteLine("No locations available.");
+        Console.ReadLine();
+        return;
+    }
+
+    for (int i = 0; i < locations.Count; i++)
+    {
+        Location loc = locations[i];
+
+        // Kontrollera att doktorn är tilldelad denna location
+        bool assigned = false;
+        if (loc.DoctorIds != null)
+        {
+            for (int j = 0; j < loc.DoctorIds.Count; j++)
+            {
+                if (loc.DoctorIds[j] == doctor.Id)
+                {
+                    assigned = true;
+                    break;
+                }
+            }
+        }
+
+        
+
+        // Om söksträngen är tom  visa alla tilldelade, annars matcha mot namnet/addressen/description
+        if (q == "" ||
+            (loc.Name != null && loc.Name.ToLower().Contains(q)) ||
+            (loc.Address != null && loc.Address.ToLower().Contains(q)) ||
+            (loc.Description != null && loc.Description.ToLower().Contains(q)))
+        {
+            Console.WriteLine($"[{i + 1}] {loc.Name}, {loc.Address} - {loc.Description}");
+            found = true;
+        }
+    }
+
+    if (!found)
+        Console.WriteLine("Inga platser matchar din sökning.");
+
+    Console.ReadLine();
+}
 
 // 
 /*
