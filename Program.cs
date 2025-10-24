@@ -281,36 +281,48 @@ while (Running)
                     // en funktion för att kunna ta bort doctorer
                     break;
                 case "6":
-                    Console.WriteLine("Enter index of Doctor to book.");
-                    for (int i = 0; i < users.Count; i++)
+                    try
+
                     {
-                        if (users[i].Role == UserRole.Doctor)
+
+                        Console.WriteLine("Enter index of Doctor to book.");
+                        for (int i = 0; i < users.Count; i++)
                         {
-                            Console.WriteLine($"Doctor Index:{i} Dr.{users[i].Username}.");
+                            if (users[i].Role == UserRole.Doctor)
+                            {
+                                Console.WriteLine($"Doctor Index:{i} Dr.{users[i].Username}.");
+                            }
                         }
+                        int ChooseDoctorindex = Convert.ToInt32(Console.ReadLine());
+                        User choosenDoctor = users[ChooseDoctorindex];
+                        bookingSystem.ShowAvailableTimes(choosenDoctor);
+
+                        Console.WriteLine("Enter starting hour of booking (8-15)");
+
+                        Double startTime = Convert.ToInt32(Console.ReadLine());
+                        DateTime bookedTime = DateTime.Today.AddHours(startTime);
+
+                        bookingSystem.CreatAppointment(choosenDoctor, activeUser, bookedTime);
+
+
+                        // en funktion för att kunna ta bort doctorer
+                        break;
                     }
-                    int ChooseDoctorindex = Convert.ToInt32(Console.ReadLine());
-                    User choosenDoctor = users[ChooseDoctorindex];
-                    bookingSystem.ShowAvailableTimes(choosenDoctor);
+                    catch
 
-                    Console.WriteLine("Enter starting hour of booking (8-15)");
-
-                    Double startTime = Convert.ToInt32(Console.ReadLine());
-                    DateTime bookedTime = DateTime.Today.AddHours(startTime);
-
-                    bookingSystem.CreatAppointment(choosenDoctor, activeUser, bookedTime);
-
-
-                    // en funktion för att kunna ta bort doctorer
-                    break;
+                                        {
+                        System.Console.WriteLine("Wrong input, try again");
+                        Console.ReadLine();
+                        break;
+                    }
                 case "q":
-                    activeUser.IsLoggedIn = false;
-                    permission = null;
-                    activeUser = null;
+                        activeUser.IsLoggedIn = false;
+                        permission = null;
+                        activeUser = null;
 
-                    break;
-            }
-        }
+                        break;
+                    }
+                    }
         // PATIENT VV
 
 
