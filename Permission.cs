@@ -81,6 +81,8 @@ public class Permissions
 
     public void EditUserPermissionById(List<User> users)
     {
+            try
+            {
         User user = ChooseUserByIdAdmin(users);
         bool Choosing = true;
         while (Choosing)
@@ -90,34 +92,41 @@ public class Permissions
             Console.WriteLine("Q to quit");
             Console.Write("\nChoose a permission in the list:");
 
-            string ChangePermission = Console.ReadLine();
-            switch (ChangePermission)
-            {
-                case "1":
-                    user.permissions.ViewPatient = AskBool(1, "ViewPatient", user.permissions.ViewPatient);
-                    break;
-                case "2":
-                    user.permissions.EditPatient = AskBool(2, "EditPatient", user.permissions.EditPatient);
-                    break;
-                case "3":
-                    user.permissions.AddDoctor = AskBool(3, "AddDoctor", user.permissions.AddDoctor);
-                    break;
-                case "4":
-                    user.permissions.GiveMed = AskBool(4, "GiveMed", user.permissions.GiveMed);
-                    break;
-                case "5":
-                    user.permissions.ManageUsers = AskBool(5, "ManageUsers", user.permissions.ManageUsers);
-                    break;
-                case "6":
-                    user.permissions.CreateEvent = AskBool(6, "CreateEvent", user.permissions.CreateEvent);
-                    break;
-                case "q":
-                    Choosing = false;
-                    break;
+                string ChangePermission = Console.ReadLine();
+                switch (ChangePermission)
+                {
+                    case "1":
+                        user.permissions.ViewPatient = AskBool(1, "ViewPatient", user.permissions.ViewPatient);
+                        break;
+                    case "2":
+                        user.permissions.EditPatient = AskBool(2, "EditPatient", user.permissions.EditPatient);
+                        break;
+                    case "3":
+                        user.permissions.AddDoctor = AskBool(3, "AddDoctor", user.permissions.AddDoctor);
+                        break;
+                    case "4":
+                        user.permissions.GiveMed = AskBool(4, "GiveMed", user.permissions.GiveMed);
+                        break;
+                    case "5":
+                        user.permissions.ManageUsers = AskBool(5, "ManageUsers", user.permissions.ManageUsers);
+                        break;
+                    case "6":
+                        user.permissions.CreateEvent = AskBool(6, "CreateEvent", user.permissions.CreateEvent);
+                        break;
+                    case "q":
+                        Choosing = false;
+                        break;
+                }
             }
 
         }
 
+            catch
+
+                        {
+            System.Console.WriteLine("Wrong input, try again.");
+            Console.ReadLine();
+            }
     }
 
     private bool AskBool(int num, string perm, bool currentbool)
