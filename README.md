@@ -1,5 +1,8 @@
 # HealthCare System
-A terminal-based healthcare management system built in C#.
+Healthcare System is a journal system that runs in the terminal and has been developed in C#.
+The purpose of our project is to create a simple system where users can log in and perform different actions depending on their role (doctor, patient, admin).
+The idea was to mimic a real system, such as 1177, as a source of inspiration.
+
 
 ## Patient
 - Log in or create an account
@@ -21,6 +24,13 @@ A terminal-based healthcare management system built in C#.
 - Manage and save healthcare locations
 
 
+## File Management
+To make sure information is saved, we created a file management system where user data and different locations are stored in CSV files.
+This way, the information does not disappear when the program is closed.
+Currently, the system uses:
+- Users.csv to store users
+- Locations.csv to store locations
+- In the future, we plan to add Journals.csv to store journals.
 
 ### How to run
 
@@ -34,3 +44,13 @@ A terminal-based healthcare management system built in C#.
 * Patient: username: p-1 ,password: a 
 
 4 - Follow to Menu
+
+## Group Members
+This project was created by:
+
+- Robin
+- Tameem
+- Filiph
+- Nicklas
+- Calle
+

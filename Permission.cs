@@ -52,6 +52,7 @@ public class Permissions
         Console.WriteLine($"[4] - GiveMed: {GiveMed}");
         Console.WriteLine($"[5] - ManageUsers: {ManageUsers}");
         Console.WriteLine($"[6] - CreateEvent: {CreateEvent}");
+
     }
     public string ToCsv(User activeuser)
     {
