@@ -381,8 +381,6 @@ while (Running)
                     break;
                 case "3":// Handle Requested Events
                     bookingSystem.HandleRequestBooking(activeUser);
-                    Console.WriteLine("\nPress ENTER to continue...");
-                    Console.ReadLine();
                     break;
                 case "4":// Show upcoming appointments
                     bookingSystem.DoctorScheduele(activeUser);

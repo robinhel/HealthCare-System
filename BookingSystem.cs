@@ -74,6 +74,8 @@ public class BookingSystem
             Console.WriteLine($"Patient is: {patient.Username}");
             Console.WriteLine($"Time: {time}");
             Console.WriteLine("if booking is accepted, it will land in scheduele");
+            Console.WriteLine("Press ENTER to continue.");
+            Console.ReadLine();
         }
     }
     public void HandleRequestBooking(User doctor)
