@@ -3,13 +3,10 @@ namespace App;
 public class Journal
 {
     public string Title;
-
     public string Description;
-
     public string Publisher;
-
     public string Patient;
-    public List<User> patientJournal = new List<User>();
+    public List<string> patientJournal = new List<string>();
 
 
     public Journal(string title, string description, string publisher, string patient)
