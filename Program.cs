@@ -465,40 +465,50 @@ static void AddDoctor(List<User> users)
 
 static void RemoveDoctor(List<User> users)
 {
-    System.Console.WriteLine("----------   REMOVE A DOCTOR ACCOUNT   ----------");
-    User? deletedUser = null;
+    try
 
-    foreach (User user in users)
     {
-        if (user.Role == UserRole.Doctor)
-        {
-            System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
 
+        System.Console.WriteLine("----------   REMOVE A DOCTOR ACCOUNT   ----------");
+        User? deletedUser = null;
+
+        foreach (User user in users)
+        {
+            if (user.Role == UserRole.Doctor)
+            {
+                System.Console.WriteLine($"     [ID - {user.Id}    USERNAME - {user.Username}] ");
+
+            }
+        }
+        System.Console.WriteLine("Enter ID of doctor which you wish to remove: ");
+        int idRemove = Convert.ToInt32(Console.ReadLine());
+
+        foreach (User user in users)
+        {
+            if (idRemove == user.Id && user.Role == UserRole.Doctor)
+            {
+                deletedUser = user;
+                break;
+            }
+        }
+        if (deletedUser != null)
+        {
+            users.Remove(deletedUser);
+            System.Console.WriteLine($"Succesfully deleted {deletedUser.Username} with ID: {deletedUser.Id}");
+            Console.ReadLine();
+        }
+        else
+        {
+            System.Console.WriteLine($"User with that ID not found.");
         }
     }
-    System.Console.WriteLine("Enter ID of doctor which you wish to remove: ");
-    int idRemove = Convert.ToInt32(Console.ReadLine());
-
-    foreach (User user in users)
-    {
-        if (idRemove == user.Id && user.Role == UserRole.Doctor)
+    catch
         {
-            deletedUser = user;
-            break;
-        }
-    }
-    if (deletedUser != null)
-    {
-        users.Remove(deletedUser);
-        System.Console.WriteLine($"Succesfully deleted {deletedUser.Username} with ID: {deletedUser.Id}");
+        System.Console.WriteLine("Wrong input, try again.");
         Console.ReadLine();
     }
-    else
-    {
-        System.Console.WriteLine($"User with that ID not found.");
-    }
 
-}
+    }
 
 
 
