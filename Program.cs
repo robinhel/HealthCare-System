@@ -25,6 +25,7 @@ users.Add(new User("a", "a", false, UserRole.Admin));
 Journal test = new Journal("Huvudvärk", "Kom in med huvudvärk", "Dr.Nicklas", "p-1");
 journals.Add(test);
 LocationSaveData.LoadLocationDataCsv(locations);
+SaveData.LoadUserDataCsv(users);
 
 
 
